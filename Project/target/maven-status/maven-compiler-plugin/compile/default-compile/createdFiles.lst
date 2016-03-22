@@ -1,0 +1,7 @@
+com/iowniwant/dao/AbstractDAO.class
+com/iowniwant/util/DataBaseManager.class
+com/iowniwant/model/BaseEntity.class
+com/iowniwant/dao/implementation/UserDao.class
+com/iowniwant/model/User.class
+com/iowniwant/controller/RegistrationServlet.class
+com/iowniwant/dao/implementation/AbstractDaoImpl.class

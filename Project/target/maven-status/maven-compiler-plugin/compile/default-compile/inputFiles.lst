@@ -1,0 +1,7 @@
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/model/BaseEntity.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/model/User.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/util/DataBaseManager.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/controller/RegistrationServlet.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/dao/AbstractDAO.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/dao/implementation/AbstractDaoImpl.java
+/home/owl/JavaPractice/ownWant/I-own-I-want/Project/src/main/java/com/iowniwant/dao/implementation/UserDao.java
