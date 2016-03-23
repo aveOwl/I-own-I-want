@@ -1,4 +1,4 @@
-package com.iowniwant.controller;
+package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
@@ -18,7 +18,8 @@ public class RegistrationServlet extends HttpServlet {
 
     UserDao userDao = new UserDao();
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String nickname = request.getParameter("nickname");
@@ -28,19 +29,10 @@ public class RegistrationServlet extends HttpServlet {
         if (name != null && surname != null && nickname != null && password != null) {
             User user = new User(name, surname, nickname, password, email);
             userDao.create(user);
-            request.setAttribute("user", user);
+//            request.setAttribute("user", user);
         }
 
-        getServletContext().getRequestDispatcher("/result.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("html/main-page.html");
+//        getServletContext().getRequestDispatcher("/register-test.jsp").forward(request, response);
     }
 }

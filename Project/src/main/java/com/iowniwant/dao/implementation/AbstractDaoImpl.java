@@ -113,6 +113,32 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
     }
 
     @Override
+    public T getByNick(String nickname) {
+        Connection connection = null;
+        PreparedStatement prepStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbManager.getConnection();
+            String query = getGetByNickQuery();
+            prepStatement = connection.prepareStatement(query);
+            prepStatement.setString(1, nickname);
+            resultSet = prepStatement.executeQuery();
+            if (resultSet.next()) {
+                log.debug("Returning entity with nickname: {}", nickname);
+                return getEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException logOrIgnore) {}
+            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
+            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+        }
+
+        return null;
+    }
+
+    @Override
     public List<T> getAll() {
         Connection connection = null;
         PreparedStatement prepStatement = null;
@@ -144,5 +170,6 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
     public abstract String getDeleteQuery();
     public abstract String getUpdateQuery();
     public abstract String getGetByIdQuery();
+    public abstract String getGetByNickQuery();
     public abstract String getGetAllQuery();
 }

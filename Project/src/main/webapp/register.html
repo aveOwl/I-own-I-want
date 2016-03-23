@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
-    <meta charset="UTF-8">
-    <link rel='stylesheet' href="style/register-form-style.css">
+    <link href="style/register-page-style.css" rel='stylesheet'>
 </head>
 <body>
-<div class="container">
-    <div class="header"><h1>Create Account</h1></div>
+<div class="header">
+    <div class="container">
+        <ul class="nav">
+            <a href="#" ><li>About</li></a>
+            <a href="#"><li>Team</li></a>
+            <a href="#"><li>Contact</li></a>
+            <a href="login.html"><li>Log in</li></a>
+            <a href="register.html"><li>Register</li></a>
+        </ul>
+    </div>
+</div>
 
-    <form class="login" action="registrationServlet" method="post">
-        <input type="text" placeholder="name" name="name"/>
-        <input type="text" placeholder="surname" name="surname"/>
-        <input type="text" placeholder="nickname" name="nickname"/>
-        <input type="email" placeholder="email" name="email"/>
-        <input type="password" placeholder="password" name="password"/>
-        <input type="submit" value="Finish"/>
-    </form>
+<div class="front">
+    <div class="container">
+        <div class="banner">
+            <form action="registrationServlet" method="post" class="login">
+                <input type="text" placeholder="Name"/>
+                <input type="text" placeholder="Surname"/>
+                <input type="text" placeholder="Nickname"/>
+                <input type="email" placeholder="Email"/>
+                <input type="password" placeholder="Password"/>
+                <input type="submit" value="Finish"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p>&copy; One and only 2016</p>
+    </div>
 </div>
 </body>
 </html>

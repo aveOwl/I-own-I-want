@@ -8,5 +8,6 @@ public interface AbstractDAO<T> {
     void delete(T entity);
     T update(T entity);
     T getById(Integer id);
+    T getByNick(String nickname);
     List<T> getAll();
 }

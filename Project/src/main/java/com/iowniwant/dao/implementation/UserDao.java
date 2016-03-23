@@ -69,6 +69,11 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     @Override
+    public String getGetByNickQuery() {
+        return dbManager.getQuery("get.user.by.nick");
+    }
+
+    @Override
     public String getGetAllQuery() {
         return dbManager.getQuery("get.all.user");
     }
