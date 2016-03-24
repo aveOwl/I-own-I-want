@@ -1,11 +1,13 @@
 package com.iowniwant.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Created by sulfur on 21.03.16.
  */
-public class Goal {
+public class Goal extends BaseEntity{
 
-    private Long id;
     private String title;
     private double cost;
     private String description;
@@ -20,12 +22,18 @@ public class Goal {
         this.notes = notes;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Goal (ResultSet resultSet) {
+        try {
+            this.id = resultSet.getInt("goals_id");
+            this.title = resultSet.getString("title");
+            this.cost = resultSet.getDouble("cost");
+            this.description = resultSet.getString("description");
+            this.pubdate = resultSet.getString("pubdate");
+            this.notes = resultSet.getString("notes");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitle() {
@@ -66,5 +74,16 @@ public class Goal {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "title='" + title + '\'' +
+                ", cost=" + cost +
+                ", description='" + description + '\'' +
+                ", pubdate='" + pubdate + '\'' +
+                ", notes='" + notes + '\'' +
+                "} ";
     }
 }
