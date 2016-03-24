@@ -65,7 +65,7 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     @Override
     public String getGetByIdQuery() {
-        return dbManager.getQuery("get.user.by.id");
+        return dbManager.getQuery("get.goal.by.id");
     }
 
     @Override

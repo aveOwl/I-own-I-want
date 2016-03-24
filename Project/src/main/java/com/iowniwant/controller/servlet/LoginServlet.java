@@ -2,7 +2,6 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +13,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     UserDao userDao = new UserDao();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
