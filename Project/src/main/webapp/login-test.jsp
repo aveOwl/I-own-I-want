@@ -3,7 +3,7 @@
 <head>
     <title>Result</title>
 </head>
-<body background="img/form-bg.jpg">
+<body background="/img/form-bg.jpg">
 <h3>Login Successfully</h3>
 <hr>
 <a href="http://google.com">Continue</a>
