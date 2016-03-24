@@ -30,7 +30,6 @@ public class TestServlet extends HttpServlet{
     private static final String PASSWORD = "postgres";
     private final String GET_SOME = "SELECT * FROM users.goals";
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
