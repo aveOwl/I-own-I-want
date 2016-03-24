@@ -1,0 +1,68 @@
+body {
+  /*  background-image: url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/reader/bg.png');*/
+  background-image: url(../img/notebook-computer-chill-relax.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+p {
+  margin: 0;
+}
+
+.row {
+  margin: 0;
+  padding: 0 20px;
+}
+
+.article {
+  max-width: 940px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #222;
+  background: rgba(255,255,255,.8);
+  border-spacing: 2px;
+  border-color: #9a9393;
+  font-family: 'Oswald';
+  border-bottom: 1px #e5e5e5 solid;
+}
+
+.current .item {
+  background: rgb(193, 185, 161);
+
+}
+
+.item {
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.item .source {
+  margin-left: 40px;
+}
+
+.item .title {
+  padding: 20px;
+
+  font-weight: bold;
+}
+
+.item .pubdate {
+  margin-right: 20px;
+}
+
+.item .pubdate {
+  text-align: right;
+}
+
+.description {
+  display: none;
+  padding: 20px;
+}
+
+.description h1 {
+  margin-top: 0px;
+  font-size: 23px;
+}
