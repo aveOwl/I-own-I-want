@@ -9,9 +9,9 @@
 <div class="header">
   <div class="container">
     <ul class="nav">
-      <a href="#" ><li>About</li></a>
+      <a href="#" ><li>Home</li></a>
       <a href="#"><li>Team</li></a>
-      <a href="#"><li>Contact</li></a>
+      <a href="#"><li>Dashboard</li></a>
       <a href="login.jsp"><li>Log in</li></a>
       <a href="register.jsp"><li>Register</li></a>
     </ul>

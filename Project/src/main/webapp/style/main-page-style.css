@@ -18,6 +18,12 @@ html, body {
   font-size: 16px;
 }
 
+.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .front {
   height: 800px;
   background: url("img/main-bg.jpg");
@@ -67,7 +73,7 @@ a {
 .footer {
   background-color: #252838;
   color: #fff;
-  padding: 15px 0;
+  padding: 8px 0;
 }
 
 .footer p {

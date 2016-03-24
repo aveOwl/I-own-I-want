@@ -20,8 +20,18 @@ public class AuthFilter implements Filter {
         log.trace("initialize filter content");
     }
 
+    /**
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     * Filters user request whether user logged into the system, if so sends request & response to
+     * doGet method, otherwise redirects user to login page.
+     */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;

@@ -13,7 +13,7 @@
       <form action="loginServlet" method="post" class="login">
         <input type="text" placeholder="Username" name="username"/>
         <input type="password" placeholder="Password" name="password"/>
-        <input type="submit" value="Sign in"/>
+        <input type="submit" value="Log in"/>
       </form>
     </div>
   </div>

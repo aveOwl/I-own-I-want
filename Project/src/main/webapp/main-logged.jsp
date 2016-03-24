@@ -6,7 +6,21 @@
   <meta charset="utf-8">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<div class="header">
+  <div class="container">
+    <ul class="nav">
+      <a href="#" id="row"><li>Home</li></a>
+      <a href="#"><li>Team</li></a>
+      <a href="#"><li>Dashboard</li></a>
+      <a href="login.jsp"><li>Log in</li></a>
+      <a href="register.jsp"><li>Register</li></a>
+    </ul>
+    <ul class="nav right">
+      <a href="#"><li>My account</li></a>
+      <a href="#"><li>Log out</li></a>
+    </ul>
+  </div>
+</div>
 <div class="front">
   <div class="container">
     <div class="banner">
