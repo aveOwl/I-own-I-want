@@ -32,7 +32,7 @@ public class RegistrationServlet extends HttpServlet {
 //            request.setAttribute("user", user);
         }
 
-        response.sendRedirect("main-page.html");
+        response.sendRedirect("main.jsp");
 //        getServletContext().getRequestDispatcher("/register-test.jsp").forward(request, response);
     }
 }

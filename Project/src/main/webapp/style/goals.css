@@ -1,9 +1,6 @@
 body {
-  /*  background-image: url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/reader/bg.png');*/
-  background-image: url(notebook-computer-chill-relax.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
+  background-size: cover;
+  background: url("img/notebook-computer-chill-relax.jpg") fixed center;
 }
 p {
   margin: 0;
@@ -16,15 +13,12 @@ p {
 
 .article {
   max-width: 940px;
-  margin-top: 40px;
-  margin-bottom: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 40px auto 30px;
   color: #222;
   background: rgba(255,255,255,.8);
   border-spacing: 2px;
   border-color: #9a9393;
-  font-family: 'Oswald';
+  font-family: 'Oswald', serif;
   border-bottom: 1px #e5e5e5 solid;
 }
 

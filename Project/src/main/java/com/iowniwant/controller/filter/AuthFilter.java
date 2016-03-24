@@ -31,7 +31,7 @@ public class AuthFilter implements Filter {
         if (session.getAttribute("token") != null) {
             filterChain.doFilter(request, response);
         } else {
-            httpServletResponse.sendRedirect("login.html");
+            httpServletResponse.sendRedirect("login.jsp");
         }
     }
 
