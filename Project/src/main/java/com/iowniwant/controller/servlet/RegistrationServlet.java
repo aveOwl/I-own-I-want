@@ -14,8 +14,6 @@ import java.io.IOException;
 
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
-    public static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
-
     UserDao userDao = new UserDao();
 
     @Override
@@ -29,10 +27,7 @@ public class RegistrationServlet extends HttpServlet {
         if (name != null && surname != null && nickname != null && password != null) {
             User user = new User(name, surname, nickname, password, email);
             userDao.create(user);
-//            request.setAttribute("user", user);
         }
-
         response.sendRedirect("main.jsp");
-//        getServletContext().getRequestDispatcher("/register-test.jsp").forward(request, response);
     }
 }

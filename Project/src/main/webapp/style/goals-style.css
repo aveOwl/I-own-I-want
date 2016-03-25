@@ -1,9 +1,10 @@
 body {
-  background-image: url(img/notebook-computer-chill-relax.jpg);
+  background-image: url("img/notebook-computer-chill-relax.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
 }
+
 p {
   margin: 0;
 }
@@ -26,7 +27,6 @@ p {
 
 .current .item {
   background: rgb(193, 185, 161);
-
 }
 
 .item {

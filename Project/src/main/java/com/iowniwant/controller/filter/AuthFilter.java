@@ -7,9 +7,10 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(displayName = "AuthFilter", urlPatterns = "/welcome")
+@WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
 public class AuthFilter implements Filter {
     public static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -18,22 +19,29 @@ public class AuthFilter implements Filter {
         log.trace("initialize filter content");
     }
 
+    /**
+     * @param request - the request to pass along the chain.
+     * @param response - the response to pass along the chain.
+     * @throws IOException
+     * @throws ServletException
+     * Filters user request whether user logged into the system or not.
+     */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        Object token = httpServletRequest.getSession().getAttribute("token");
-        log.debug("****************************************");
-        log.debug("token object obtained from attribute: {}", token);
+        HttpSession session = httpServletRequest.getSession(true);
 
-        if (token != null) {
+        log.debug("Session with ID: {} created", session.getId());
 
+        if (session.getAttribute("token") != null) {
+            session.setAttribute("logged", true);
             filterChain.doFilter(request, response);
         } else {
-            log.debug("*************************************");
-            log.debug("YOU WERE FUCKING REDIRECTED BACK TO THE LOGIN JSP");
+            log.debug("You were redirected back to the login jsp");
             httpServletResponse.sendRedirect("login.jsp");
         }
     }

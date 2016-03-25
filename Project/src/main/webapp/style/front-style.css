@@ -1,0 +1,23 @@
+.front {
+  height: 800px;
+  background: url("img/main-bg.jpg");
+  background-size: cover;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.banner-action {
+  background-color: #222930;
+  color: #E9E9E9;
+  font-family: 'Oswald', serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1px;
+  padding: 16px 40px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
