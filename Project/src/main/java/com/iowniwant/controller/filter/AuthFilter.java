@@ -5,10 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(displayName = "AuthFilter", urlPatterns = "/welcome")
@@ -26,11 +24,16 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        HttpSession session = httpServletRequest.getSession(true);
+        Object token = httpServletRequest.getSession().getAttribute("token");
+        log.debug("****************************************");
+        log.debug("token object obtained from attribute: {}", token);
 
-        if (session.getAttribute("token") != null) {
+        if (token != null) {
+
             filterChain.doFilter(request, response);
         } else {
+            log.debug("*************************************");
+            log.debug("YOU WERE FUCKING REDIRECTED BACK TO THE LOGIN JSP");
             httpServletResponse.sendRedirect("login.jsp");
         }
     }

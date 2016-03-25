@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<a href="GoalServlet">Show the list</a>
+<a href="goalServlet">Show the list</a>
 
 </body>
 </html>

@@ -2,10 +2,14 @@ package com.iowniwant.dao.implementation;
 
 
 import com.iowniwant.model.Goal;
-import com.iowniwant.util.DataBaseManager;
+import com.iowniwant.model.User;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sulfur on 24.03.16.
@@ -15,9 +19,9 @@ import java.sql.SQLException;
     Таковыми будут реализации методов класса GoalsDAO в зависимости от обьектов переданных в
 качестве параметров его методам
 */
-public class GoalsDAO extends AbstractDaoImpl<Goal>{
+public class GoalDAO extends AbstractDaoImpl<Goal>{
 
-    DataBaseManager dbManager = new DataBaseManager();
+    UserDao userDao = new UserDao();
 
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, Goal entity) {
@@ -45,6 +49,38 @@ public class GoalsDAO extends AbstractDaoImpl<Goal>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Goal getEntity(ResultSet resultSet) {
+        try {
+            int user_id = resultSet.getInt("user_id");
+            User user = userDao.getById(user_id);
+            return new Goal(resultSet, user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Goal> getGoalsByUserId(Integer userId) {
+
+        ArrayList<Goal> goals = new ArrayList<>();
+        User user = userDao.getById(userId);
+
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM iowniwant.goals WHERE user_id = ?")) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                while (rs.next()) {
+                    goals.add(new Goal(rs, user));
+                }
+            }
+        }
+        catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return goals;
     }
 
     @Override
@@ -77,14 +113,4 @@ public class GoalsDAO extends AbstractDaoImpl<Goal>{
         return dbManager.getQuery("get.all.goal");
     }
 
-    @Override
-    public Goal getEntity(ResultSet resultSet) {
-//        зачем try catch если он реализован в месте вызова функции
-        try {
-            return new Goal(resultSet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

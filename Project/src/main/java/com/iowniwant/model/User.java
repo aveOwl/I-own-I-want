@@ -3,6 +3,7 @@ package com.iowniwant.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class User extends BaseEntity {
 
@@ -12,6 +13,7 @@ public class User extends BaseEntity {
     private String password;
     private String email;
     private float monthSalary;
+    private List<Goal> goalList;
 
     public User() {
     }
@@ -88,6 +90,14 @@ public class User extends BaseEntity {
 
     public void setMonthSalary(float monthSalary) {
         this.monthSalary = monthSalary;
+    }
+
+    public List<Goal> getGoalList() {
+        return goalList;
+    }
+
+    public void setGoalList(List<Goal> goalList) {
+        this.goalList = goalList;
     }
 
     @Override

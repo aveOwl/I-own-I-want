@@ -13,6 +13,7 @@ public class Goal extends BaseEntity{
     private String description;
     private String pubdate;
     private String notes;
+    private User user;
 
     public Goal(String title, double cost, String description, String pubdate, String notes) {
         this.title = title;
@@ -23,7 +24,7 @@ public class Goal extends BaseEntity{
     }
 
 
-    public Goal (ResultSet resultSet) {
+    public Goal (ResultSet resultSet, User user) {
         try {
             this.id = resultSet.getInt("goals_id");
             this.title = resultSet.getString("title");
@@ -31,6 +32,7 @@ public class Goal extends BaseEntity{
             this.description = resultSet.getString("description");
             this.pubdate = resultSet.getString("pubdate");
             this.notes = resultSet.getString("notes");
+            this.user = user;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,6 +76,14 @@ public class Goal extends BaseEntity{
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

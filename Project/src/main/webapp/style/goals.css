@@ -1,6 +1,8 @@
 body {
+  background-image: url(img/notebook-computer-chill-relax.jpg);
   background-size: cover;
-  background: url("img/notebook-computer-chill-relax.jpg") fixed center;
+  background-attachment: fixed;
+  background-position: center;
 }
 p {
   margin: 0;
