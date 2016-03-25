@@ -11,26 +11,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sulfur on 24.03.16.
- */
-
 /*
     Таковыми будут реализации методов класса GoalsDAO в зависимости от обьектов переданных в
 качестве параметров его методам
 */
-public class GoalDAO extends AbstractDaoImpl<Goal>{
+public class GoalDao extends AbstractDaoImpl<Goal> {
 
     UserDao userDao = new UserDao();
 
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, Goal entity) {
         try {
-            prepStatement.setString(1,entity.getTitle());
-            prepStatement.setDouble(2,entity.getCost());
-            prepStatement.setString(3,entity.getDescription());
-            prepStatement.setString(4,entity.getPubdate());
-            prepStatement.setString(5,entity.getNotes());
+            prepStatement.setString(1, entity.getTitle());
+            prepStatement.setDouble(2, entity.getCost());
+            prepStatement.setString(3, entity.getDescription());
+            prepStatement.setString(4, entity.getPubdate());
+            prepStatement.setString(5, entity.getNotes());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,12 +36,12 @@ public class GoalDAO extends AbstractDaoImpl<Goal>{
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, Goal entity) {
         try {
-            prepStatement.setString(1,entity.getTitle());
-            prepStatement.setDouble(2,entity.getCost());
-            prepStatement.setString(3,entity.getDescription());
-            prepStatement.setString(4,entity.getPubdate());
-            prepStatement.setString(5,entity.getNotes());
-            prepStatement.setInt(6,entity.getId());
+            prepStatement.setString(1, entity.getTitle());
+            prepStatement.setDouble(2, entity.getCost());
+            prepStatement.setString(3, entity.getDescription());
+            prepStatement.setString(4, entity.getPubdate());
+            prepStatement.setString(5, entity.getNotes());
+            prepStatement.setInt(6, entity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,7 +65,7 @@ public class GoalDAO extends AbstractDaoImpl<Goal>{
         User user = userDao.getById(userId);
 
         try (Connection connection = dbManager.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM iowniwant.goals WHERE user_id = ?")) {
+             PreparedStatement pstmt = connection.prepareStatement(dbManager.getQuery("get.goal.by.user.id"))) {
             pstmt.setInt(1, userId);
             try (ResultSet rs = pstmt.executeQuery();) {
                 while (rs.next()) {
@@ -105,12 +101,11 @@ public class GoalDAO extends AbstractDaoImpl<Goal>{
 
     @Override
     public String getGetByIdQuery() {
-        return dbManager.getQuery("get.by.id.goal");
+        return dbManager.getQuery("get.goal.by.id");
     }
 
     @Override
     public String getGetAllQuery() {
         return dbManager.getQuery("get.all.goal");
     }
-
 }

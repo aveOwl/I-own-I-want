@@ -20,13 +20,13 @@ CREATE TABLE iowniwant.goals (
 	pubdate 			varchar(255),
 	notes 				varchar(255),
 	user_id				INT,
-CONSTRAINT goals_id_pk PRIMARY KEY(goals_id)
--- 	,
--- CONSTRAINT goals_FK FOREIGN KEY (user_id) REFERENCES iowniwant.user
+CONSTRAINT goals_id_pk PRIMARY KEY(goals_id),
+CONSTRAINT goals_fk FOREIGN KEY (user_id)
+REFERENCES iowniwant.user(user_id)
 );
 
-INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email, month_salary)
-values ('John Doe', 'Mike', 'Mayers', '27', 'sinister@gmail.com', 5000);
+INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
+values ('admin', 'admin', 'admin', 'admin', 'admin@gmail.com');
 
 INSERT INTO iowniwant.goals (title, cost, description, pubdate, notes, user_id)
 values ('PC Computer',164.69,'THIS TEXT REPRESENTS AN ARTICLE FOR WHATEVEN YOU DID ADD','22-13-62'
@@ -37,5 +37,3 @@ values ('Waschmachine',500.56,'PC TO WORK WHILE YOU RELAX SO WILL IT WORK THIS I
 INSERT INTO iowniwant.goals (title, cost, description, pubdate, notes, user_id)
 values ('Vacuum Triode',5124.78,'PC TO WORK WHILE YOU RELAX SO WILL IT WORK THIS IS RAP','24-13-62'
 	,'to somewhere in the back of my mind It will remain there until I wish to retrieve it ', 1);
-
-

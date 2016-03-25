@@ -44,7 +44,6 @@ public class UserDao extends AbstractDaoImpl<User> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 

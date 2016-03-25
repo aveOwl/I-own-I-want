@@ -3,10 +3,7 @@ package com.iowniwant.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by sulfur on 21.03.16.
- */
-public class Goal extends BaseEntity{
+public class Goal extends BaseEntity {
 
     private String title;
     private double cost;
@@ -14,6 +11,9 @@ public class Goal extends BaseEntity{
     private String pubdate;
     private String notes;
     private User user;
+
+    public Goal() {
+    }
 
     public Goal(String title, double cost, String description, String pubdate, String notes) {
         this.title = title;
