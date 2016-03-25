@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(displayName = "AuthFilter", urlPatterns = "/welcome")
+@WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
 public class AuthFilter implements Filter {
     public static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -21,13 +21,11 @@ public class AuthFilter implements Filter {
     }
 
     /**
-     * @param request
-     * @param response
-     * @param filterChain
+     * @param request - the request to pass along the chain.
+     * @param response - the response to pass along the chain.
      * @throws IOException
      * @throws ServletException
-     * Filters user request whether user logged into the system, if so sends request & response to
-     * doGet method, otherwise redirects user to login page.
+     * Filters user request whether user logged into the system or not.
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
@@ -38,7 +36,10 @@ public class AuthFilter implements Filter {
 
         HttpSession session = httpServletRequest.getSession(true);
 
+        log.debug("Session with ID: {} created", session.getId());
+
         if (session.getAttribute("token") != null) {
+            session.setAttribute("logged", true);
             filterChain.doFilter(request, response);
         } else {
             httpServletResponse.sendRedirect("login.jsp");

@@ -13,10 +13,10 @@ import static com.iowniwant.util.UserValidation.*;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        getServletContext().getRequestDispatcher("/main-logged.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
     @Override

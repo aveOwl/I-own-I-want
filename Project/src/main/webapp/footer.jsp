@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Footer</title>
-  <link href="style/main-page-style.css" rel='stylesheet'>
+  <link href="style/header-footer.css" rel='stylesheet'>
   <meta charset="utf-8">
 </head>
 <body>

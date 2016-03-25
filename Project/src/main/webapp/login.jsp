@@ -2,21 +2,25 @@
 <html>
 <head>
   <title>Login</title>
-  <link href="style/login-page-style.css" rel='stylesheet'>
   <meta charset="utf-8">
+  <link href="style/header-footer.css" rel='stylesheet'>
+  <link href="style/login-style.css" rel='stylesheet'>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="front">
-  <div class="container">
-    <div class="banner">
-      <form action="loginServlet" method="post" class="login">
-        <input type="text" placeholder="Username" name="username"/>
-        <input type="password" placeholder="Password" name="password"/>
-        <input type="submit" value="Log in"/>
-      </form>
+<div class="wrapper">
+  <div class="front">
+    <div class="container">
+      <div class="banner">
+        <form action="loginServlet" method="post" class="login">
+          <input type="text" placeholder="Username" name="username"/>
+          <input type="password" placeholder="Password" name="password"/>
+          <input type="submit" value="Log in"/>
+        </form>
+      </div>
     </div>
   </div>
+  <div class="push"></div>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
