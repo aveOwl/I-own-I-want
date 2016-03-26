@@ -7,8 +7,14 @@
   <link href="style/header-footer.css" rel='stylesheet'>
 </head>
 <body>
+<%
+
+
+
+%>
+
 <c:choose>
-  <c:when test="${logged}">
+  <c:when test="${token}">
     <div class="header">
       <div class="container">
         <ul class="nav">

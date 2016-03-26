@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,23 +35,34 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
         HttpSession session = httpServletRequest.getSession(true);
 
         log.debug("Session with ID: {} created", session.getId());
 
-        log.debug("******************************************");
-        log.debug("username obtained from servlet context: {}", request.getServletContext().getAttribute("username"));
-        log.debug("******************************************");
-        log.debug("password obtained from servlet context: {}", request.getServletContext().getAttribute("password"));
+        String token = null;
+        token = (String) session.getAttribute("token");
 
-         if (request.getServletContext().getAttribute("username") != null
-                && request.getServletContext().getAttribute("password") != null){
-            log.debug("**************************************");
-            log.debug("error occurs in the context obtaining if");
-            httpServletRequest.getRequestDispatcher("loginServlet").forward(request,response);
-        } else if (session.getAttribute("token") != null) {
-             session.setAttribute("logged", true);
+        if(token == null) {
+
+            Cookie[] theCookies = httpServletRequest.getCookies();
+
+            log.debug("Cookies arrays is empty");
+            if (theCookies != null) {
+                for (Cookie tempCoockie : theCookies) {
+
+                    if ("ioiw.token".equals(tempCoockie.getName())) {
+                        token =  tempCoockie.getValue();
+                        log.debug("***********************************");
+                        log.debug("you have created a token parsing cookie: {}", token);
+                        request.getServletContext().setAttribute("token", token);
+                    }
+                }
+            }
+            log.debug("you do access user_id == null clause");
+        }
+
+
+         if (token != null) {
              log.debug("**************************************");
              log.debug("program commits to the token if");
              log.debug("your token prameter equals: {}", session.getAttribute("token"));
