@@ -32,15 +32,24 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
         HttpSession session = httpServletRequest.getSession(true);
 
         log.debug("Session with ID: {} created", session.getId());
 
-        if (session.getAttribute("token") != null) {
-            session.setAttribute("logged", true);
-            filterChain.doFilter(request, response);
-        } else {
+        String token = (String) session.getAttribute("token");
+
+        log.debug("token attribute from cookie have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
+
+        if (token == null) {
+            token = (String) httpServletRequest.getServletContext().getAttribute("token");
+            log.debug("token attribute from cookie have been read: {}", token);
+        }
+
+         if (token != null) {
+             log.debug("your token prameter equals: {}", session.getAttribute("token"));
+             filterChain.doFilter(request, response);
+         }
+        else {
             log.debug("You were redirected back to the login jsp");
             httpServletResponse.sendRedirect("login.jsp");
         }

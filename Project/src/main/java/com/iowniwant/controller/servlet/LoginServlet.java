@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
@@ -19,9 +17,10 @@ public class LoginServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        getServletContext().getRequestDispatcher("/goalServlet").forward(req, resp);
+
+        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
     @Override
@@ -41,11 +40,24 @@ public class LoginServlet extends HttpServlet {
         log.debug("password from request: {}", password);
         log.debug("*****************************************");
 
+        HttpSession session = request.getSession(true);
 
         if (username.equals(user.getNickName()) && password.equals(user.getPassword())) {
-            request.getSession().setAttribute("token", 1);
+            session.setAttribute("token", "logged");
+
             log.debug("id from dao: {}", user.getId());
-            request.getSession().setAttribute("user_id", user.getId());
+            session.setAttribute("user_id", user.getId());
+            log.debug("*********************************");
+            log.debug("id successfully persisted in the session object", user.getId());
+
+            String token =  (String) session.getAttribute("token");
+            String user_id =  String.valueOf(session.getAttribute("user_id"));
+
+            Cookie userCookie = new Cookie("ioiw.user_id", user_id);
+            Cookie tokenCookie = new Cookie("ioiw.token", token);
+            response.addCookie(userCookie);
+            response.addCookie(tokenCookie);
+
             response.sendRedirect("welcome");
         } else {
             response.sendRedirect("login.jsp");
