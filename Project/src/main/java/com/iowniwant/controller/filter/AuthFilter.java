@@ -36,17 +36,11 @@ public class AuthFilter implements Filter {
 
         log.debug("Session with ID: {} created", session.getId());
 
-        String token = (String) session.getAttribute("token");
+        String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 
-        log.debug("token attribute from cookie have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
-
-        if (token == null) {
-            token = (String) httpServletRequest.getServletContext().getAttribute("token");
-            log.debug("token attribute from cookie have been read: {}", token);
-        }
+        log.debug("token attribute from context have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
 
          if (token != null) {
-             log.debug("your token prameter equals: {}", session.getAttribute("token"));
              filterChain.doFilter(request, response);
          }
         else {

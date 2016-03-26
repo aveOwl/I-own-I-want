@@ -13,8 +13,8 @@
     <div class="container">
       <div class="banner">
         <form action="loginServlet" method="post" class="login">
-          <input type="text" placeholder="Username" name="username"/>
-          <input type="password" placeholder="Password" name="password"/>
+          <input type="text" placeholder="Username" name="username" value="${sessionScope.username}"/>
+          <input type="password" placeholder="Password" name="password" value="${sessionScope.password}"/>
           <input type="submit" value="Log in"/>
         </form>
       </div>

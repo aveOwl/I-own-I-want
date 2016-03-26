@@ -40,23 +40,21 @@ public class LoginServlet extends HttpServlet {
         log.debug("password from request: {}", password);
         log.debug("*****************************************");
 
-        HttpSession session = request.getSession(true);
-
         if (username.equals(user.getNickName()) && password.equals(user.getPassword())) {
-            session.setAttribute("token", "logged");
 
             log.debug("id from dao: {}", user.getId());
-            session.setAttribute("user_id", user.getId());
+
+
+            request.getServletContext().setAttribute("user_id", user.getId());
             log.debug("*********************************");
-            log.debug("id successfully persisted in the session object", user.getId());
+            log.debug("id successfully persisted in the session context object", user.getId());
 
-            String token =  (String) session.getAttribute("token");
-            String user_id =  String.valueOf(session.getAttribute("user_id"));
+            request.getServletContext().setAttribute("token", new String("logged"));
 
-            Cookie userCookie = new Cookie("ioiw.user_id", user_id);
-            Cookie tokenCookie = new Cookie("ioiw.token", token);
+            Cookie userCookie = new Cookie("ioiw.username", username);
+            Cookie passCookie = new Cookie("ioiw.password", password);
             response.addCookie(userCookie);
-            response.addCookie(tokenCookie);
+            response.addCookie(passCookie);
 
             response.sendRedirect("welcome");
         } else {
