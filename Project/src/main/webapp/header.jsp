@@ -8,13 +8,31 @@
 </head>
 <body>
 <%
+  Integer user_id = null;
+  String token = null;
 
+  if(user_id == null) {
 
+    Cookie[] theCookies = request.getCookies();
 
+    if (theCookies != null) {
+      for (Cookie tempCoockie : theCookies) {
+
+        if ("ioiw.user_id".equals(tempCoockie.getName())) {
+          user_id =  Integer.valueOf(tempCoockie.getValue());
+          request.getServletContext().setAttribute("user_id", user_id);
+        }
+        if ("ioiw.token".equals(tempCoockie.getName())) {
+          token =  tempCoockie.getValue();
+          request.getServletContext().setAttribute("token", token);
+        }
+      }
+    }
+  }
 %>
 
 <c:choose>
-  <c:when test="${token}">
+  <c:when test="${token eq 'logged'}">
     <div class="header">
       <div class="container">
         <ul class="nav">

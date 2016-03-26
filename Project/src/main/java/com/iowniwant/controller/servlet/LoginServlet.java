@@ -50,16 +50,14 @@ public class LoginServlet extends HttpServlet {
             log.debug("*********************************");
             log.debug("id successfully persisted in the session object", user.getId());
 
-            Cookie[] theCookies = request.getCookies();
-
             String token =  (String) session.getAttribute("token");
             String user_id =  String.valueOf(session.getAttribute("user_id"));
 
-            if (theCookies == null) {
-                Cookie userCookie = new Cookie("ioiw.user_id", token);
-                Cookie tokenCookie = new Cookie("ioiw.token", user_id);
-                response.addCookie(userCookie);
-            }
+            Cookie userCookie = new Cookie("ioiw.user_id", user_id);
+            Cookie tokenCookie = new Cookie("ioiw.token", token);
+            response.addCookie(userCookie);
+            response.addCookie(tokenCookie);
+
             response.sendRedirect("welcome");
         } else {
             response.sendRedirect("login.jsp");

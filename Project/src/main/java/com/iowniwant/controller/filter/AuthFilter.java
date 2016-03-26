@@ -5,14 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
-//тут уже стоял /goalServlet зачем не знаю
 @WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
 public class AuthFilter implements Filter {
     public static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
@@ -39,32 +36,16 @@ public class AuthFilter implements Filter {
 
         log.debug("Session with ID: {} created", session.getId());
 
-        String token = null;
-        token = (String) session.getAttribute("token");
+        String token = (String) session.getAttribute("token");
 
-        if(token == null) {
+        log.debug("token attribute from cookie have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
 
-            Cookie[] theCookies = httpServletRequest.getCookies();
-
-            log.debug("Cookies arrays is empty");
-            if (theCookies != null) {
-                for (Cookie tempCoockie : theCookies) {
-
-                    if ("ioiw.token".equals(tempCoockie.getName())) {
-                        token =  tempCoockie.getValue();
-                        log.debug("***********************************");
-                        log.debug("you have created a token parsing cookie: {}", token);
-                        request.getServletContext().setAttribute("token", token);
-                    }
-                }
-            }
-            log.debug("you do access user_id == null clause");
+        if (token == null) {
+            token = (String) httpServletRequest.getServletContext().getAttribute("token");
+            log.debug("token attribute from cookie have been read: {}", token);
         }
 
-
          if (token != null) {
-             log.debug("**************************************");
-             log.debug("program commits to the token if");
              log.debug("your token prameter equals: {}", session.getAttribute("token"));
              filterChain.doFilter(request, response);
          }
