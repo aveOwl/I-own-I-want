@@ -12,6 +12,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
+  <button class="goal">new Goal</button>
   <div class="articles container">
     <c:forEach items="${goals_list}" var="goal">
       <div class="article">
@@ -24,6 +25,10 @@
           </div>
           <div class="item">
             <p class="pubdate">${goal.pubdate}</p>
+          </div>
+          <div class="buttonContainer">
+            <button class="close">✗</button>
+            <button class="edit">✍</button>
           </div>
         </div>
 

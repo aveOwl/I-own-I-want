@@ -17,12 +17,12 @@ p {
 .article {
   max-width: 940px;
   margin: 40px auto 30px;
-  color: #222;
-  background: rgba(255,255,255,.8);
+  color: #ffffff;
+  background: rgba(34, 41, 48, 0.69);
   border-spacing: 2px;
-  border-color: #9a9393;
+  border-color: #222930;
   font-family: 'Oswald', serif;
-  border-bottom: 1px #e5e5e5 solid;
+  border-bottom: 1px #222930 solid;
 }
 
 .current .item {
@@ -30,6 +30,7 @@ p {
 }
 
 .item {
+  position: relative;
   cursor: pointer;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -61,4 +62,62 @@ p {
 .description h1 {
   margin-top: 0px;
   font-size: 23px;
+}
+
+.darker {
+  background-color: #222930;.goalContainer {
+		position: relative;
+}
+}
+
+.goal {
+  height: 50px;
+  width: 90px;
+  top: 100px;
+  left: 80px;
+  color: white;
+  font-family: 'Oswald', serif;
+  position: absolute;
+  border: none;
+  background: rgba(34, 41, 48, 0.69);
+  border-radius:40px/24px;
+}
+
+.goal:hover {
+  background: #222930;
+}
+
+.close {
+  color: white;
+  position: absolute;
+  border: none;
+  background: none;
+  top: 0;
+  right: 0;
+}
+
+.close:hover {
+  color: #4EB1BA;
+  cursor: pointer;
+}
+
+.edit {
+  color: white;
+  position: absolute;
+  border: none;
+  background: none;
+  top: 0;
+  right: 20px;
+}
+
+.edit:hover {
+  color:  #4EB1BA;
+  cursor: pointer;
+}
+
+.buttonContainer {
+  margin: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
