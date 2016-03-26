@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +20,10 @@ public class LoginServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        getServletContext().getRequestDispatcher("/goalServlet").forward(req, resp);
+
+        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
     @Override
@@ -42,10 +44,20 @@ public class LoginServlet extends HttpServlet {
         log.debug("*****************************************");
 
 
+
         if (username.equals(user.getNickName()) && password.equals(user.getPassword())) {
             request.getSession().setAttribute("token", 1);
+
             log.debug("id from dao: {}", user.getId());
             request.getSession().setAttribute("user_id", user.getId());
+
+            Cookie[] theCookies = request.getCookies();
+
+            if (theCookies == null) {
+                Cookie userCoockie = new Cookie("ioiw.user_id", password);
+                Cookie loggedCoockie = new Cookie("ioiw.logged", password);
+                response.addCookie(userCoockie);
+            }
             response.sendRedirect("welcome");
         } else {
             response.sendRedirect("login.jsp");

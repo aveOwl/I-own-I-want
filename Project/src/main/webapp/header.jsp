@@ -18,7 +18,7 @@
         </ul>
         <ul class="nav right">
           <a href="#"><li>My account</li></a>
-          <a href="#"><li>Log out</li></a>
+          <a href="logoutServlet"><li>Log out</li></a>
         </ul>
       </div>
     </div>

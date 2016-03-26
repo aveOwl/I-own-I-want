@@ -22,7 +22,7 @@ public class GoalServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer user_id = (Integer) request.getSession().getAttribute("user_id");
-        log.debug("user_id attribute obtained from request");
+        log.debug("user_id attribute obtained from request: {}", user_id);
 
         List<Goal> list = goalDao.getGoalsByUserId(user_id);
         request.setAttribute("goals_list",list);
