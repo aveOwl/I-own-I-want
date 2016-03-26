@@ -10,7 +10,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 // Классо-параметром этого класса может быть лишь класс, который наследуется от BaseEntity
 public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractDAO<T> {
     public static final Logger log = LoggerFactory.getLogger(AbstractDaoImpl.class);
