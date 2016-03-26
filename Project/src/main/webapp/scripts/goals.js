@@ -1,22 +1,18 @@
-var main = function() {
-    $('.article').click(function() {
+//toggle an arcticle
+$(function () {
+    $('.article').click(function () {
 
+        $(this).toggleClass('darker');
         var description = $(this).children('.description');
-
-        if (description.is(':hidden')) {
-            description.slideDown('200');
-        } else {
-            description.slideUp('200');
-        }
+        description.slideToggle('200');
     });
-};
+});
 
-$(document).ready(main);
+//Removing an article
+$(function () {
+    $('.close').click(function () {
 
-/* 
-
-children() allows you to search through elements nested directly under the current element. 
-
-show() is jQuery's way of saying list or display these.
-
-*/
+        var container = $(this).closest('.buttonContainer');
+        container.closest('.article').remove();
+    });
+});
