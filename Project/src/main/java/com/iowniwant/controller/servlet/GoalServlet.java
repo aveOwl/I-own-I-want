@@ -23,15 +23,15 @@ public class GoalServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Integer user_id = (Integer) request.getSession().getAttribute("user_id");
+        log.debug("user_id from HttpSession: {}", user_id);
 
-        if(user_id == null) {
+        if (user_id == null) {
             user_id = (Integer) request.getServletContext().getAttribute("user_id");
-            log.debug("*********************************************");
-            log.debug("after fetching user_id from cookie (if clause): {}", user_id);
+            log.debug("user_id from ServletContext: {}", user_id);
         }
 
         List<Goal> list = goalDao.getGoalsByUserId(user_id);
-        request.setAttribute("goals_list",list);
-        request.getRequestDispatcher("/goals.jsp").forward(request,response);
+        request.setAttribute("goals_list", list);
+        request.getRequestDispatcher("/goals.jsp").forward(request, response);
     }
 }

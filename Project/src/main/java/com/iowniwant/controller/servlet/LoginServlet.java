@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.util.UserValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+
+import static com.iowniwant.util.UserValidation.*;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
 public class LoginServlet extends HttpServlet {
@@ -29,26 +32,23 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        log.debug("username from request: {}", username);
+        log.debug("password from request: {}", password);
+
         User user = userDao.getByNick(username);
 
-        log.debug("User.getNickName() from DAO: {}", user.getNickName());
-        log.debug("*****************************************");
-        log.debug("User.getPassword() from DAO: {}", user.getPassword());
-        log.debug("*****************************************");
-        log.debug("username from request: {}", username);
-        log.debug("*****************************************");
-        log.debug("password from request: {}", password);
-        log.debug("*****************************************");
+        log.debug("username from Dao: {}", user.getNickName());
+        log.debug("password from Dao: {}", user.getPassword());
 
         HttpSession session = request.getSession(true);
 
-        if (username.equals(user.getNickName()) && password.equals(user.getPassword())) {
+        if (isUserValid(username, password)) {
             session.setAttribute("token", "logged");
+            log.trace("Setting token in HttpSession");
 
-            log.debug("id from dao: {}", user.getId());
+            log.debug("user_id from Dao: {}", user.getId());
             session.setAttribute("user_id", user.getId());
-            log.debug("*********************************");
-            log.debug("id successfully persisted in the session object", user.getId());
+            log.trace("Setting user_id in HttpSession");
 
             String token =  (String) session.getAttribute("token");
             String user_id =  String.valueOf(session.getAttribute("user_id"));
@@ -57,9 +57,13 @@ public class LoginServlet extends HttpServlet {
             Cookie tokenCookie = new Cookie("ioiw.token", token);
             response.addCookie(userCookie);
             response.addCookie(tokenCookie);
+            log.debug("Setting token in Cookie: {}", tokenCookie);
+            log.debug("Setting user_id in Cookie: {}", userCookie);
 
+            log.trace("redirection to welcome");
             response.sendRedirect("welcome");
         } else {
+            log.debug("redirecting to login page");
             response.sendRedirect("login.jsp");
         }
     }

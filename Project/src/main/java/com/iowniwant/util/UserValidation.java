@@ -8,7 +8,7 @@ public class UserValidation {
     /**
      * @param username: String input, entered by user.
      * @param password: String input, entered by user.
-     * @return true if user's nick-name and password valid & present in the DataBase.
+     * @return true if user's username and password valid & present in the data-base.
      */
     public static boolean isUserValid(String username, String password) {
         UserDao userDao = new UserDao();

@@ -29,28 +29,24 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
-
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(true);
 
-        log.debug("Session with ID: {} created", session.getId());
-
         String token = (String) session.getAttribute("token");
-
-        log.debug("token attribute from cookie have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
+        log.debug("token from HttpSession: {}", token);
 
         if (token == null) {
             token = (String) httpServletRequest.getServletContext().getAttribute("token");
-            log.debug("token attribute from cookie have been read: {}", token);
+            log.debug("token from ServletContext: {}", token);
         }
 
-         if (token != null) {
-             log.debug("your token prameter equals: {}", session.getAttribute("token"));
-             filterChain.doFilter(request, response);
-         }
+        if (token != null) {
+            log.trace("sending request and response along the chain");
+            filterChain.doFilter(request, response);
+        }
         else {
-            log.debug("You were redirected back to the login jsp");
+            log.debug("redirecting to login page");
             httpServletResponse.sendRedirect("login.jsp");
         }
     }

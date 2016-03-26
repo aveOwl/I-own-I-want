@@ -8,10 +8,10 @@
 </head>
 <body>
 <%
-  Integer user_id = null;
-  String token = null;
+  String token =  (String) session.getAttribute("token");
+  String user_id =  String.valueOf(session.getAttribute("user_id"));
 
-  if(user_id == null) {
+  if (token == null && user_id == null) {
 
     Cookie[] theCookies = request.getCookies();
 
@@ -19,12 +19,12 @@
       for (Cookie tempCoockie : theCookies) {
 
         if ("ioiw.user_id".equals(tempCoockie.getName())) {
-          user_id =  Integer.valueOf(tempCoockie.getValue());
-          request.getServletContext().setAttribute("user_id", user_id);
+          user_id =  String.valueOf(session.getAttribute("user_id"));
+          request.getSession().setAttribute("user_id", user_id);
         }
         if ("ioiw.token".equals(tempCoockie.getName())) {
           token =  tempCoockie.getValue();
-          request.getServletContext().setAttribute("token", token);
+          request.getSession().setAttribute("token", token);
         }
       }
     }
