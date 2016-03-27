@@ -29,22 +29,20 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession(true);
 
-        String token = (String) session.getAttribute("token");
-        log.debug("token from HttpSession: {}", token);
+        log.debug("Session with ID: {} created", session.getId());
 
-        if (token == null) {
-            token = (String) httpServletRequest.getServletContext().getAttribute("token");
-            log.debug("token from ServletContext: {}", token);
-        }
+        String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 
-        if (token != null) {
-            log.trace("sending request and response along the chain");
-            filterChain.doFilter(request, response);
-        }
+        log.debug("token attribute from context have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
+
+         if (token != null) {
+             filterChain.doFilter(request, response);
+         }
         else {
             log.debug("redirecting to login page");
             httpServletResponse.sendRedirect("login.jsp");

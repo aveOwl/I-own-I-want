@@ -7,32 +7,25 @@
   <link href="style/header-footer.css" rel='stylesheet'>
 </head>
 <body>
+
 <%
-  String token =  (String) session.getAttribute("token");
-  String user_id =  String.valueOf(session.getAttribute("user_id"));
-
-  if (token == null && user_id == null) {
-
     Cookie[] theCookies = request.getCookies();
 
     if (theCookies != null) {
       for (Cookie tempCoockie : theCookies) {
 
-        if ("ioiw.user_id".equals(tempCoockie.getName())) {
-          user_id =  String.valueOf(session.getAttribute("user_id"));
-          request.getSession().setAttribute("user_id", user_id);
+        if ("ioiw.username".equals(tempCoockie.getName())) {
+          request.getSession().setAttribute("username", tempCoockie.getValue());
         }
-        if ("ioiw.token".equals(tempCoockie.getName())) {
-          token =  tempCoockie.getValue();
-          request.getSession().setAttribute("token", token);
+        if ("ioiw.password".equals(tempCoockie.getName())) {
+          request.getSession().setAttribute("password", tempCoockie.getValue());
         }
       }
     }
-  }
 %>
 
 <c:choose>
-  <c:when test="${token eq 'logged'}">
+  <c:when test="${applicationScope.token eq 'logged'}">
     <div class="header">
       <div class="container">
         <ul class="nav">
