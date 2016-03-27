@@ -20,8 +20,10 @@ public class LogoutServlet extends HttpServlet{
 
         request.getServletContext().removeAttribute("token");
         request.getServletContext().removeAttribute("user_id");
+        log.trace("removing user_id and token attribute from ServletContext");
 
         request.getSession().invalidate();
+        log.trace("invalidating session");
         response.sendRedirect("login.jsp");
     }
 }

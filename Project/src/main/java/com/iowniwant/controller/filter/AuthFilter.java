@@ -7,7 +7,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
@@ -32,17 +31,14 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession(true);
-
-        log.debug("Session with ID: {} created", session.getId());
 
         String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 
-        log.debug("token attribute from context have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
+        log.debug("token attribute from ServletContext: {}", token);
 
-         if (token != null) {
-             filterChain.doFilter(request, response);
-         }
+        if (token != null) {
+            filterChain.doFilter(request, response);
+        }
         else {
             log.debug("redirecting to login page");
             httpServletResponse.sendRedirect("login.jsp");

@@ -10,21 +10,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+import static com.iowniwant.util.UserValidation.*;
+
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
 public class LoginServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     UserDao userDao = new UserDao();
 
-
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -37,21 +39,22 @@ public class LoginServlet extends HttpServlet {
         log.debug("username from Dao: {}", user.getNickName());
         log.debug("password from Dao: {}", user.getPassword());
 
-        if (username.equals(user.getNickName()) && password.equals(user.getPassword())) {
+        if (isUserValid(username, password)) {
 
-            log.debug("id from dao: {}", user.getId());
-
+            log.debug("user_id from dao: {}", user.getId());
 
             request.getServletContext().setAttribute("user_id", user.getId());
-            log.debug("*********************************");
-            log.debug("id successfully persisted in the session context object", user.getId());
+            log.debug("user_id successfully persisted in ServletContext", user.getId());
 
-            request.getServletContext().setAttribute("token", new String("logged"));
+            request.getServletContext().setAttribute("token", "logged");
+            log.trace("setting token attribute via ServletContext");
 
             Cookie userCookie = new Cookie("ioiw.username", username);
             Cookie passCookie = new Cookie("ioiw.password", password);
             response.addCookie(userCookie);
             response.addCookie(passCookie);
+            log.debug("Setting username: {} to userCookie: {}", username, userCookie);
+            log.debug("Setting password: {} to passCookie: {}", password, passCookie);
 
             log.trace("redirection to welcome");
             response.sendRedirect("welcome");

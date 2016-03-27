@@ -20,11 +20,14 @@ public class GoalServlet extends HttpServlet {
     GoalDao goalDao = new GoalDao();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         Integer user_id = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("fetching goals for user with id: {}", user_id);
 
         List<Goal> list = goalDao.getGoalsByUserId(user_id);
+        log.debug("goals fetched: {}", list.toArray());
         request.setAttribute("goals_list", list);
         request.getRequestDispatcher("/goals.jsp").forward(request, response);
     }

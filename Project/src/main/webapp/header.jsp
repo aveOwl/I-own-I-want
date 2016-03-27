@@ -12,13 +12,13 @@
     Cookie[] theCookies = request.getCookies();
 
     if (theCookies != null) {
-      for (Cookie tempCoockie : theCookies) {
+      for (Cookie tempCookie : theCookies) {
 
-        if ("ioiw.username".equals(tempCoockie.getName())) {
-          request.getSession().setAttribute("username", tempCoockie.getValue());
+        if ("ioiw.username".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("username", tempCookie.getValue());
         }
-        if ("ioiw.password".equals(tempCoockie.getName())) {
-          request.getSession().setAttribute("password", tempCoockie.getValue());
+        if ("ioiw.password".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("password", tempCookie.getValue());
         }
       }
     }
