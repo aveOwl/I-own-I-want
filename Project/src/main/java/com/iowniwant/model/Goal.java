@@ -86,6 +86,7 @@ public class Goal extends BaseEntity {
         this.user = user;
     }
 
+
     @Override
     public String toString() {
         return "Goal{" +

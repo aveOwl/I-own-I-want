@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Removes user login data from ServletContext,
+ * invalidates Session, redirects user to login page.
+ */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
 public class LogoutServlet extends HttpServlet{
-
-    Logger log = LoggerFactory.getLogger(LogoutServlet.class);
+    private Logger log = LoggerFactory.getLogger(LogoutServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

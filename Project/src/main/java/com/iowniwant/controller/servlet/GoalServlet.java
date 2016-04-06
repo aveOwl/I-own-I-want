@@ -13,11 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Fetches goals for user who's id was obtained by ServletContext,
+ * forwards obtained goals to goals page
+ */
 @WebServlet(name = "GoalServlet", urlPatterns = {"/goalServlet"})
 public class GoalServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(GoalServlet.class);
 
-    GoalDao goalDao = new GoalDao();
+    private GoalDao goalDao = GoalDao.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,7 +31,7 @@ public class GoalServlet extends HttpServlet {
         log.debug("fetching goals for user with id: {}", user_id);
 
         List<Goal> list = goalDao.getGoalsByUserId(user_id);
-        log.debug("goals fetched: {}", list.toArray());
+        log.debug("goals fetched: {}", list);
         request.setAttribute("goals_list", list);
         request.getRequestDispatcher("/goals.jsp").forward(request, response);
     }

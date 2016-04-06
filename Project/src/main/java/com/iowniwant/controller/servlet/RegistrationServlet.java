@@ -10,17 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Obtains user input, verifies required fields to be not null values,
+ * creates User object and persists it to the DataBase, redirects user
+ * to goals page
+ */
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
-    UserDao userDao = new UserDao();
+    private UserDao userDao = UserDao.getInstance();
 
-    /**
-     * @param request - an HttpServletRequest object that contains the request the client has made of the servlet
-     * @param response - an HttpServletResponse object that contains the response the servlet sends to the client
-     * @throws ServletException
-     * @throws IOException
-     * Takes user input, verifies its not null values and persists derived data to data-base
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
