@@ -9,15 +9,15 @@ import java.util.List;
 
 /**
  * Fills the PreparedStatement with given
- * @see Goal entity fields
+ * @see Goal entity fields.
  */
 public class GoalDao extends AbstractDaoImpl<Goal> {
     private static GoalDao instance;
     private GoalDao() {}
 
     /**
-     * Provides GoalDao instance
-     * @return the same GoalDao object each time its invoked
+     * Provides GoalDao instance.
+     * @return the same GoalDao object each time its invoked.
      */
     public static GoalDao getInstance (){
         if (instance == null) {
@@ -30,9 +30,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Fills the PreparedStatement with given Goal entity fields
-     * to persist Goal in the DataBase
-     * @param prepStatement object that represents a precompiled SQL statement
-     * @param entity goal to be persisted
+     * to persist Goal in the DataBase.
+     * @param prepStatement object that represents a precompiled SQL statement.
+     * @param entity goal to be persisted.
      */
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, Goal entity) {
@@ -40,7 +40,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(1, entity.getTitle());
             prepStatement.setDouble(2, entity.getCost());
             prepStatement.setString(3, entity.getDescription());
-            prepStatement.setString(4, entity.getPubdate());
+            prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,9 +50,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Fills the PreparedStatement with given Goal entity fields
-     * to update Goal in the DataBase
-     * @param prepStatement object that represents a precompiled SQL statement
-     * @param entity goal to be updated
+     * to update Goal in the DataBase.
+     * @param prepStatement object that represents a precompiled SQL statement.
+     * @param entity goal to be updated.
      */
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, Goal entity) {
@@ -60,7 +60,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(1, entity.getTitle());
             prepStatement.setDouble(2, entity.getCost());
             prepStatement.setString(3, entity.getDescription());
-            prepStatement.setString(4, entity.getPubdate());
+            prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
             prepStatement.setInt(6, entity.getId());
         } catch (SQLException e) {
@@ -70,9 +70,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Creates Goal entity by providing resultSet and user_id to
-     * @see Goal class constructor
-     * @param resultSet a table of data representing a database result set
-     * @return Goal entity
+     * @see Goal class constructor.
+     * @param resultSet a table of data representing a database result set.
+     * @return Goal entity.
      */
     @Override
     public Goal getEntity(ResultSet resultSet) {
@@ -88,9 +88,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Returns a List of all Goals associated with user,
-     * who's id is the userId parameter
-     * @param userId User identifier
-     * @return List of Goals
+     * who's id is the userId parameter.
+     * @param userId User identifier.
+     * @return List of Goals.
      */
     public List<Goal> getGoalsByUserId(Integer userId) {
         List<Goal> goals = new ArrayList<>();
@@ -121,14 +121,14 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to retrieve all Goals from the DataBase using User's ID
+     * @return query to retrieve all Goals from the DataBase using User's ID.
      */
     private String getGoalByUserId() {
         return dbManager.getQuery("get.goal.by.user.id");
     }
 
     /**
-     * @return query to insert Goal into the DataBase
+     * @return query to insert Goal into the DataBase.
      */
     @Override
     public String getCreateQuery() {
@@ -136,7 +136,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to delete Goal from the DataBase
+     * @return query to delete Goal from the DataBase.
      */
     @Override
     public String getDeleteQuery() {
@@ -144,7 +144,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to update Goal in the DataBase
+     * @return query to update Goal in the DataBase.
      */
     @Override
     public String getUpdateQuery() {
@@ -152,7 +152,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to retrieve Goal from the DataBase using Goal's ID
+     * @return query to retrieve Goal from the DataBase using Goal's ID.
      */
     @Override
     public String getGetByIdQuery() {
@@ -160,7 +160,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to retrieve all Goals from the DataBase
+     * @return query to retrieve all Goals from the DataBase.
      */
     @Override
     public String getGetAllQuery() {

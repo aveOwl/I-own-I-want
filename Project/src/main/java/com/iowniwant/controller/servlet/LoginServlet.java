@@ -18,7 +18,7 @@ import static com.iowniwant.util.UserValidation.*;
  * the fact that user is logged into the system in ServletContext,
  * attaches username and password to response Cookies, redirects
  * to welcome page if validation is passed, otherwise redirects to
- * login page
+ * login page.
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
 public class LoginServlet extends HttpServlet {
@@ -36,12 +36,12 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username = request.getParameter("username");
+        String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
         User user = userDao.getByNick(username);
 
-        log.debug("username present in the DataBase: {}", username.equals(user.getNickName()));
+        log.debug("username present in the DataBase: {}", username.equals(user.getUserName()));
         log.debug("password present in the DataBase: {}", password.equals(user.getPassword()));
 
         if (isUserValid(username, password)) {

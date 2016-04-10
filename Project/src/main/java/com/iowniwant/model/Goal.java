@@ -1,21 +1,43 @@
 package com.iowniwant.model;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Comparator;
+import java.sql.Date;
 
-public class Goal extends BaseEntity {
+/**
+ * The Goal class is a mutable data type to encapsulate
+ * properties of a goal created by a
+ * @see User
+ */
+public class Goal implements Serializable, Comparable<Goal> {
 
+    private int id;
     private String title;
     private double cost;
     private String description;
-    private String pubdate;
+    private Date pubdate;
     private String notes;
     private User user;
 
+    /**
+     * All serializable object required to have
+     * a default constructor without parameters.
+     */
     public Goal() {
     }
 
-    public Goal(String title, double cost, String description, String pubdate, String notes) {
+    /**
+     * Initialize a new goal after its creation by a user
+     * using its title, cost, description, pubdate, notes.
+     * @param title goal's title.
+     * @param cost goal's cost.
+     * @param description goal's description.
+     * @param pubdate goal's pubdate.
+     * @param notes goal's notes.
+     */
+    public Goal(String title, double cost, String description, Date pubdate, String notes) {
         this.title = title;
         this.cost = cost;
         this.description = description;
@@ -23,19 +45,34 @@ public class Goal extends BaseEntity {
         this.notes = notes;
     }
 
-
-    public Goal (ResultSet resultSet, User user) {
-        try {
-            this.id = resultSet.getInt("goals_id");
-            this.title = resultSet.getString("title");
+    /**
+     * Initialize goal using given data from the obtained resultSet.
+     * @param resultSet a table of data, obtained from the DataBase
+     * in order to create a new goal instance.
+     * @throws SQLException if there is some sqlException occurred.
+     * @throws IllegalArgumentException if cost is NaN or infinitive.
+     */
+    public Goal (ResultSet resultSet, User user) throws SQLException {
+        if (Double.isNaN(cost) || Double.isInfinite(cost))
+            throw new IllegalArgumentException("Cost cannot be NaN or infinitive");
+        this.id = resultSet.getInt("goals_id");
+        this.title = resultSet.getString("title");
+        this.description = resultSet.getString("description");
+        this.pubdate = resultSet.getDate("pubdate");
+        this.notes = resultSet.getString("notes");
+        this.user = user;
+        if (cost == 0.0)
+            this.cost = 0.0; // to handle -0.0
+        else
             this.cost = resultSet.getDouble("cost");
-            this.description = resultSet.getString("description");
-            this.pubdate = resultSet.getString("pubdate");
-            this.notes = resultSet.getString("notes");
-            this.user = user;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -62,11 +99,11 @@ public class Goal extends BaseEntity {
         this.description = description;
     }
 
-    public String getPubdate() {
+    public Date getPubdate() {
         return pubdate;
     }
 
-    public void setPubdate(String pubdate) {
+    public void setPubdate(Date pubdate) {
         this.pubdate = pubdate;
     }
 
@@ -86,15 +123,82 @@ public class Goal extends BaseEntity {
         this.user = user;
     }
 
+    /**
+     * Compares this goal to the specified goal.
+     * @param other the other goal.
+     * @return true if this goal equals other; false otherwise.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) return true;
+        if (other == null) return false;
+        if (other.getClass() != this.getClass()) return false;
+        Goal that = (Goal) other;
+        return (this.id == that.id);
+    }
 
+    /**
+     * Returns a hash code for this goal.
+     * @return a hash code for this goal.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = 31 * hash + ((Integer)id).hashCode();
+        return hash;
+    }
+
+    /**
+     * Compares this goal to the specified goal.
+     *
+     * @param  that the other transaction
+     * @return { a negative integer, zero, a positive integer}, depending
+     *         on whether the cost of this goal is { less than,
+     *         equal to, or greater than } the cost of that goal.
+     */
+    @Override
+    public int compareTo(Goal that) {
+        if      (this.cost < that.cost) return -1;
+        else if (this.cost > that.cost) return +1;
+        return 0;
+    }
+
+    /**
+     * Compares two goals by cost.
+     */
+    public static class howMuchCost implements Comparator<Goal> {
+        @Override
+        public int compare(Goal v, Goal w) {
+            if      (v.cost < w.cost) return -1;
+            else if (v.cost > w.cost) return +1;
+            else                      return 0;
+        }
+    }
+
+    /**
+     * Compares two transactions by pubDate.
+     */
+    public static class whenPublished implements Comparator<Goal> {
+        @Override
+        public int compare(Goal v, Goal w) {
+            return v.pubdate.compareTo(w.pubdate);
+        }
+    }
+
+    /**
+     * Returns a string representation of this goal.
+     * @return a string representation of this goal.
+     */
     @Override
     public String toString() {
         return "Goal{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
                 ", pubdate='" + pubdate + '\'' +
                 ", notes='" + notes + '\'' +
-                "} ";
+                ", user=" + user +
+                '}';
     }
 }

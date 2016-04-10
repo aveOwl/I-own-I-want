@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Obtains user input, verifies required fields to be not null values,
  * creates User object and persists it to the DataBase, redirects user
- * to goals page
+ * to goals page.
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
@@ -22,14 +22,14 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String nickname = request.getParameter("nickname");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String userName = request.getParameter("userName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (name != null && surname != null && nickname != null && password != null) {
-            User user = new User(name, surname, nickname, password, email);
+        if (firstName != null && lastName != null && userName != null && password != null) {
+            User user = new User(firstName, lastName, userName, password, email);
             userDao.create(user);
         }
         response.sendRedirect("goals.jsp");

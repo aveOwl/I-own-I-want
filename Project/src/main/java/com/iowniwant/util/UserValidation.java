@@ -4,7 +4,7 @@ import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
 
 /**
- * Validates user persistence in the DataBase
+ * Validates the user persistence in the DataBase.
  */
 public class UserValidation {
 
@@ -18,6 +18,6 @@ public class UserValidation {
      */
     public static boolean isUserValid(String username, String password) {
         User user = UserDao.getInstance().getByNick(username);
-        return username.equals(user.getNickName()) && password.equals(user.getPassword());
+        return username.equals(user.getUserName()) && password.equals(user.getPassword());
     }
 }

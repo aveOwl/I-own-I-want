@@ -1,11 +1,11 @@
 package com.iowniwant.dao.implementation;
 
 import com.iowniwant.dao.AbstractDAO;
-import com.iowniwant.model.BaseEntity;
 import com.iowniwant.util.DataBaseManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,11 @@ import java.util.List;
 /**
  * Implements basic CRUD operations using
  * @see DataBaseManager to get connection to the DataBase.
- * @param <T> type of object that is subclass of the BaseEntity class
+ * @param <T> type of object that implements
+ * @see Serializable interface.
  */
 
-abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractDAO<T> {
+abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T> {
     private static final Logger log = LoggerFactory.getLogger(AbstractDaoImpl.class);
     DataBaseManager dbManager = DataBaseManager.getInstance();
 
@@ -56,15 +57,15 @@ abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractDAO<T> {
      * {@inheritDoc}
      */
     @Override
-    public void delete(T entity) {
+    public void delete(Integer id) {
         Connection connection = null;
         PreparedStatement prepStatement = null;
         try {
             connection = dbManager.getConnection();
             String query = getDeleteQuery();
             prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, entity.getId());
-            log.debug("Deleting entity with id: {}", entity.getId());
+            prepStatement.setInt(1, id);
+            log.debug("Deleting entity with id: {}", id);
             prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,7 +87,6 @@ abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractDAO<T> {
             String query = getUpdateQuery();
             prepStatement = connection.prepareStatement(query);
             fillUpdateStatement(prepStatement, entity);
-            log.debug("Updating entity with id: {}", entity.getId());
             prepStatement.executeUpdate();
             return entity;
         } catch (SQLException e) {

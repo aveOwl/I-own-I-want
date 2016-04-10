@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
 public class AuthFilter implements Filter {
-    public static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

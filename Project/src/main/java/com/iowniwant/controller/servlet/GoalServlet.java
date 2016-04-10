@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Fetches goals for user who's id was obtained by ServletContext,
- * forwards obtained goals to goals page
+ * forwards obtained goals to goals page.
  */
 @WebServlet(name = "GoalServlet", urlPatterns = {"/goalServlet"})
 public class GoalServlet extends HttpServlet {

@@ -15,7 +15,6 @@ import java.util.Properties;
 
 /**
  * Provides connection to the DataBase, manages queries access.
- * Singleton with lazy initialization
  */
 public class DataBaseManager {
     private static final Logger log = LoggerFactory.getLogger(DataBaseManager.class);
@@ -23,8 +22,8 @@ public class DataBaseManager {
     private Properties queries;
 
     /**
-     * Provides DataBaseManager instance
-     * @return the same DataBaseManager object each time its invoked
+     * Provides DataBaseManager instance.
+     * @return the same DataBaseManager object each time its invoked.
      */
     public static DataBaseManager getInstance() {
         if (instance == null) {
@@ -39,8 +38,8 @@ public class DataBaseManager {
     }
 
     /**
-     * Establishes connection to the DataBase
-     * @return connection to the DataBase
+     * Establishes connection to the DataBase.
+     * @return connection to the DataBase.
      */
     public Connection getConnection() {
         Connection connection = null;
@@ -57,8 +56,8 @@ public class DataBaseManager {
     }
 
     /**
-     * @param name query name from the queries.properties
-     * @return query by the given identifier name
+     * @param name query name from the queries.properties.
+     * @return query by the given identifier name.
      */
     public String getQuery(String name) {
         log.debug("Requested query: {}", name);

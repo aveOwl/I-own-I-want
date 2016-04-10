@@ -9,15 +9,15 @@ import java.sql.SQLException;
 
 /**
  * Fills the PreparedStatement with given
- * @see User entity fields
+ * @see User entity fields.
  */
 public class UserDao extends AbstractDaoImpl<User> {
     private static UserDao instance;
     private UserDao() {}
 
     /**
-     * Provides UserDao instance
-     * @return the same UserDao object each time its invoked
+     * Provides UserDao instance.
+     * @return the same UserDao object each time its invoked.
      */
     public static UserDao getInstance (){
         if (instance == null) {
@@ -28,19 +28,19 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Fills the PreparedStatement with given User entity fields
-     * to persist User in the DataBase
-     * @param prepStatement object that represents a precompiled SQL statement
-     * @param entity user to be persisted
+     * to persist User in the DataBase.
+     * @param prepStatement object that represents a precompiled SQL statement.
+     * @param entity user to be persisted.
      */
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, User entity) {
         try {
             prepStatement.setString(1, entity.getFirstName());
             prepStatement.setString(2, entity.getLastName());
-            prepStatement.setString(3, entity.getNickName());
+            prepStatement.setString(3, entity.getUserName());
             prepStatement.setString(4, entity.getPassword());
             prepStatement.setString(5, entity.getEmail());
-            prepStatement.setFloat(6, entity.getMonthSalary());
+            prepStatement.setDouble(6, entity.getMonthSalary());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,19 +48,19 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Fills the PreparedStatement with given User entity fields
-     * to update User in the DataBase
-     * @param prepStatement object that represents a precompiled SQL statement
-     * @param entity user to be updated
+     * to update User in the DataBase.
+     * @param prepStatement object that represents a precompiled SQL statement.
+     * @param entity user to be updated.
      */
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, User entity) {
         try {
             prepStatement.setString(1, entity.getFirstName());
             prepStatement.setString(2, entity.getLastName());
-            prepStatement.setString(3, entity.getNickName());
+            prepStatement.setString(3, entity.getUserName());
             prepStatement.setString(4, entity.getPassword());
             prepStatement.setString(5, entity.getEmail());
-            prepStatement.setFloat(6, entity.getMonthSalary());
+            prepStatement.setDouble(6, entity.getMonthSalary());
             prepStatement.setInt(7, entity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,9 +69,9 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Creates User entity by providing resultSet to
-     * @see User class constructor
-     * @param resultSet a table of data representing a database result set
-     * @return User entity
+     * @see User class constructor.
+     * @param resultSet a table of data representing a database result set.
+     * @return User entity.
      */
     @Override
     public User getEntity(ResultSet resultSet) {
@@ -84,10 +84,10 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * Returns persistent object with given identifier
-     * @param nickname object identifier
+     * Returns persistent object with given identifier.
+     * @param nickname object identifier.
      * @return persistent User object with the given identifier or null if
-     * there is no such persistent object
+     * there is no such persistent object.
      */
     public User getByNick(String nickname) {
         Connection connection = null;
@@ -115,14 +115,14 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to retrieve User from the DataBase using User's NickName
+     * @return query to retrieve User from the DataBase using User's NickName.
      */
     private String getGetByNickQuery() {
         return dbManager.getQuery("get.user.by.nick");
     }
 
     /**
-     * @return query to insert User into the DataBase
+     * @return query to insert User into the DataBase.
      */
     @Override
     public String getCreateQuery() {
@@ -130,7 +130,7 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to delete User from the DataBase
+     * @return query to delete User from the DataBase.
      */
     @Override
     public String getDeleteQuery() {
@@ -138,7 +138,7 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to update User in the DataBase
+     * @return query to update User in the DataBase.
      */
     @Override
     public String getUpdateQuery() {
@@ -146,7 +146,7 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to retrieve User from the DataBase using User's ID
+     * @return query to retrieve User from the DataBase using User's ID.
      */
     @Override
     public String getGetByIdQuery() {
@@ -154,7 +154,7 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to retrieve all Users from the DataBase
+     * @return query to retrieve all Users from the DataBase.
      */
     @Override
     public String getGetAllQuery() {
