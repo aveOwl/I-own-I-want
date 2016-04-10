@@ -65,9 +65,11 @@ p {
 }
 
 .darker {
-  background-color: #222930;.goalContainer {
-		position: relative;
+  background-color: #222930;
 }
+
+.goalContainer {
+  position: relative;
 }
 
 .goal {
