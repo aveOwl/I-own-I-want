@@ -22,6 +22,7 @@ import static com.iowniwant.util.UserValidation.*;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
 public class LoginServlet extends HttpServlet {
+
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     private UserDao userDao = UserDao.getInstance();
 
@@ -58,7 +59,6 @@ public class LoginServlet extends HttpServlet {
             Cookie passCookie = new Cookie("ioiw.password", password);
             response.addCookie(userCookie);
 
-            log.debug("Setting token in Cookie: {}", tokenCookie);
             log.debug("Setting user_id in Cookie: {}", userCookie);
 
             response.addCookie(passCookie);

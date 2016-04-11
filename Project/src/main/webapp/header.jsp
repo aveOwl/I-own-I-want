@@ -7,12 +7,6 @@
   <link href="style/header-footer.css" rel='stylesheet'>
 </head>
 <body>
-<<<<<<< Temporary merge branch 1
-<%
-  String token =  (String) session.getAttribute("token");
-  String user_id =  String.valueOf(session.getAttribute("user_id"));
-
-  if (token == null && user_id == null) {
 
 <%
     Cookie[] theCookies = request.getCookies();

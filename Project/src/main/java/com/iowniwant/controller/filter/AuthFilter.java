@@ -43,9 +43,6 @@ public class AuthFilter implements Filter {
         if (token != null) {
             filterChain.doFilter(request, response);
         }
-         if (token != null) {
-             filterChain.doFilter(request, response);
-         }
         else {
             log.debug("You were redirected back to the login jsp");
             httpServletResponse.sendRedirect("login.jsp");
