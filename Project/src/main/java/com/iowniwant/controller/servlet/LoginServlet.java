@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         log.debug("username present in the DataBase: {}", username.equals(user.getUserName()));
         log.debug("password present in the DataBase: {}", password.equals(user.getPassword()));
 
-        if (isUserValid(username, password)) {
+        if (isUserValid(user)) {
 
             log.debug("user_id from DataBase: {}", user.getId());
 
