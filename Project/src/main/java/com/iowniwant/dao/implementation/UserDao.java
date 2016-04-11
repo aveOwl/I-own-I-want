@@ -1,6 +1,8 @@
 package com.iowniwant.dao.implementation;
 
 import com.iowniwant.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
  * @see User entity fields.
  */
 public class UserDao extends AbstractDaoImpl<User> {
+    private static final Logger log = LoggerFactory.getLogger(UserDao.class);
     private static UserDao instance;
     private UserDao() {}
 
@@ -23,6 +26,7 @@ public class UserDao extends AbstractDaoImpl<User> {
         if (instance == null) {
             instance = new UserDao();
         }
+        log.trace("UserDao instance invoked");
         return instance;
     }
 

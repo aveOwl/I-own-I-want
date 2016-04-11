@@ -34,7 +34,7 @@
           <a href="goalServlet"><li>Goals</li></a>
         </ul>
         <ul class="nav right">
-          <a href="#"><li>My account</li></a>
+          <a href="accountServlet"><li>My account</li></a>
           <a href="logoutServlet"><li>Log out</li></a>
         </ul>
       </div>
