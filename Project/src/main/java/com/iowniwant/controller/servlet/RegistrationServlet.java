@@ -32,6 +32,11 @@ public class RegistrationServlet extends HttpServlet {
             User user = new User(firstName, lastName, userName, password, email);
             userDao.create(user);
         }
-        response.sendRedirect("goals.jsp");
+
+        request.setAttribute("userName", userName);
+        request.setAttribute("password", password);
+
+        request.getServletContext().getRequestDispatcher("/loginServlet").forward(request,response);
+//        response.sendRedirect("/loginServlet");
     }
 }
