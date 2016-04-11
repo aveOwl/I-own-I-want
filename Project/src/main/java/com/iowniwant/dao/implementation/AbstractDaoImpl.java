@@ -1,21 +1,29 @@
 package com.iowniwant.dao.implementation;
 
 import com.iowniwant.dao.AbstractDAO;
-import com.iowniwant.model.BaseEntity;
 import com.iowniwant.util.DataBaseManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Классо-параметром этого класса может быть лишь класс, который наследуется от BaseEntity
-public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractDAO<T> {
-    public static final Logger log = LoggerFactory.getLogger(AbstractDaoImpl.class);
+/**
+ * Implements basic CRUD operations using
+ * @see DataBaseManager to get connection to the DataBase.
+ * @param <T> type of object that implements
+ * @see Serializable interface.
+ */
 
-    DataBaseManager dbManager = new DataBaseManager();
+abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T> {
+    private static final Logger log = LoggerFactory.getLogger(AbstractDaoImpl.class);
+    DataBaseManager dbManager = DataBaseManager.getInstance();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T create(T entity) {
         Connection connection = null;
@@ -38,33 +46,38 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException logOrIgnore) {}
-            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
+            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
-
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void delete(T entity) {
+    public void delete(Integer id) {
         Connection connection = null;
         PreparedStatement prepStatement = null;
         try {
             connection = dbManager.getConnection();
             String query = getDeleteQuery();
             prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, entity.getId());
-            log.debug("Deleting entity with id: {}", entity.getId());
+            prepStatement.setInt(1, id);
+            log.debug("Deleting entity with id: {}", id);
             prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T update(T entity) {
         Connection connection = null;
@@ -74,19 +87,20 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
             String query = getUpdateQuery();
             prepStatement = connection.prepareStatement(query);
             fillUpdateStatement(prepStatement, entity);
-            log.debug("Updating entity with id: {}", entity.getId());
             prepStatement.executeUpdate();
             return entity;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
-
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T getById(Integer id) {
         Connection connection = null;
@@ -105,40 +119,17 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException logOrIgnore) {}
-            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
+            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
 
         return null;
     }
 
-    @Override
-    public T getByNick(String nickname) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = dbManager.getConnection();
-            String query = getGetByNickQuery();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setString(1, nickname);
-            resultSet = prepStatement.executeQuery();
-            if (resultSet.next()) {
-                log.debug("Returning entity with nickname: {}", nickname);
-                return getEntity(resultSet);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException logOrIgnore) {}
-            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
-        }
-
-        return null;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<T> getAll() {
         Connection connection = null;
@@ -156,9 +147,9 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException logOrIgnore) {}
-            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException logOrIgnore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
+            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
         return list;
     }
@@ -171,6 +162,5 @@ public abstract class AbstractDaoImpl<T extends BaseEntity> implements AbstractD
     public abstract String getDeleteQuery();
     public abstract String getUpdateQuery();
     public abstract String getGetByIdQuery();
-    public abstract String getGetByNickQuery();
     public abstract String getGetAllQuery();
 }

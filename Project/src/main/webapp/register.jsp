@@ -13,11 +13,11 @@
     <div class="container">
       <div class="banner">
         <form action="registrationServlet" method="post" class="login">
-          <input type="text" placeholder="Name" name="name"/>
-          <input type="text" placeholder="Surname" name="surname"/>
-          <input type="text" placeholder="Nickname" name="nickname"/>
+          <input type="text" placeholder="Name" name="firstName" required/>
+          <input type="text" placeholder="LastName" name="lastName" required/>
+          <input type="text" placeholder="UserName" name="userName" required/>
           <input type="email" placeholder="Email" name="email"/>
-          <input type="password" placeholder="Password" name="password"/>
+          <input type="password" placeholder="Password" name="password" required/>
           <input type="submit" value="Finish"/>
         </form>
       </div>

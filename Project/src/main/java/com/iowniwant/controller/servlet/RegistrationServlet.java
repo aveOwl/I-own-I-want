@@ -10,30 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Obtains user input, verifies required fields to be not null values,
+ * creates User object and persists it to the DataBase, redirects user
+ * to goals page.
+ */
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
-    UserDao userDao = new UserDao();
+    private UserDao userDao = UserDao.getInstance();
 
-    /**
-     * @param request - an HttpServletRequest object that contains the request the client has made of the servlet
-     * @param response - an HttpServletResponse object that contains the response the servlet sends to the client
-     * @throws ServletException
-     * @throws IOException
-     * Takes user input, verifies its not null values and persists derived data to data-base
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String nickname = request.getParameter("nickname");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String userName = request.getParameter("userName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (name != null && surname != null && nickname != null && password != null) {
-            User user = new User(name, surname, nickname, password, email);
+        if (firstName != null && lastName != null && userName != null && password != null) {
+            User user = new User(firstName, lastName, userName, password, email);
             userDao.create(user);
         }
-        response.sendRedirect("goals.jsp");
+
+        request.setAttribute("userName", userName);
+        request.setAttribute("password", password);
+
+        request.getServletContext().getRequestDispatcher("/loginServlet").forward(request,response);
+//        response.sendRedirect("/loginServlet");
     }
 }

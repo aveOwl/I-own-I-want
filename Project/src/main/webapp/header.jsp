@@ -7,18 +7,24 @@
   <link href="style/header-footer.css" rel='stylesheet'>
 </head>
 <body>
+<<<<<<< Temporary merge branch 1
+<%
+  String token =  (String) session.getAttribute("token");
+  String user_id =  String.valueOf(session.getAttribute("user_id"));
+
+  if (token == null && user_id == null) {
 
 <%
     Cookie[] theCookies = request.getCookies();
 
     if (theCookies != null) {
-      for (Cookie tempCoockie : theCookies) {
+      for (Cookie tempCookie : theCookies) {
 
-        if ("ioiw.username".equals(tempCoockie.getName())) {
-          request.getSession().setAttribute("username", tempCoockie.getValue());
+        if ("ioiw.username".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("username", tempCookie.getValue());
         }
-        if ("ioiw.password".equals(tempCoockie.getName())) {
-          request.getSession().setAttribute("password", tempCoockie.getValue());
+        if ("ioiw.password".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("password", tempCookie.getValue());
         }
       }
     }

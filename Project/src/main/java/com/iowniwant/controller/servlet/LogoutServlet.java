@@ -10,18 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Removes user login data from ServletContext,
+ * invalidates Session, redirects user to login page.
+ */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
 public class LogoutServlet extends HttpServlet{
-
-    Logger log = LoggerFactory.getLogger(LogoutServlet.class);
+    private Logger log = LoggerFactory.getLogger(LogoutServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.getServletContext().removeAttribute("token");
         request.getServletContext().removeAttribute("user_id");
+        log.trace("removing user_id and token attribute from ServletContext");
 
         request.getSession().invalidate();
+        log.trace("invalidating session");
         response.sendRedirect("login.jsp");
     }
 }

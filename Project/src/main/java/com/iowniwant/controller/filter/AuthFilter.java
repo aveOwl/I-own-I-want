@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
 public class AuthFilter implements Filter {
-    public static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -38,8 +38,11 @@ public class AuthFilter implements Filter {
 
         String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 
-        log.debug("token attribute from context have been read: {}", httpServletRequest.getServletContext().getAttribute("token"));
+        log.debug("token attribute from ServletContext: {}", token);
 
+        if (token != null) {
+            filterChain.doFilter(request, response);
+        }
          if (token != null) {
              filterChain.doFilter(request, response);
          }

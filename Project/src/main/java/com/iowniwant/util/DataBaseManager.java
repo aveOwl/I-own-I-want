@@ -13,23 +13,41 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Provides connection to the DataBase, manages queries access.
+ */
 public class DataBaseManager {
-    public static final Logger log = LoggerFactory.getLogger(DataBaseManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DataBaseManager.class);
+    private static DataBaseManager instance;
+    private Properties queries;
 
-    Properties queries;
+    /**
+     * Provides DataBaseManager instance.
+     * @return the same DataBaseManager object each time its invoked.
+     */
+    public static DataBaseManager getInstance() {
+        if (instance == null) {
+            instance = new DataBaseManager();
+        }
+        return instance;
+    }
 
-    public DataBaseManager() {
+    private DataBaseManager() {
         log.trace("loading properties");
         loadProperties();
     }
 
+    /**
+     * Establishes connection to the DataBase.
+     * @return connection to the DataBase.
+     */
     public Connection getConnection() {
         Connection connection = null;
         try {
             Context context = new InitialContext();
             DataSource ds = (DataSource) context.lookup("java:/jbdc/data-postgres");
             connection = ds.getConnection();
-            log.debug("getting connection: {}", connection);
+            log.debug("Establishing connection: {}", connection.getMetaData().getURL());
         } catch (SQLException | NamingException e) {
             log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
@@ -37,14 +55,15 @@ public class DataBaseManager {
         return connection;
     }
 
+    /**
+     * @param name query name from the queries.properties.
+     * @return query by the given identifier name.
+     */
     public String getQuery(String name) {
-        log.debug("Get query: {}", name);
-        if (queries == null) {
+        log.debug("Requested query: {}", name);
+        if (queries == null)
             loadProperties();
-        }
-        String q = queries.getProperty(name);
-        log.debug("q = {}", q);
-        return q;
+        return queries.getProperty(name);
     }
 
     private void loadProperties() {
@@ -56,6 +75,8 @@ public class DataBaseManager {
         } catch (IOException e) {
             log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
+        } finally {
+            if (is != null)  try { is.close(); } catch (IOException ignored) {}
         }
     }
 }
