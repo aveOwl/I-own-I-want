@@ -35,7 +35,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             prepStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             fillCreateStatement(prepStatement, entity);
             int i = prepStatement.executeUpdate();
-            log.debug("Is update executed ? : {}", i == 1);
+            log.debug("Is creation executed : {}", i == 1);
 
             resultSet = prepStatement.getGeneratedKeys();
             if (resultSet.next()) {
