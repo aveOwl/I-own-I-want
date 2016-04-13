@@ -24,6 +24,8 @@
 
           <input type="text" class="title"/>
 
+          <input type="number" class="cost" name="cost"/>
+
           <textarea class="shorten" name="shorten"></textarea>
 
           <textarea class="description" name="description"></textarea>

@@ -2,7 +2,6 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.GoalDao;
 import com.iowniwant.dao.implementation.UserDao;
-import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
 
 import javax.servlet.ServletException;
@@ -33,8 +32,8 @@ public class AddGoalsServlet extends HttpServlet {
         Date pubdate = new Date(new java.util.Date().getTime());
 
         if (title != null && shorten != null && description != null && pubdate != null) {
-            Goal goal = new Goal(title,shorten,pubdate,description,)
-            goalDao.create()
+//            Goal goal = new Goal(title,shorten,pubdate,description,user);
+//            goalDao.create()
         }
 
     }

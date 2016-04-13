@@ -37,13 +37,13 @@ public class Goal implements Serializable, Comparable<Goal> {
      * @param pubdate goal's pubdate.
      * @param notes goal's notes.
      */
-    public Goal(String title, double cost, String description, Date pubdate, String notes/*, User user*/) {
+    public Goal(String title, double cost, String description, Date pubdate, String notes, User user) {
         this.title = title;
         this.cost = cost;
         this.description = description;
         this.pubdate = pubdate;
         this.notes = notes;
-//        this.user = user;
+        this.user = user;
     }
 
     /**
