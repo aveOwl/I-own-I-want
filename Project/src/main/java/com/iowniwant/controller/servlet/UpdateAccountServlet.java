@@ -48,6 +48,6 @@ public class UpdateAccountServlet extends HttpServlet {
 
         userDao.update(user);
         log.debug("user after Update: {}", user);
-        response.sendRedirect("goals.jsp");
+        response.sendRedirect("goalServlet");
     }
 }

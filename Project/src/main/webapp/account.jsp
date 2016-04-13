@@ -11,7 +11,6 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="line"></div>
 <div class="wrapper">
   <form action="updateAccountServlet" method="post">
     <fieldset>
@@ -31,8 +30,9 @@
       <label for="monthSalary">Month Salary:</label>
       <input type="text" id="monthSalary" name="monthSalary" value="${user.monthSalary}">
 
-      <a class="passButton">Change password</a>
-
+      <div class="passButton">
+      <a>Change password</a>
+      </div>
       <div class="password">
         <label for="current_password">Current password:</label>
         <input type="password" id="current_password" name="current_password">
@@ -45,11 +45,10 @@
       </div>
 
     </fieldset>
-    <button type="submit">Save Changes</button>
+    <button type="submit" class="proceed">Save Changes</button>
   </form>
   <div class="push"></div>
 </div>
-<div class="line"></div>
 <jsp:include page="footer.jsp"/>
 </body>
 </html>

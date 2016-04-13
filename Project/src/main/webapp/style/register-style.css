@@ -11,3 +11,7 @@ form {
   left: 50%;
   transform: translate(-50%, 0%);
 }
+
+label {
+  color: #222930;
+}
