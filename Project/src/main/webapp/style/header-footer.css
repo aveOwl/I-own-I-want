@@ -80,7 +80,8 @@ input {
 
 input[type="email"],
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
