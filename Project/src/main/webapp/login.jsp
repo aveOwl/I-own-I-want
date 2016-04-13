@@ -13,9 +13,12 @@
     <div class="container">
       <div class="banner">
         <form action="loginServlet" method="post" class="login">
-          <input type="text" placeholder="Username" name="userName" value="${sessionScope.username}"/>
-          <input type="password" placeholder="Password" name="password" value="${sessionScope.password}"/>
-          <input type="submit" value="Log in"/>
+          <label for="userName">Username:</label>
+          <input type="text" placeholder="Username" id="userName" name="userName" value="${sessionScope.username}"/>
+          <label for="password">Password:</label>
+          <input type="password" placeholder="Password" id="password" name="password" value="${sessionScope.password}"/>
+          <%--<input type="submit" value="Log in"/>--%>
+          <button type="submit" class="proceed">Log in</button>
         </form>
       </div>
     </div>
