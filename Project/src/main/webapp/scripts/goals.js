@@ -1,3 +1,5 @@
+var counter = 0;
+
 //toggle an arcticle
 $(function () {
     $('.article').click(function () {
@@ -29,6 +31,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
 
     //var myForm = $('#MyForm');
 
+    counter++;
     var title = document.getElementById("title").value;
     var cost = document.getElementById("cost").value;
     var shorten = document.getElementById("shorten").value;
@@ -43,14 +46,83 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             shorten : shorten, description : description},   //variable you want to send.
         success : function(data)
         {
+
+            var articleId = 'article' + counter;
+            var itemId = 'item' + counter;
+            var rowId = 'row' + counter;
+            var titleId = 'title' + counter;
+
+            var html = '<div class="article">' +
+                '<div class="item"' + ' id=' + itemId + '>' +
+                '<div class="row"' + ' id=' + rowId + '>' +
+                '<p class="title"' + ' id=' + titleId + '></p>' +
+                '</div>' + '</div>' + '</div>';
+            $(".articles").append(html);
+            document.getElementById(titleId).innerHTML = title;
+
+
+            /*var articleId = 'article' + counter;
+            var itemId = 'item' + counter;
+            var rowId = 'row' + counter;
+            var titleId = 'title' + counter;
+
+            $('<div class="article">').(id, articleId).appendTo(".articles");
+            $('<div class="item">').setAttribute(id, itemId).appendTo("#" + articleId);
+            $('<div class="row">').setAttribute(id, rowId).appendTo("#" + itemId);
+            document.getElementById(titleId).innerHTML = title;*/
+
+
+            /*document.getElementById("newP" + counter).innerHTML = title;
+
+            $('<div class="item" id="newItem">').appendTo('#newArticle');
+            $('<p class="source" id="newS">').appendTo('#newItem');
+            document.getElementById("newS").innerHTML = shorten;*/
+
+
+            /*var article = document.createElement('div');
+            article.className = "article";
+
+            article.innerHTML = '<div class="item"><div class="row"> <p class="title">'+title+'</div> </div> </div>';
+*/
+
+          /*  var art = document.createElement('div');
+            div.className = "newArticle";
+
+            var item = document.createElement('div');
+            div.className = "newItem";
+
+            art.appendChild(item);
+
+            var row = document.createElement('div');
+            div.className = "row";
+
+            item.appendChild(row);
+
+            row.innerHTML = text;*/
+
+
+
+            //$('<div class="row">').innerHTML = "<p>" + title + "</p>";
+
+
+
+            //$('<div>').text(title).appendTo('.articles');
+
             // This happens AFTER the backend has returned an JSON array (or other object type)
-            var res1, res2;
+           /* var res1, res2;
 
             for(var i = 0; i < data.length; i++)
             {
                 // Parse through the JSON array which was returned.
                 // A proper error handling should be added here (check if
                 // everything went successful or not)
+
+
+                var newDiv = document.createElement("div");
+                newDiv.innerHTML = "<p>" + title + "</p>";
+                $(".articles").appendChild(newDiv);
+
+
 
                 res1 = data[i].res1;
                 res2 = data[i].res2;
@@ -61,8 +133,10 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
                 // Create a text node
                 para.appendChild(t);                                          // Append the text to <p>
                 document.body.appendChild(para);                              // Append <p> to <body>
-            }
+            }*/
         }
+
+
     });
 
     /*jQuery('<div/>', {

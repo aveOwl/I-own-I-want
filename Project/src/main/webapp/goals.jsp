@@ -13,7 +13,7 @@
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
   <button class="goal">new Goal</button>
-  <div class="articles container">
+  <div class="articles">
 
     <div class="insertion">
 
@@ -32,6 +32,7 @@
 
           <input id="confirm" type="submit" value="Confirm"/>
         </div>
+
       </div>
     </div>
 

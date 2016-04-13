@@ -26,6 +26,8 @@ p {
   display: none;
 }
 
+
+
 .article {
   max-width: 940px;
   margin: 40px auto 30px;
@@ -37,7 +39,9 @@ p {
   border-bottom: 1px #222930 solid;
 }
 
-form{
+
+
+.form{
   width:450px;
   margin:30px;
 }
