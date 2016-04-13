@@ -14,6 +14,26 @@
 <div class="wrapper">
   <button class="goal">new Goal</button>
   <div class="articles container">
+
+    <div class="insertion">
+
+      <div class="item">
+
+        <form action="loginServlet" method="post" class="login" id="MyForm">
+          <!--        <div class="item">-->
+
+          <input type="text" class="title"/>
+
+          <textarea class="shorten" name="shorten"></textarea>
+
+          <textarea class="description" name="description"></textarea>
+
+          <input id="confirm" type="submit" value="Confirm"/>
+        </form>
+      </div>
+    </div>
+
+
     <c:forEach items="${goals_list}" var="goal">
       <div class="article">
         <div class="item">
