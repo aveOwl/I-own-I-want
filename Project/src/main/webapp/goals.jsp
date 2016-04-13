@@ -19,7 +19,7 @@
 
       <div class="item">
 
-        <form action="loginServlet" method="post" class="login" id="MyForm">
+        <form action="ajaxServlet" method="post" class="login" id="MyForm">
           <!--        <div class="item">-->
 
           <input type="text" class="title"/>

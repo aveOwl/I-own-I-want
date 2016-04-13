@@ -17,7 +17,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Provides GoalDao instance.
-     * @return the same GoalDao object each time its invoked.
+     * @return Every time the same GoalDao object is invoked.
      */
     public static GoalDao getInstance (){
         if (instance == null) {

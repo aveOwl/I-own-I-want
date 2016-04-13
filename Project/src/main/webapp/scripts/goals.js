@@ -25,17 +25,46 @@ $(function () {
 });
 
 
-$(document).on("click", "#confirm", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+$(document).on("click", "#confirm", function() {// When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+
     var myForm = $('#MyForm');
-    $.get("ajaxServlet", myForm.serialize(), function(data) {
 
-        var e = $("<p />", {
-            id: "somediv" // you need to quote "class" since it's a reserved keyword
-        });
+    //$('<div id="someId""></div>').appendTo('.articles container');
 
-        $("#somediv").text(responseText);
+    $.ajax({
+        url: '/',
+        type: 'post',   // 'get' or 'post'
+        data: 'description=' + arg0,  //variable you want to send.
+        success: function(result) {
+            console.log(result);
+        }
 
-        $("body").append(e);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*jQuery('<div/>', {
+        id : "someId"
+    }).appendTo('.articles container');*/
+
+
+    //$.post("ajaxServlet",{description:"Nikos"})
+
+    /*$.get("ajaxServlet", myForm.serialize(), function(data) {
+
+            $('#someId').text(data);*/
 
         /*var container = document.createElement('div')
 
@@ -45,6 +74,5 @@ $(document).on("click", "#confirm", function() { // When HTML DOM "click" event 
             <p>text(data)</p> \
             </div>';
     });*/
-})
 });
 

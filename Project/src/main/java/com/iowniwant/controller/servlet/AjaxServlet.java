@@ -17,22 +17,38 @@ import java.io.PrintWriter;
 @WebServlet(name = "AjaxServlet", urlPatterns = {"/ajaxServlet"})
 public class AjaxServlet extends HttpServlet{
     private static Logger log = LoggerFactory.getLogger(AjaxServlet.class);
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         log.debug("Parameter fetched: {}", request.getParameter("description"));
         try {
 
-        /* TODO output your response here.*/
+//         TODO output your response here.
 
             out.println(request.getParameter("description"));
         } finally {
             out.close();
         }
+    }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        /*response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        log.debug("Parameter fetched: {}", request.getParameter("description"));
+        try {
+
+        *//* TODO output your response here.*//*
+
+            out.println(request.getParameter("description"));
+        } finally {
+            out.close();
+        }*/
+        doPost(request, response);
 
     }
 }
