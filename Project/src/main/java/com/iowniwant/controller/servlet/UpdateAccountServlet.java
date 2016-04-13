@@ -5,7 +5,6 @@ import com.iowniwant.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Fills the user's profile info, with the information
- * from the DataBase.
+ * Updates users private data.
  */
-@WebServlet(name = "AccountServlet", urlPatterns = "/accountServlet")
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "UpdateAccountServlet", urlPatterns = "/updateAccountServlet")
+public class UpdateAccountServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(AccountServlet.class);
     private UserDao userDao = UserDao.getInstance();
 
@@ -36,9 +34,20 @@ public class AccountServlet extends HttpServlet {
         User user = userDao.getById(user_id);
         log.debug("user from DataBase: {}", user);
 
-        request.setAttribute("user", user);
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String userName = request.getParameter("userName");
+        String email = request.getParameter("email");
+        Double monthSalary = Double.valueOf(request.getParameter("monthSalary"));
 
-        log.trace("sending data to account page");
-        request.getRequestDispatcher("/account.jsp").forward(request, response);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setUserName(userName);
+        user.setEmail(email);
+        user.setMonthSalary(monthSalary);
+
+        userDao.update(user);
+        log.debug("user after Update: {}", user);
+        response.sendRedirect("goals.jsp");
     }
 }

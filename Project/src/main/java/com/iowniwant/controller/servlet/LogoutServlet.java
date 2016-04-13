@@ -1,6 +1,5 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.util.DataBaseManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +27,6 @@ public class LogoutServlet extends HttpServlet{
 
         request.getSession().invalidate();
         log.trace("invalidating session");
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("main.jsp");
     }
 }
