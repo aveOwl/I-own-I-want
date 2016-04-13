@@ -22,6 +22,10 @@
         <div class="form">
           <!--        <div class="item">-->
 
+          <div class="buttonContainer">
+            <button class="close">✗</button>
+          </div>
+
           <input type="text" id="title"/>
 
           <input type="number" id="cost" name="cost"/>

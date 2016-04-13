@@ -14,8 +14,7 @@ $(function () {
 $(function () {
     $('.close').click(function () {
 
-        var container = $(this).closest('.buttonContainer');
-        container.closest('.article').remove();
+        $(".insertion").fadeOut();
     });
 });
 
