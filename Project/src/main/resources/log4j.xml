@@ -18,7 +18,7 @@
     </appender>
 
     <category name="com.iowniwant">
-        <priority value="trace"/>
+        <priority value="debug"/>
         <appender-ref ref="Console"/>
     </category>
 

@@ -42,7 +42,7 @@ form{
   margin:30px;
 }
 
-input[type='text'] {
+input[type='text'],[type='number'] {
   outline:none;
   width:50%;
   background:#5F777E;

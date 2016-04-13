@@ -27,33 +27,43 @@ $(function () {
 
 $(document).on("click", "#confirm", function() {// When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 
-    var myForm = $('#MyForm');
+    //var myForm = $('#MyForm');
 
-    //$('<div id="someId""></div>').appendTo('.articles container');
+    var title = document.getElementById("title").value;
+    var cost = document.getElementById("cost").value;
+    var shorten = document.getElementById("shorten").value;
+    var description = document.getElementById("description").value;
+
+
 
     $.ajax({
-        url: '/',
+        url: 'addGoalsServlet',
         type: 'post',   // 'get' or 'post'
-        data: 'description=' + arg0,  //variable you want to send.
-        success: function(result) {
-            console.log(result);
+        data: {title : title, cost : cost,
+            shorten : shorten, description : description},   //variable you want to send.
+        success : function(data)
+        {
+            // This happens AFTER the backend has returned an JSON array (or other object type)
+            var res1, res2;
+
+            for(var i = 0; i < data.length; i++)
+            {
+                // Parse through the JSON array which was returned.
+                // A proper error handling should be added here (check if
+                // everything went successful or not)
+
+                res1 = data[i].res1;
+                res2 = data[i].res2;
+
+                // Do something with the returned data
+                var para = document.createElement("P");                       // Create a <p> element
+                var t = res1      // Create a text node
+                // Create a text node
+                para.appendChild(t);                                          // Append the text to <p>
+                document.body.appendChild(para);                              // Append <p> to <body>
+            }
         }
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /*jQuery('<div/>', {
         id : "someId"

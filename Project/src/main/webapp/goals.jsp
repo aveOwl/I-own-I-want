@@ -19,19 +19,19 @@
 
       <div class="item">
 
-        <form action="ajaxServlet" method="post" class="login" id="MyForm">
+        <div class="form">
           <!--        <div class="item">-->
 
-          <input type="text" class="title"/>
+          <input type="text" id="title"/>
 
-          <input type="number" class="cost" name="cost"/>
+          <input type="number" id="cost" name="cost"/>
 
-          <textarea class="shorten" name="shorten"></textarea>
+          <textarea id="shorten" name="shorten"></textarea>
 
-          <textarea class="description" name="description"></textarea>
+          <textarea id="description" name="description"></textarea>
 
           <input id="confirm" type="submit" value="Confirm"/>
-        </form>
+        </div>
       </div>
     </div>
 

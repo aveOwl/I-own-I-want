@@ -42,6 +42,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(3, entity.getDescription());
             prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
+            prepStatement.setInt(6, entity.getUser().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
