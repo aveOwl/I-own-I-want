@@ -1,31 +1,22 @@
 var counter = 0;
 
 //toggle an arcticle
-$(function () {
-    $('.article').click(function () {
-
+$(document).on('click', '.article',function () {
         $(this).toggleClass('darker');
         var description = $(this).children('.description');
         description.slideToggle('200');
-    });
 });
 
 //Removing an article
-$(function () {
-    $('.closeForm').click(function () {
-
+$(document).on('click', '.closeForm',function () {
         $('.insertion').fadeOut();
     });
-});
 
-$(function () {
-    $('.close').click(function () {
 
+$(document).on('click', '.close',function () {
         var container = $(this).closest('.buttonContainer');
         container.closest('.article').remove();
     });
-});
-
 
 $(function () {
     $('.goal').click(function () {
