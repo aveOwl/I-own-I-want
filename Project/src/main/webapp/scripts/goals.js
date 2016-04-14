@@ -46,7 +46,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
         success : function(data)
         {
 
-            var articleId = 'article' + counter;
+            //var articleId = 'article' + counter;
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
             var titleId = 'title' + counter;
@@ -59,7 +59,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
 
 
             var html = '<div class="article"' + /*' id=' + articleId + */'>' +
-                '<div class="item"' + ' id=' + itemId + '>' +
+                '<div class="itemForm"' + ' id=' + itemId + '>' +
                 '<div class="row"' + ' id=' + rowId + '>' +
                 '<p class="title"' + ' id=' + titleId + '></p>' +
 
