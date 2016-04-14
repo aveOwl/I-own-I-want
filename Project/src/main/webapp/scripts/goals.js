@@ -14,7 +14,7 @@ $(function () {
 $(function () {
     $('.close').click(function () {
 
-        $(".insertion").fadeOut();
+        $('.insertion').fadeOut();
     });
 });
 
@@ -50,14 +50,19 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
             var titleId = 'title' + counter;
+            var sourceId = 'source' + counter;
 
-            var html = '<div class="article">' +
+            var html = '<div class="article"' + /*' id=' + articleId + */'>' +
                 '<div class="item"' + ' id=' + itemId + '>' +
                 '<div class="row"' + ' id=' + rowId + '>' +
                 '<p class="title"' + ' id=' + titleId + '></p>' +
-                '</div>' + '</div>' + '</div>';
+                '</div>' + '<div class="item"' + ' id=' + itemId + '>' +
+                '<p class="source"' + ' id=' + sourceId + '></p>' +
+                + '</div>' + '</div>';
             $(".articles").append(html);
+
             document.getElementById(titleId).innerHTML = title;
+            document.getElementById(sourceId).innerHTML = shorten;
 
 
             /*var articleId = 'article' + counter;
