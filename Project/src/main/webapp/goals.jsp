@@ -23,7 +23,7 @@
           <!--        <div class="item">-->
 
           <div class="buttonContainer">
-            <button class="close">✗</button>
+            <button class="closeForm">✗</button>
           </div>
 
           <input type="text" id="title"/>
