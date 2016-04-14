@@ -14,8 +14,23 @@ $(document).on('click', '.closeForm',function () {
 
 
 $(document).on('click', '.close',function () {
-        var container = $(this).closest('.buttonContainer');
-        container.closest('.article').remove();
+
+    //$(this).children('.')
+    var container = $(this).closest('.buttonContainer');
+    container.closest('.article').remove();
+
+    $.ajax({
+        url: 'removeGoalsServlet',
+        type: 'post',   // 'get' or 'post'
+        data: {title : title, cost : cost,
+            shorten : shorten, description : description},   //variable you want to send.
+        success : function(data) {
+
+            var container = $(this).closest('.buttonContainer');
+            container.closest('.article').remove();
+        }
+        });
+
     });
 
 $(function () {
