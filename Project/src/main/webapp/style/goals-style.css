@@ -188,6 +188,7 @@ textarea{
 .description h1 {
   margin-top: 0px;
   font-size: 23px;
+  word-wrap: break-word;
 }
 
 .darker {

@@ -16,11 +16,12 @@ import java.io.IOException;
 import java.sql.Date;
 
 /**
- * Created by sulfur on 13.04.16.
+ * Created by sulfur on 14.04.16.
  */
 
-@WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
-public class AddGoalsServlet extends HttpServlet {
+
+@WebServlet(name = "RemoveGoalsServlet", urlPatterns = "/removeGoalsServlet")
+public class RemoveGoalsServlet extends HttpServlet{
 
     private static Logger log = LoggerFactory.getLogger(AddGoalsServlet.class);
     private GoalDao goalDao = GoalDao.getInstance();
@@ -47,6 +48,5 @@ public class AddGoalsServlet extends HttpServlet {
             Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
             goalDao.create(goal);
         }
-
     }
 }
