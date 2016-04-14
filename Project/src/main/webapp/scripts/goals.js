@@ -90,7 +90,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
                 '<h1' + ' id=' + descId + '></h1><div class="">&nbsp;</div>' +
                 '</div></div>';
 
-            $(".articles").append(html);
+            $(".articles").prepend(html);
 
             document.getElementById(titleId).innerHTML = title;
             document.getElementById(sourceId).innerHTML = shorten;
