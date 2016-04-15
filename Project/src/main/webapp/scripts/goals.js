@@ -12,6 +12,37 @@ $(document).on('click', '.closeForm',function () {
         $('.insertion').fadeOut();
     });
 
+$(document).on('click', '.edit',function () {
+
+    var title = document.getElementById("title").value;
+    var cost = document.getElementById("cost").value;
+    var shorten = document.getElementById("shorten").value;
+    var description = document.getElementById("description").value;
+
+    $.ajax({
+        url: 'addGoalsServlet',
+        type: 'post',   // 'get' or 'post'
+        data: {title : title, cost : cost,
+            shorten : shorten, description : description},   //variable you want to send.
+        success : function(data)
+        {
+
+            //var articleId = 'article' + counter;
+            var itemId = 'item' + counter;
+            var rowId = 'row' + counter;
+            var titleId = 'title' + counter;
+            var sourceId = 'source' + counter;
+            var dateId = 'date' + counter;
+            var descId = 'desc' + counter;
+
+            var time = new Date().getTime();
+            var pubdate = new Date(time).toDateString();
+        }
+
+
+    });
+
+});
 
 $(document).on('click', '.close',function () {
 
@@ -50,8 +81,6 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
     var cost = document.getElementById("cost").value;
     var shorten = document.getElementById("shorten").value;
     var description = document.getElementById("description").value;
-
-
 
     $.ajax({
         url: 'addGoalsServlet',
