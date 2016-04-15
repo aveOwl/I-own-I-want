@@ -39,12 +39,16 @@ public class UpdateAccountServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         String email = request.getParameter("email");
         Double monthSalary = Double.valueOf(request.getParameter("monthSalary"));
+        String password = request.getParameter("confirm_password");
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUserName(userName);
         user.setEmail(email);
         user.setMonthSalary(monthSalary);
+        if (password != null) {
+            user.setPassword(password);
+        }
 
         userDao.update(user);
         log.debug("user after Update: {}", user);

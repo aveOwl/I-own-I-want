@@ -80,7 +80,8 @@ input {
 
 input[type="email"],
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -157,4 +158,12 @@ label {
   border-width: 1px 1px 3px;
   cursor: pointer;
   cursor: hand;
+}
+
+input.ng-invalid.ng-dirty {
+  border-color: #ff0039;
+}
+
+input.ng-valid.ng-dirty {
+  border-color: #2780e3;
 }

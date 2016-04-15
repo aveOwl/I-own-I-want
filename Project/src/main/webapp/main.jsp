@@ -14,7 +14,7 @@
     <div class="container">
       <div class="banner">
         <h1>manage yourself</h1>
-        <a class="banner-action proceed" href="goalServlet" role="button">get started</a>
+        <a class="banner-action" href="goalServlet" role="button">get started</a>
       </div>
     </div>
   </div>

@@ -64,7 +64,6 @@ public class LoginServlet extends HttpServlet {
             log.trace("redirection to goals page");
             response.sendRedirect("goalServlet");
         } else {
-            log.debug("redirecting to login page");
             response.sendRedirect("login.jsp");
         }
     }
