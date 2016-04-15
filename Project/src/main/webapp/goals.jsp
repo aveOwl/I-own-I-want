@@ -13,33 +13,32 @@
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
   <button class="goal">new Goal</button>
-  <div class="articles">
 
-    <div class="insertion">
+  <div class="insertion">
 
-      <div class="item">
+    <div class="itemForm">
 
-        <div class="form">
-          <!--        <div class="item">-->
+      <div class="form">
+        <!--        <div class="item">-->
 
-          <div class="buttonContainer">
-            <button class="close">✗</button>
-          </div>
-
-          <input type="text" id="title"/>
-
-          <input type="number" id="cost" name="cost"/>
-
-          <textarea id="shorten" name="shorten"></textarea>
-
-          <textarea id="description" name="description"></textarea>
-
-          <input id="confirm" type="submit" value="Confirm"/>
+        <div class="buttonContainer">
+          <button class="closeForm">✗</button>
         </div>
 
-      </div>
-    </div>
+        <input type="text" id="title"/>
 
+        <input type="number" id="cost" name="cost"/>
+
+        <textarea id="shorten" name="shorten"></textarea>
+
+        <textarea id="description" name="description"></textarea>
+
+        <input id="confirm" type="submit" value="Confirm"/>
+      </div>
+
+    </div>
+  </div>
+  <div class="articles">
 
     <c:forEach items="${goals_list}" var="goal">
       <div class="article">

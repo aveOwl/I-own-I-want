@@ -15,16 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-/**
- * Created by sulfur on 13.04.16.
- */
 
-@WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
-public class AddGoalsServlet extends HttpServlet {
+@WebServlet(name = "EditGoalsServlet", urlPatterns = "editGoals")
+public class EditGoalsServlet extends HttpServlet{
 
-    private static Logger log = LoggerFactory.getLogger(AddGoalsServlet.class);
-    private GoalDao goalDao = GoalDao.getInstance();
-    private UserDao userDao = UserDao.getInstance();
+    public static Logger log = LoggerFactory.getLogger(EditGoalsServlet.class);
+    UserDao userDao = UserDao.getInstance();
+    GoalDao goalDao = GoalDao.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,10 +40,7 @@ public class AddGoalsServlet extends HttpServlet {
         Date pubdate = new Date(new java.util.Date().getTime());
         log.debug("This date will be persisted in the databse: {}", pubdate);
 
-        if (title != null && shorten != null && description != null && pubdate != null) {
-            Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
-            goalDao.create(goal);
-        }
-
+        Goal goal = new Goal(title,cost,description,pubdate,shorten,user);
+        goalDao.update(goal);
     }
 }
