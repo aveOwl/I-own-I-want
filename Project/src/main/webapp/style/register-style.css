@@ -15,3 +15,9 @@ form {
 label {
   color: #222930;
 }
+
+span {
+  text-align: left;
+  color: #ff0039;
+  margin-left: -260px;
+}

@@ -1,51 +1,110 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="en" ng-app="application">
 <head>
   <title>Profile</title>
   <meta charset="utf-8">
   <link href="style/header-footer.css" rel="stylesheet">
-  <link href="style/account-style.css" rel='stylesheet'>
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-  <script src="scripts/account.js"></script>
+  <link href="style/account-style.css" rel="stylesheet">
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/account.js"></script>
+  <script type="text/javascript">
+    (function () {
+      var app = angular.module('application', []);
+      app.controller('MainController', function () {
+        this.user = {
+          firstName: "${user.firstName}"
+          , lastName: "${user.lastName}"
+          , userName: "${user.userName}"
+          , email: "${user.email}"
+          , monthSalary: ${user.monthSalary}
+          , current_password: ""
+          , password_check: "${user.password}"
+          , new_password: ""
+          , confirm_password: ""
+        };
+      })
+
+      app.directive('compareTo', function () {
+        return {
+          require: "ngModel"
+          , scope: {
+            otherModelValue: "=compareTo"
+          }
+          , link: function (scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function (modelValue) {
+              return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function () {
+              ngModel.$validate();
+            });
+          }
+        };
+      });
+    })();
+  </script>
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="wrapper">
-  <form action="updateAccountServlet" method="post">
+<div class="wrapper" ng-controller="MainController as ctrl">
+  <form name="frm" action="updateAccountServlet" method="post" novalidate>
     <fieldset>
       <legend><span class="number">1</span>Profile info</legend>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" value="${user.firstName}">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" name="firstName" id="firstName" ng-model="ctrl.user.firstName" />
+      </div>
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" name="lastName" id="lastName" ng-model="ctrl.user.lastName" />
+      </div>
+      <div>
+        <label for="userName">User Name:</label>
+        <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3" required />
+        <span ng-show="frm.userName.$dirty && frm.userName.$error.required">Username is required.</span>
+        <span ng-show="frm.userName.$dirty && frm.userName.$error.minlength">Username is too short.</span>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" ng-model="ctrl.user.email" required />
+        <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required</span>
+        <span ng-show="frm.email.$dirty && frm.email.$error.email">Enter a valid email.</span>
+      </div>
 
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" value="${user.lastName}">
+      <div>
+        <label for="monthSalary">MonthSalary:</label>
+        <input type="number" name="monthSalary" id="monthSalary" ng-model="ctrl.user.monthSalary" required />
+        <span ng-show="frm.monthSalary.$dirty && frm.monthSalary.$error.number">Enter a number.</span>
+      </div>
 
-      <label for="userName">User Name:</label>
-      <input type="text" id="userName" name="userName" value="${user.userName}">
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" value="${user.email}">
-
-      <label for="monthSalary">Month Salary:</label>
-      <input type="text" id="monthSalary" name="monthSalary" value="${user.monthSalary}">
+      <div>
+        <label for="current_password">Current Password:</label>
+        <input type="password" name="current_password" id="current_password" ng-model="ctrl.user.current_password" compare-to="ctrl.user.password_check" ng-minlength="5" required />
+        <span ng-show="frm.current_password.$dirty && frm.current_password.$error.compareTo">Wrong password.</span>
+      </div>
 
       <div class="passButton">
-      <a>Change password</a>
+        <a>Change password</a>
       </div>
+
       <div class="password">
-        <label for="current_password">Current password:</label>
-        <input type="password" id="current_password" name="current_password">
-
-        <label for="new_password">New password:</label>
-        <input type="password" id="new_password" name="new_password">
-
-        <label for="confirm_password">Confirm password:</label>
-        <input type="password" id="confirm_password" name="confirm_password">
+        <div>
+          <label for="new_password">New Password:</label>
+          <input type="password" name="new_password" id="new_password" ng-model="ctrl.user.new_password" ng-minlength="5" ng-disabled="frm.current_password.$invalid" required />
+          <span ng-show="frm.new_password.$dirty && frm.new_password.$error.minlength">Password is too short.</span>
+        </div>
+        <div>
+          <label for="confirm_password">Confirm Password:</label>
+          <input type="password" name="confirm_password" id="confirm_password" ng-model="ctrl.user.confirm_password" compare-to="ctrl.user.new_password" ng-disabled="frm.new_password.$invalid" required />
+          <span ng-show="frm.confirm_password.$dirty && frm.confirm_password.$error.compareTo">Passwords don't match.</span>
+        </div>
       </div>
 
     </fieldset>
-    <button type="submit" class="proceed">Save Changes</button>
+    <button type="submit" class="proceed" ng-disabled="frm.email.$invalid || frm.userName.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid">Save Changes</button>
   </form>
   <div class="push"></div>
 </div>
