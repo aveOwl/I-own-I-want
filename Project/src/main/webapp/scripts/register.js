@@ -6,9 +6,9 @@
     app.controller('MainController', function () {
         // code that runs when controller is called
         this.user = { // this.user - property of this controller
-            firstname: ""
-            , lastname: ""
-            , username: ""
+            firstName: ""
+            , lastName: ""
+            , userName: ""
             , email: ""
             , password: ""
             , confirmPassword: ""

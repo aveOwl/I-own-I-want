@@ -1,45 +1,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html ng-app="application">
 <head>
   <title>Goals</title>
   <meta charset="UTF-8">
-  <link href="style/header-footer.css" rel="stylesheet">
   <link href="style/goals-style.css" rel="stylesheet">
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="scripts/angular.min.js"></script>
   <script src="scripts/goals.js"></script>
+  <script src="scripts/goals-valid.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="wrapper">
+<div class="wrapper" ng-controller="MainController as ctrl">
   <button class="goal">new Goal</button>
-
   <div class="insertion">
-
     <div class="itemForm">
-
-      <div class="form">
-        <!--        <div class="item">-->
-
+      <form name="frm" novalidate>
         <div class="buttonContainer">
           <button class="closeForm">✗</button>
         </div>
-
-        <input type="text" id="title"/>
-
-        <input type="number" id="cost" name="cost"/>
-
-        <textarea id="shorten" name="shorten"></textarea>
-
-        <textarea id="description" name="description"></textarea>
-
-        <input id="confirm" type="submit" value="Confirm"/>
-      </div>
-
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" ng-model="ctrl.goal.title" required/>
+          <span ng-show="frm.title.$dirty && frm.title.$error.required">Title is required.</span>
+        </div>
+        <div>
+          <label for="cost">Cost:</label>
+          <input type="number" id="cost" name="cost" ng-model="ctrl.goal.cost" required/>
+          <span ng-show="frm.cost.$dirty && frm.cost.$error.required">Cost is required.</span>
+          <span ng-show="frm.cost.$dirty && frm.cost.$error.number">Enter a number.</span>
+        </div>
+        <div>
+          <label for="shorten">Short Description:</label>
+          <textarea id="shorten" name="shorten" ng-model="ctrl.goal.shortDescr"></textarea>
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" ng-model="ctrl.goal.description"></textarea>
+        </div>
+        <button type="submit"
+                id="confirm"
+                class="proceed"
+                ng-class="{red: frm.$invalid}"
+                ng-disabled="frm.$invalid">Confirm</button>
+      </form>
     </div>
   </div>
-  <div class="articles">
 
+  <div class="articles">
     <c:forEach items="${goals_list}" var="goal">
       <div class="article">
         <div class="item">
@@ -57,7 +66,6 @@
             <button class="edit">✍</button>
           </div>
         </div>
-
         <div class="description">
           <div class="">&nbsp;</div>
           <h1>${goal.notes}</h1>
