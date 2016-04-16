@@ -20,6 +20,7 @@ public class DataBaseManager {
     private static final Logger log = LoggerFactory.getLogger(DataBaseManager.class);
     private static DataBaseManager instance;
     private Properties queries;
+    private Connection connection;
 
     /**
      * Provides DataBaseManager instance.
@@ -42,11 +43,10 @@ public class DataBaseManager {
      * @return connection to the DataBase.
      */
     public Connection getConnection() {
-        Connection connection = null;
         try {
             Context context = new InitialContext();
             DataSource ds = (DataSource) context.lookup("java:/jbdc/data-postgres");
-            connection = ds.getConnection();
+            this.connection = ds.getConnection();
             log.debug("Establishing connection: {}", connection.getMetaData().getURL());
         } catch (SQLException | NamingException e) {
             log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());

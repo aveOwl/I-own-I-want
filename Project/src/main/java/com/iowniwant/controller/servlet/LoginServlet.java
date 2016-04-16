@@ -20,7 +20,7 @@ import static com.iowniwant.util.UserValidation.*;
  * to welcome page if validation is passed, otherwise redirects to
  * login page.
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet", "/welcome"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
 
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
@@ -40,12 +40,9 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
-        User user = userDao.getByNick(username);
-
-        log.debug("username present in the DataBase: {}", username.equals(user.getUserName()));
-        log.debug("password present in the DataBase: {}", password.equals(user.getPassword()));
-
         if (isUserValid(username, password)) {
+
+            User user = userDao.getByNick(username);
 
             log.debug("user_id from DataBase: {}", user.getId());
 
@@ -57,18 +54,16 @@ public class LoginServlet extends HttpServlet {
 
             Cookie userCookie = new Cookie("ioiw.username", username);
             Cookie passCookie = new Cookie("ioiw.password", password);
+
             response.addCookie(userCookie);
-
-            log.debug("Setting user_id in Cookie: {}", userCookie);
-
             response.addCookie(passCookie);
+
             log.debug("setting username: {} to userCookie: {}", username, userCookie.getName());
             log.debug("setting password: {} to passCookie: {}", password, passCookie.getName());
 
-            log.trace("redirection to welcome");
-            response.sendRedirect("welcome");
+            log.trace("redirection to goals page");
+            response.sendRedirect("goalServlet");
         } else {
-            log.debug("redirecting to login page");
             response.sendRedirect("login.jsp");
         }
     }

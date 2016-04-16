@@ -66,65 +66,6 @@ a {
   font-size: 11px;
 }
 
-input {
-  display: block;
-  padding: 10px 0;
-  width: 30%;
-  margin-bottom: 10px;
-  -webkit-transition: background 1s ease;
-  -moz-transition: background 1s ease;
-  -o-transition: background 1s ease;
-  -ms-transition: background 1s ease;
-  transition: background 1s ease;
-}
-
-input[type="email"],
-input[type="text"],
-input[type="password"] {
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  display: block;
-  width: 100%;
-  padding: 7px;
-  border: none;
-  border-bottom: 2px solid #E9E9E9;
-  background: transparent;
-  margin-bottom: 15px;
-  font: 16px Arial, Helvetica, sans-serif;
-  height: 45px;
-}
-
-input[type="button"],
-input[type="submit"]{
-  -moz-box-shadow: inset 0px 1px 0px 0px #222930;
-  -webkit-box-shadow: inset 0px 1px 0px 0px #222930;
-  box-shadow: inset 0px 1px 0px 0px #222930;
-  background-color: #222930;
-  border: 1px solid #222930;
-  display: inline-block;
-  cursor: pointer;
-  color: #E9E9E9;
-  font-family: sans-serif;
-  font-size: 14px;
-  padding: 7px 15px;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-input, select, textarea{
-  color: #E9E9E9;
-}
-
-textarea:focus, input:focus {
-  color: #E9E9E9;
-}
-
-::-webkit-input-placeholder {
-  color: #E9E9E9;
-}
-
 .push {
   height: 2em;
 }

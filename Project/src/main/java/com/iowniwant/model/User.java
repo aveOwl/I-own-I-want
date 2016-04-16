@@ -62,10 +62,7 @@ public class User implements Serializable, Comparable<User> {
         this.userName = resultSet.getString("nick_name");
         this.password = resultSet.getString("user_password");
         this.email = resultSet.getString("email");
-        if (monthSalary == 0.0)
-            this.monthSalary = 0.0; // to handle -0.0
-        else
-            this.monthSalary = resultSet.getDouble("month_salary");
+        this.monthSalary = resultSet.getDouble("month_salary");
     }
 
     public int getId() {
