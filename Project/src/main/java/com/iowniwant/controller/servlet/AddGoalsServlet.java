@@ -45,8 +45,14 @@ public class AddGoalsServlet extends HttpServlet {
 
         if (title != null && shorten != null && description != null && pubdate != null) {
             Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
-            goalDao.create(goal);
+            Goal goal1 = goalDao.create(goal);
+            Goal viewGoal = goalDao.getById(goal1.getId());
+
+            log.debug("difference between normal goals_id and view goals_id: {}, {}", viewGoal.getId(), viewGoal.getV_id());
         }
+
+       /* response.setContentType("application/json");
+        response.getWriter().write("{v_id:" + });*/
 
     }
 }

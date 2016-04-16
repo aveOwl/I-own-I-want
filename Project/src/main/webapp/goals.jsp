@@ -44,7 +44,7 @@
       <div class="article">
         <div class="item">
           <div class="row">
-            <p class="title">${goal.title}</p>
+            <p class="title">${goal.v_id} ${goal.title}</p>
           </div>
           <div class="item">
             <p class="source">${goal.description}</p>
