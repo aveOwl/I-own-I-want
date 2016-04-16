@@ -3,7 +3,6 @@
 <head>
   <title>Profile</title>
   <meta charset="utf-8">
-  <link href="style/header-footer.css" rel="stylesheet">
   <link href="style/account-style.css" rel="stylesheet">
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="scripts/angular.min.js"></script>
@@ -70,7 +69,7 @@
       <div>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" ng-model="ctrl.user.email" required />
-        <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required</span>
+        <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required.</span>
         <span ng-show="frm.email.$dirty && frm.email.$error.email">Enter a valid email.</span>
       </div>
 
@@ -83,6 +82,7 @@
       <div>
         <label for="current_password">Current Password:</label>
         <input type="password" name="current_password" id="current_password" ng-model="ctrl.user.current_password" compare-to="ctrl.user.password_check" ng-minlength="5" required />
+        <span ng-show="frm.current_password.$dirty && frm.current_password.$error.required">Password is required.</span>
         <span ng-show="frm.current_password.$dirty && frm.current_password.$error.compareTo">Wrong password.</span>
       </div>
 
@@ -104,7 +104,11 @@
       </div>
 
     </fieldset>
-    <button type="submit" class="proceed" ng-disabled="frm.email.$invalid || frm.userName.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid">Save Changes</button>
+    <button type="submit"
+            class="proceed"
+            ng-class="{red: frm.email.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid || frm.confirm_password.$error.compareTo}"
+            ng-disabled="frm.email.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid || frm.confirm_password.$error.compareTo">Save Changes
+    </button>
   </form>
   <div class="push"></div>
 </div>
