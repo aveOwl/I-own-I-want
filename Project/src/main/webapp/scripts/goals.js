@@ -85,6 +85,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
     $.ajax({
         url: 'addGoalsServlet',
         type: 'post',   // 'get' or 'post'
+        //dataType: 'json',
         data: {title : title, cost : cost,
             shorten : shorten, description : description},   //variable you want to send.
         success : function(data)
@@ -97,7 +98,9 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             var sourceId = 'source' + counter;
             var dateId = 'date' + counter;
             var descId = 'desc' + counter;
+            var numdId = 'numd' + counter;
 
+            //var numb = data.v_id;
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
 
@@ -106,6 +109,28 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
                 '<div class="item"' + ' id=' + itemId + '>' +
                 '<div class="row"' + ' id=' + rowId + '>' +
                 '<p class="title"' + ' id=' + titleId + '></p>' +
+
+                '</div>' + '<div class="item"' + ' id=' + itemId + '>' +
+                '<p class="source"' + ' id=' + sourceId + '></p>' +
+
+                '</div>' + '<div class="item"' + ' id=' + itemId + '>' +
+                '<p class="pubdate"' + ' id=' + dateId + '></p>' +
+                '</div>' +
+                '<div class="buttonContainer"><button class="close">✗</button>' +
+                '<button class="edit">✍</button></div>' +
+                '</div>' + '<div class="description"><div class="">&nbsp;</div>' +
+                '<h1' + ' id=' + descId + '></h1><div class="">&nbsp;</div>' +
+                '</div></div>';
+
+            $(".articles").prepend(html);
+
+            //array = data.split(" ");
+
+
+            document.getElementById(titleId).innerHTML = data + " " + title;
+            document.getElementById(sourceId).innerHTML = shorten;
+            document.getElementById(dateId).innerHTML = pubdate;
+            document.getElementById(descId).innerHTML = description;
 
                 '</div>' + '<div class="item"' + ' id=' + itemId + '>' +
                 '<p class="source"' + ' id=' + sourceId + '></p>' +

@@ -87,6 +87,34 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         return null;
     }
 
+
+
+    /**
+     * Creates a view that defines a new numeration order for the ids
+     * of the goals associated with a separate user. Partition is based
+     * on the user_id values.
+     * @param connection used to execute a creation of the view when the
+     *        goals list is demanded to be obtained
+     */
+    /*
+    Функция создания представления
+    public void createGoalsView(Connection connection) {
+        Statement stmt = null;
+        try {
+            String query = createGoalView();
+            stmt = connection.createStatement();
+            stmt.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        if (stmt != null)      try { stmt.close(); } catch (SQLException ignored) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+    }
+
+    }
+    */
+
+
     /**
      * Returns a List of all Goals associated with user,
      * who's id is the userId parameter.
@@ -102,6 +130,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         ResultSet resultSet = null;
         try {
             connection = dbManager.getConnection();
+//            createGoalsView(connection);
             String query = getGoalByUserId();
             prepStatement = connection.prepareStatement(query);
             prepStatement.setInt(1, userId);
@@ -119,6 +148,14 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         }
 
         return goals;
+    }
+
+
+    /**
+     * @return query to create a view based on the result-set of an SQL statement
+     */
+    private String createGoalView() {
+        return dbManager.getQuery("create.goal.view");
     }
 
     /**

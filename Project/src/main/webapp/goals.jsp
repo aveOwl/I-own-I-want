@@ -7,8 +7,8 @@
   <link href="style/goals-style.css" rel="stylesheet">
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="scripts/angular.min.js"></script>
-  <script src="scripts/goals-valid.js"></script>
   <script src="scripts/goals.js"></script>
+  <script src="scripts/goals-valid.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -53,7 +53,7 @@
       <div class="article">
         <div class="item">
           <div class="row">
-            <p class="title">${goal.title}</p>
+            <p class="title">${goal.v_id} ${goal.title}</p>
           </div>
           <div class="item">
             <p class="source">${goal.description}</p>
