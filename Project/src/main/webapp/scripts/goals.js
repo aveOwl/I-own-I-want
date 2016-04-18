@@ -50,17 +50,17 @@ $(document).on('click', '.close',function () {
     var container = $(this).closest('.buttonContainer');
     container.closest('.article').remove();
 
-    $.ajax({
+    /*$.ajax({
         url: 'removeGoalsServlet',
         type: 'post',   // 'get' or 'post'
         data: {title : title, cost : cost,
             shorten : shorten, description : description},   //variable you want to send.
         success : function(data) {
 
-            var container = $(this).closest('.buttonContainer');
-            container.closest('.article').remove();
+            /!*var container = $(this).closest('.buttonContainer');
+            container.closest('.article').remove();*!/
         }
-        });
+        });*/
 
     });
 
@@ -85,6 +85,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
     $.ajax({
         url: 'addGoalsServlet',
         type: 'post',   // 'get' or 'post'
+        //dataType: 'json',
         data: {title : title, cost : cost,
             shorten : shorten, description : description},   //variable you want to send.
         success : function(data)
@@ -97,7 +98,9 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             var sourceId = 'source' + counter;
             var dateId = 'date' + counter;
             var descId = 'desc' + counter;
+            var numdId = 'numd' + counter;
 
+            //var numb = data.v_id;
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
 
@@ -121,7 +124,10 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
 
             $(".articles").prepend(html);
 
-            document.getElementById(titleId).innerHTML = title;
+            //array = data.split(" ");
+
+
+            document.getElementById(titleId).innerHTML = data + " " + title;
             document.getElementById(sourceId).innerHTML = shorten;
             document.getElementById(dateId).innerHTML = pubdate;
             document.getElementById(descId).innerHTML = description;

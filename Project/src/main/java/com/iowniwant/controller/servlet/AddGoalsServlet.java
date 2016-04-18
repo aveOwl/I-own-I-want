@@ -35,24 +35,32 @@ public class AddGoalsServlet extends HttpServlet {
         String title = request.getParameter("title");
         log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
-        log.debug("Title was obtained due to the ajax function: {}", cost);
+        log.debug("Cost was obtained due to the ajax function: {}", cost);
         String shorten = request.getParameter("shorten");
-        log.debug("Title was obtained due to the ajax function: {}", shorten);
+        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
         String description = request.getParameter("description");
-        log.debug("Title was obtained due to the ajax function: {}", description);
+        log.debug("Description was obtained due to the ajax function: {}", description);
         Date pubdate = new Date(new java.util.Date().getTime());
         log.debug("This date will be persisted in the databse: {}", pubdate);
 
         if (title != null && shorten != null && description != null && pubdate != null) {
             Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
-            Goal goal1 = goalDao.create(goal);
-            Goal viewGoal = goalDao.getById(goal1.getId());
 
-            log.debug("difference between normal goals_id and view goals_id: {}, {}", viewGoal.getId(), viewGoal.getV_id());
+            Goal viewGoal = goalDao.getById(goalDao.create(goal).getId());
+
+            String jsonObject = "" + viewGoal.getV_id();
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(jsonObject);
+
+
+            /*String jsonObject = "{v_id:" + viewGoal.getV_id() + "}";
+            String json = new Gson().toJson(jsonObject);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            out.flush();*/
         }
-
-       /* response.setContentType("application/json");
-        response.getWriter().write("{v_id:" + });*/
-
     }
 }

@@ -37,3 +37,20 @@ values ('Waschmachine',500.56,'PC TO WORK WHILE YOU RELAX SO WILL IT WORK THIS I
 INSERT INTO iowniwant.goals (title, cost, description, pubdate, notes, user_id)
 values ('Vacuum Triode',5124.78,'PC TO WORK WHILE YOU RELAX SO WILL IT WORK THIS IS RAP','05/04/16'
 	,'to somewhere in the back of my mind It will remain there until I wish to retrieve it ', 1);
+
+
+/*
+представление не является самостоятельной частью набора данных, хранящегося в базе
+
+row_number - нумерует строки, возвращаемые запросом
+
+Over - задает порядок нумерации строк
+
+PARTITION - определяет группы в которые будут собираться значения для задания нового порядка независимой нумерации
+
+ORDER BY - набор строк будет отсортирован по значению заданного столбца
+*/
+
+CREATE OR REPLACE VIEW iowniwant.v_goals
+AS SELECT goals_id, title, cost, description, pubdate, notes,user_id,
+		 row_number() OVER (PARTITION BY user_id ORDER BY goals_id) AS v_goals_id FROM iowniwant.goals;
