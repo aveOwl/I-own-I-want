@@ -85,12 +85,11 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
     $.ajax({
         url: 'addGoalsServlet',
         type: 'post',   // 'get' or 'post'
-        //dataType: 'json',
+        dataType: 'text',
         data: {title : title, cost : cost,
             shorten : shorten, description : description},   //variable you want to send.
         success : function(data)
         {
-
             //var articleId = 'article' + counter;
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
@@ -127,7 +126,8 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             //array = data.split(" ");
 
 
-            document.getElementById(titleId).innerHTML = data + " " + title;
+
+            document.getElementById(titleId).innerHTML = data.toString().charAt(2) + " " + title;
             document.getElementById(sourceId).innerHTML = shorten;
             document.getElementById(dateId).innerHTML = pubdate;
             document.getElementById(descId).innerHTML = description;
@@ -206,8 +206,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
                 para.appendChild(t);                                          // Append the text to <p>
                 document.body.appendChild(para);                              // Append <p> to <body>
             }*/
-        }
-
+            }
 
     });
 

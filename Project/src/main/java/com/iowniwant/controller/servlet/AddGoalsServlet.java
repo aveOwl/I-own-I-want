@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 
 /**
@@ -48,19 +49,43 @@ public class AddGoalsServlet extends HttpServlet {
 
             Goal viewGoal = goalDao.getById(goalDao.create(goal).getId());
 
-            String jsonObject = "" + viewGoal.getV_id();
-            response.setContentType("text/plain");
+            /*List<Integer> index = new ArrayList<>();
+            index.add(viewGoal.getV_id());
+            String json = new Gson().toJson(index);
+
+            response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().print(jsonObject);
+            response.getWriter().write(json);*/
 
 
-            /*String jsonObject = "{v_id:" + viewGoal.getV_id() + "}";
-            String json = new Gson().toJson(jsonObject);
+            /*IndexJSON jsonObject = new IndexJSON(viewGoal.getV_id());
+            String index = new Gson().toJson(jsonObject);
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+            response.getWriter().write(index);
             out.flush();*/
+
+            response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+
+            PrintWriter out = response.getWriter();
+            String text = String.valueOf(viewGoal.getV_id());
+
+            out.write(text);
+
+
+            /*List<IndexJSON> list = new ArrayList<IndexJSON>();
+            list.add(new IndexJSON(viewGoal.getV_id()));
+            String json = new Gson().toJson(list);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);*/
+//            log.debug("JSON index: {}",text);
+
+//            response.getWriter().write(json.toString());
+
         }
     }
 }
