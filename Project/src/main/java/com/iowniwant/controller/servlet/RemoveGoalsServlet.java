@@ -15,11 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-/**
- * Created by sulfur on 14.04.16.
- */
-
-
 @WebServlet(name = "RemoveGoalsServlet", urlPatterns = "/removeGoalsServlet")
 public class RemoveGoalsServlet extends HttpServlet{
 

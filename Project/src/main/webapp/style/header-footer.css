@@ -6,6 +6,11 @@ html, body {
 
 a {
   text-decoration: none;
+  color: #E9E9E9;
+}
+
+a:hover {
+  color: #4EB1BA;
 }
 
 .header {

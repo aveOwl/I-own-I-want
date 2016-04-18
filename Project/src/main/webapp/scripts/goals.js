@@ -50,7 +50,7 @@ $(document).on('click', '.close',function () {
     var container = $(this).closest('.buttonContainer');
     container.closest('.article').remove();
 
-    $.ajax({
+   /* $.ajax({
         url: 'removeGoalsServlet',
         type: 'post',   // 'get' or 'post'
         data: {title : title, cost : cost,
@@ -60,7 +60,7 @@ $(document).on('click', '.close',function () {
             var container = $(this).closest('.buttonContainer');
             container.closest('.article').remove();
         }
-        });
+        });*/
 
     });
 

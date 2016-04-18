@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-
 @WebServlet(name = "EditGoalsServlet", urlPatterns = "editGoals")
 public class EditGoalsServlet extends HttpServlet{
 
     public static Logger log = LoggerFactory.getLogger(EditGoalsServlet.class);
-    UserDao userDao = UserDao.getInstance();
-    GoalDao goalDao = GoalDao.getInstance();
+    private UserDao userDao = UserDao.getInstance();
+    private GoalDao goalDao = GoalDao.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

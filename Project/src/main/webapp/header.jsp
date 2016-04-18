@@ -29,13 +29,13 @@
     <div class="header">
       <div class="container">
         <ul class="nav">
-          <a href="main.jsp"><li>Home</li></a>
-          <a href="#"><li>Team</li></a>
-          <a href="goalServlet"><li>Goals</li></a>
+          <li><a href="main.jsp">Home</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="goalServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
-          <a href="accountServlet"><li>My account</li></a>
-          <a href="logoutServlet"><li>Log out</li></a>
+          <li><a href="accountServlet">My account</a></li>
+          <li><a href="logoutServlet">Log out</a></li>
         </ul>
       </div>
     </div>
@@ -44,11 +44,11 @@
     <div class="header">
       <div class="container">
         <ul class="nav">
-          <a href="main.jsp"><li>Home</li></a>
-          <a href="#"><li>Team</li></a>
-          <a href="goalServlet"><li>Goals</li></a>
-          <a href="login.jsp"><li>Log in</li></a>
-          <a href="register.jsp"><li>Register</li></a>
+          <li><a href="main.jsp">Home</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="goalServlet">Goals</a></li>
+          <li><a href="login.jsp">Log in</a></li>
+          <li><a href="register.jsp">Register</a></li>
         </ul>
       </div>
     </div>
