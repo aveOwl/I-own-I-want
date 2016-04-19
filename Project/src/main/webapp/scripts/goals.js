@@ -46,21 +46,18 @@ $(document).on('click', '.edit',function () {
 
 $(document).on('click', '.close',function () {
 
-    //$(this).children('.')
-    var container = $(this).closest('.buttonContainer');
-    container.closest('.article').remove();
+    var sp = $(this).closest("div").siblings().find("span").text();
 
-    /*$.ajax({
+    $.ajax({
         url: 'removeGoalsServlet',
         type: 'post',   // 'get' or 'post'
-        data: {title : title, cost : cost,
-            shorten : shorten, description : description},   //variable you want to send.
+        data: {id: sp},   //variable you want to send.
         success : function(data) {
 
-            /!*var container = $(this).closest('.buttonContainer');
-            container.closest('.article').remove();*!/
+            var container = $(this).closest('.buttonContainer');
+            container.closest('.article').remove();
         }
-        });*/
+        });
 
     });
 
@@ -93,6 +90,7 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             //var articleId = 'article' + counter;
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
+            var indicatorCl = 'indicator' + counter;
             var titleId = 'title' + counter;
             var sourceId = 'source' + counter;
             var dateId = 'date' + counter;
@@ -102,11 +100,13 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             //var numb = data.v_id;
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
+            var ind = data.toString().charAt(2);
 
 
             var html = '<div class="article"' + /*' id=' + articleId + */'>' +
                 '<div class="item"' + ' id=' + itemId + '>' +
                 '<div class="row"' + ' id=' + rowId + '>' +
+
                 '<p class="title"' + ' id=' + titleId + '></p>' +
 
                 '</div>' + '<div class="item"' + ' id=' + itemId + '>' +
@@ -125,9 +125,14 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
 
             //array = data.split(" ");
 
+            var temp = document.createTextNode(ind);
+            temp.className = "title";
+            temp.id = "forDeletion";
+            $("#" + titleId).append(temp).append(" ");
 
+            $("#" + titleId).append(title);
 
-            document.getElementById(titleId).innerHTML = data.toString().charAt(2) + " " + title;
+            //document.getElementById(titleId).innerHTML = data.toString().charAt(2) + " " + title;
             document.getElementById(sourceId).innerHTML = shorten;
             document.getElementById(dateId).innerHTML = pubdate;
             document.getElementById(descId).innerHTML = description;

@@ -233,13 +233,21 @@ input.ng-valid.ng-dirty {
   border-color: #2780e3;
 }
 
+.title span {
+  display: inline-block;
+  color: #ffffff;
+}
+
 span {
-  color: #ff0039;
+  color: #ff0114;
   text-align: left;
   text-decoration: solid;
-  font-style: italic;
   display: block;
   margin-bottom: 8px;
+}
+
+.row .forDeletion {
+  display: inline-block;
 }
 
 .proceed {
