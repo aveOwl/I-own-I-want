@@ -31,10 +31,11 @@ public class RemoveGoalsServlet extends HttpServlet{
         User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
         log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
         response.getWriter().println(request.getServletContext().getAttribute("user_id"));
-        String id = request.getParameter("id");
-        log.debug("Title was obtained due to the ajax function: {}", id);
-        
-
+        String temp = request.getParameter("id");
+        log.debug("Title was obtained due to the ajax function: {}", temp);
+        Integer id = Integer.valueOf(temp.trim());
+        log.debug("Goal with the following id is about to be deleted: {}", id);
+        goalDao.delete(goalDao.getByViewId(id).getId());
 
        /* if (title != null) {
 

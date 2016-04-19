@@ -53,7 +53,7 @@
       <div class="article">
         <div class="item">
           <div class="row">
-            <p class="title"><span id="forDeletion">#${goal.v_id} </span> ${goal.title}</p>
+            <p class="title"><span id="forDeletion">${goal.v_id} </span> ${goal.title}</p>
           </div>
           <div class="item">
             <p class="source">${goal.description}</p>

@@ -47,6 +47,8 @@ $(document).on('click', '.edit',function () {
 $(document).on('click', '.close',function () {
 
     var sp = $(this).closest("div").siblings().find("span").text();
+    var container = $(this).closest('.buttonContainer');
+    container.closest('.article').remove();
 
     $.ajax({
         url: 'removeGoalsServlet',
@@ -54,8 +56,7 @@ $(document).on('click', '.close',function () {
         data: {id: sp},   //variable you want to send.
         success : function(data) {
 
-            var container = $(this).closest('.buttonContainer');
-            container.closest('.article').remove();
+
         }
         });
 

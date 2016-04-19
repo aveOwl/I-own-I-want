@@ -152,6 +152,40 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
 
     /**
+     * Forced to create a duplicate method as soon as goal addition is being executed
+     * by pk_id's from the original table but deletion should be provided by v_id form the view table.
+     * With that said it is necessary to use a different query.
+     * @param id identifier from the view table that a depicts a new partition over the pk's in goals table
+     */
+    public Goal getByViewId(Integer id) {
+        Connection connection = null;
+        PreparedStatement prepStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbManager.getConnection();
+            String query = getByViewIdQuery();
+            prepStatement = connection.prepareStatement(query);
+            prepStatement.setInt(1, id);
+            resultSet = prepStatement.executeQuery();
+            if (resultSet.next()) {
+                return getEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
+            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+        }
+
+        return null;
+    }
+
+
+
+    private String getByViewIdQuery() { return dbManager.getQuery("get.goal.view.by.id"); }
+
+    /**
      * @return query to create a view based on the result-set of an SQL statement
      */
     private String createGoalView() {
