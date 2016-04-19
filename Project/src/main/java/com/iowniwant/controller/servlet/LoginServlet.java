@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static com.iowniwant.util.UserValidation.*;
 
@@ -40,6 +41,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
+        response.setContentType("text/html;charset=UTF-8");
+
         if (isUserValid(username, password)) {
 
             User user = userDao.getByNick(username);
@@ -64,7 +67,8 @@ public class LoginServlet extends HttpServlet {
             log.trace("redirection to goals page");
             response.sendRedirect("goalServlet");
         } else {
-            response.sendRedirect("login.jsp");
+            response.getWriter().write("username taken");
+//            response.sendRedirect("login.jsp");
         }
     }
 }

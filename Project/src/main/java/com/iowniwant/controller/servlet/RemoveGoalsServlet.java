@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
+/**
+ * Removes goal from DataBase.
+ */
 @WebServlet(name = "RemoveGoalsServlet", urlPatterns = "/removeGoalsServlet")
 public class RemoveGoalsServlet extends HttpServlet{
 
@@ -24,22 +27,24 @@ public class RemoveGoalsServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer userID = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id obtained from the servletContext: {}", userID);
 
-        User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
-        log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
-        response.getWriter().println(request.getServletContext().getAttribute("user_id"));
+        // user associated with goal
+        User user = userDao.getById(userID);
+
         String title = request.getParameter("title");
-        log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
-        log.debug("Title was obtained due to the ajax function: {}", cost);
         String shorten = request.getParameter("shorten");
-        log.debug("Title was obtained due to the ajax function: {}", shorten);
         String description = request.getParameter("description");
-        log.debug("Title was obtained due to the ajax function: {}", description);
         Date pubdate = new Date(new java.util.Date().getTime());
-        log.debug("This date will be persisted in the databse: {}", pubdate);
 
-        if (title != null && shorten != null && description != null && pubdate != null) {
+        log.debug("Title was obtained due to the ajax function: {}", title);
+        log.debug("Cost was obtained due to the ajax function: {}", cost);
+        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
+        log.debug("Description was obtained due to the ajax function: {}", description);
+
+        if (title != null && shorten != null && description != null) {
             Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
             goalDao.create(goal);
         }

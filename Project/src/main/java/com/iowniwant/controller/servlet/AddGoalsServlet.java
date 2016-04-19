@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.sql.Date;
 
 /**
- * Created by sulfur on 13.04.16.
+ * Using users input persists new Goal in DataBase, bonds it with
+ * this user. Obtains essential data from the ajax on the clients side.
  */
-
 @WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
 public class AddGoalsServlet extends HttpServlet {
 
@@ -27,40 +27,35 @@ public class AddGoalsServlet extends HttpServlet {
     private UserDao userDao = UserDao.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Integer userID = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id obtained from the servletContext: {}", userID);
 
-        User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
-        log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
-        response.getWriter().println(request.getServletContext().getAttribute("user_id"));
+        // user associated with goal
+        User user = userDao.getById(userID);
+
         String title = request.getParameter("title");
-        log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
-        log.debug("Cost was obtained due to the ajax function: {}", cost);
         String shorten = request.getParameter("shorten");
-        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
         String description = request.getParameter("description");
-        log.debug("Description was obtained due to the ajax function: {}", description);
         Date pubdate = new Date(new java.util.Date().getTime());
-        log.debug("This date will be persisted in the databse: {}", pubdate);
 
-        if (title != null && shorten != null && description != null && pubdate != null) {
-            Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
+        log.debug("Title was obtained due to the ajax function: {}", title);
+        log.debug("Cost was obtained due to the ajax function: {}", cost);
+        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
+        log.debug("Description was obtained due to the ajax function: {}", description);
+
+        if (title != null && shorten != null && description != null) {
+            Goal goal = new Goal(title, cost, shorten, pubdate, description, user);
 
             Goal viewGoal = goalDao.getById(goalDao.create(goal).getId());
 
+            // sends GoalId from view to ajax function, could be used via data object.
             String jsonObject = "" + viewGoal.getV_id();
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().print(jsonObject);
-
-
-            /*String jsonObject = "{v_id:" + viewGoal.getV_id() + "}";
-            String json = new Gson().toJson(jsonObject);
-            response.setContentType("application/json");
-            PrintWriter out = response.getWriter();
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-            out.flush();*/
         }
     }
 }

@@ -7,44 +7,7 @@
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="scripts/angular.min.js"></script>
   <script type="text/javascript" src="scripts/account.js"></script>
-  <script type="text/javascript">
-    (function () {
-      var app = angular.module('application', []);
-      app.controller('MainController', function () {
-        this.user = {
-          firstName: "${user.firstName}"
-          , lastName: "${user.lastName}"
-          , userName: "${user.userName}"
-          , email: "${user.email}"
-          , monthSalary: ${user.monthSalary}
-          , current_password: ""
-          , password_check: "${user.password}"
-          , new_password: ""
-          , confirm_password: ""
-        };
-      })
-
-      app.directive('compareTo', function () {
-        return {
-          require: "ngModel"
-          , scope: {
-            otherModelValue: "=compareTo"
-          }
-          , link: function (scope, element, attributes, ngModel) {
-
-            ngModel.$validators.compareTo = function (modelValue) {
-              return modelValue == scope.otherModelValue;
-            };
-
-            scope.$watch("otherModelValue", function () {
-              ngModel.$validate();
-            });
-          }
-        };
-      });
-    })();
-  </script>
-
+  <script type="text/javascript" src="scripts/account-test.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>

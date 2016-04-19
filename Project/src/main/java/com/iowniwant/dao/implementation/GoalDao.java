@@ -46,7 +46,6 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -86,8 +85,6 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         }
         return null;
     }
-
-
 
     /**
      * Creates a view that defines a new numeration order for the ids
