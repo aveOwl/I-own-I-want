@@ -32,26 +32,22 @@ $(document).on("click", "#confirm", function() {
 
     $.ajax({
         url: 'addGoalsServlet',
-        type: 'post',   // 'get' or 'post'
+        type: 'post', // 'get' or 'post'
         dataType: 'text',
-        data: {title : title, cost : cost,
-            shorten : shorten, description : description},   //variable you want to send.
-        success : function(data)
-        {
-            //var articleId = 'article' + counter;
+        data: {title : title, 
+               cost : cost,
+               shorten : shorten, 
+               description : description}, // variable you want to send.
+        success : function(data) {
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
-            var indicatorCl = 'indicator' + counter;
             var titleId = 'title' + counter;
             var sourceId = 'source' + counter;
             var dateId = 'date' + counter;
             var descId = 'desc' + counter;
-            var numdId = 'numd' + counter;
 
-            //var numb = data.v_id;
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
-            var ind = data.toString().charAt(2);
 
             var html = '<div class="article"' + '>' +
                 '<div class="item"' + ' id=' + itemId + '>' +
@@ -71,18 +67,8 @@ $(document).on("click", "#confirm", function() {
                 '<h1' + ' id=' + descId + '></h1><div class="">&nbsp;</div>' +
                 '</div></div>';
 
-            $(".articles").prepend(html);
+            $(".articles").append(html);
 
-            //array = data.split(" ");
-
-            var temp = document.createTextNode(ind);
-            temp.className = "title";
-            temp.id = "forDeletion";
-            $("#" + titleId).append(temp).append(" ");
-
-            $("#" + titleId).append(title);
-
-            //document.getElementById(titleId).innerHTML = data.toString().charAt(2) + " " + title;
             document.getElementById(titleId).innerHTML = "#" + data + " " + title;
             document.getElementById(sourceId).innerHTML = shorten;
             document.getElementById(dateId).innerHTML = pubdate;
@@ -94,19 +80,15 @@ $(document).on("click", "#confirm", function() {
 // close goal => remove it from DataBase.
 $(document).on('click', '.close', function () {
 
+    var sp = $(this).closest("div").siblings().find("span").text();
     var container = $(this).closest('.buttonContainer');
     container.closest('.article').remove();
-
+    
     $.ajax({
         url: 'removeGoalsServlet',
         type: 'post', // 'get' or 'post'
-        data: {title : title,
-               cost : cost,
-               shorten : shorten,
-               description : description}, // variable you want to send.
+        data: {id: sp}, // variable you want to send.
         success : function(data) {
-            var container = $(this).closest('.buttonContainer');
-            container.closest('.article').remove();
         }
     });
 });
@@ -114,49 +96,14 @@ $(document).on('click', '.close', function () {
 // edit goal => update it in DataBase
 $(document).on('click', '.edit', function () {
 
-    var title =         document.getElementById("title").value;
-    var cost =          document.getElementById("cost").value;
-    var shorten =       document.getElementById("shorten").value;
-    var description =   document.getElementById("description").value;
+    var sp = $(this).closest("div").siblings().find("span").text();
 
     $.ajax({
-        url: 'addGoalsServlet',
+        url: 'editGoalsServlet',
         type: 'post', // 'get' or 'post'
-        data: {title : title,
-            cost : cost,
-            shorten : shorten,
-            description : description}, //variable you want to send.
+        data: {id: sp}, // variable you want to send.
         success : function(data) {
-            var itemId = 'item' + counter;
-            var rowId = 'row' + counter;
-            var titleId = 'title' + counter;
-            var sourceId = 'source' + counter;
-            var dateId = 'date' + counter;
-            var descId = 'desc' + counter;
-
-            var time = new Date().getTime();
-            var pubdate = new Date(time).toDateString();
+            
         }
     });
-
-    /*jQuery('<div/>', {
-        id : "someId"
-    }).appendTo('.articles container');*/
-
-
-    //$.post("ajaxServlet",{description:"Nikos"})
-
-    /*$.get("ajaxServlet", myForm.serialize(), function(data) {
-
-            $('#someId').text(data);*/
-
-        /*var container = document.createElement('div')
-
-        container.innerHTML = '<div class="article"> \
-            <div class="item">'+title+'</div> \
-            <div class="row">'+body+'</div> \
-            <p>text(data)</p> \
-            </div>';
-    });*/
 });
-

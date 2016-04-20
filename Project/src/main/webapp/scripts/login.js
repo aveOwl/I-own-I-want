@@ -1,15 +1,20 @@
-$(document).ready(function(){
-    $("#userName").change(function(){
-        var userName = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "check",
-            data: "userName="+ userName,
-            success: function(msg){
-                $(".status").ajaxComplete(function(event, request, settings){
-                    $(".status").html(msg);
-                });
+$(document).on("submit", ".login", function myFunc() {
+    
+    $.ajax({
+        url: $(".login").attr('action'),
+        type: 'post', // 'get' or 'post'
+        data: $(".login").serialize(),
+        success : function(response) {
+            if (response == "success") {
+                window.location.assign("goalServlet");
+            } else {
+                $('#logError').removeClass("hideME");
+                $('#logError').effect( 'shake', {direction: "up", distance: 5}, 1000 );
             }
-        });
+        }
     });
-});  
+});
+
+function myFunc() {
+    return false;
+}

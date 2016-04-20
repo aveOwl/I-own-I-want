@@ -64,10 +64,7 @@ public class Goal implements Serializable, Comparable<Goal> {
         this.notes = resultSet.getString("notes");
         this.user = user;
         this.v_id = resultSet.getInt("v_goals_id");
-        if (cost == 0.0)
-            this.cost = 0.0; // to handle -0.0
-        else
-            this.cost = resultSet.getDouble("cost");
+        this.cost = resultSet.getDouble("cost");
     }
 
     public int getId() {

@@ -113,7 +113,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             prepStatement.setInt(1, id);
             resultSet = prepStatement.executeQuery();
             if (resultSet.next()) {
-                log.debug("Returning entity with id: {}", id);
                 return getEntity(resultSet);
             }
         } catch (SQLException e) {

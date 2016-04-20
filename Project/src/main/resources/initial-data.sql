@@ -39,7 +39,7 @@ CREATE OR REPLACE VIEW iowniwant.v_goals AS SELECT goals.goals_id,
 INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
 values ('admin', 'admin', 'admin', 'admin', 'admin@gmail.com');
 INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
-values ('user', 'qwerty', 'user', 'user', 'user@gmail.com');
+values ('user', 'qwerty', 'user', 'admin', 'user@gmail.com');
 
 INSERT INTO iowniwant.goals (title, cost, description, pubdate, notes, user_id)
 values ('Title Sample 1', 100.00, 'Description Sample 1', '22/01/12', 'Notes Sample 1', 1);

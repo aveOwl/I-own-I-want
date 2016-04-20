@@ -60,36 +60,22 @@ p {
 
 .menu {
   /*	display:none;*/
-  clear:both;
-  margin:20px 0 0 0;
+  clear: both;
+  margin: 20px 0 0 0;
 }
+
 .menu li {
-  font-size:12px;
+  font-size: 12px;
   /*	margin:10px 0 0;*/
 }
+
 .menu li a {
-  color:#555;
+  color: #555;
 }
 
 .menu li:hover a {
-  color:#eee;
+  color: #eee;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .wrapper {
   min-height: 100%;
@@ -275,21 +261,13 @@ input.ng-valid.ng-dirty {
   border-color: #2780e3;
 }
 
-.title span {
-  display: inline-block;
-  color: #ffffff;
-}
-
 span {
-  color: #ff0114;
+  color: #ff0039;
   text-align: left;
   text-decoration: solid;
+  font-style: italic;
   display: block;
   margin-bottom: 8px;
-}
-
-.row .forDeletion {
-  display: inline-block;
 }
 
 .proceed {
@@ -448,4 +426,10 @@ span {
 .footer,
 .push {
   clear: both;
+}
+
+.hideME {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }

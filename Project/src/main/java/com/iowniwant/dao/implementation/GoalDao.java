@@ -154,7 +154,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      * With that said it is necessary to use a different query.
      * @param id identifier from the view table that a depicts a new partition over the pk's in goals table
      */
-    public Goal getByViewId(Integer id) {
+    /*public Goal getByViewId(Integer id) {
         Connection connection = null;
         PreparedStatement prepStatement = null;
         ResultSet resultSet = null;
@@ -176,11 +176,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         }
 
         return null;
-    }
+    }*/
 
-
-
-    private String getByViewIdQuery() { return dbManager.getQuery("get.goal.view.by.id"); }
+//    private String getByViewIdQuery() { return dbManager.getQuery("get.goal.view.by.id"); }
 
     /**
      * @return query to create a view based on the result-set of an SQL statement

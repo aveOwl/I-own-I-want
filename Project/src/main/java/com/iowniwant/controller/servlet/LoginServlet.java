@@ -30,7 +30,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
@@ -41,7 +40,9 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+
 
         if (isUserValid(username, password)) {
 
@@ -65,10 +66,9 @@ public class LoginServlet extends HttpServlet {
             log.debug("setting password: {} to passCookie: {}", password, passCookie.getName());
 
             log.trace("redirection to goals page");
-            response.sendRedirect("goalServlet");
+            response.getWriter().write("success");
         } else {
-            response.getWriter().write("username taken");
-//            response.sendRedirect("login.jsp");
+            response.getWriter().write("fail");
         }
     }
 }
