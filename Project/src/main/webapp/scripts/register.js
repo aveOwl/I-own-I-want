@@ -36,3 +36,21 @@
     });
 
 })();
+
+$(document).on("submit", ".register", function myFunc() {
+
+    $.ajax({
+        url: $(".register").attr('action'),
+        type: 'post', // 'get' or 'post'
+        data: $(".register").serialize(),
+        success : function(response) {
+            if (response == "success") {
+                window.location.assign("goalServlet");
+            }
+        }
+    });
+});
+
+function myFunc() {
+    return false;
+}

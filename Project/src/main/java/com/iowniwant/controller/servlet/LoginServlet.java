@@ -43,8 +43,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
 
-
-        if (isUserValid(user)) {
+        if (isUserValid(username, password)) {
 
             User user = userDao.getByNick(username);
 
