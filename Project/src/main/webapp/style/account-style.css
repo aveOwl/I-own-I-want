@@ -5,12 +5,20 @@ body {
   padding: 0;
 }
 
-a {
-  text-decoration: none;
+body {
+  background-image: url("img/account-bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .header {
   background-color: #222930;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .nav {
@@ -33,6 +41,10 @@ a {
   right: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
@@ -40,39 +52,42 @@ a {
   margin: 0 auto -2em;
 }
 
-.front {
-  height: 800px;
-  background: url("img/login-bg.jpg");
-  background-size: cover;
-}
-
-.container {
+form {
+  width: 300px;
+  padding: 20px;
   margin: 0 auto;
-  padding: 0 10px;
 }
 
-.banner {
-  position: relative;
-  top: 180px;
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  color: #E9E9E9;
+  font-size: 2.4em;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.banner h1 {
-  color: #ffffff;
-  font-family: 'Oswald', serif;
-  font-weight: 600;
-  font-size: 70px;
-  margin-top: 0;
-  margin-bottom: 80px;
-  text-transform: uppercase;
+span {
+  text-align: left;
+  color: #ff0039;
+  margin-left: 0;
 }
 
-form {
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 100%);
+.number {
+  background-color: #4EB1BA;
+  color: #E9E9E9;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
 }
 
 label {
@@ -81,7 +96,7 @@ label {
   font-style: italic;
   display: block;
   margin-bottom: 8px;
-  color: #222930;
+  color: #E9E9E9;
 }
 
 input {
@@ -96,8 +111,10 @@ input {
   transition: background 1s ease;
 }
 
+input[type="email"],
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -120,14 +137,35 @@ input.ng-valid.ng-dirty {
   border-color: #2780e3;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.passButton {
+  cursor: pointer;
+  cursor: hand;
+  color: #4EB1BA;
+  text-decoration: underline;
+}
+
+.password {
+  display: none;
+  margin: 10px;
+}
+
 .proceed {
   padding: 10px 18px 10px 15px;
   color: #E9E9E9;
   background-color: #4EB1BA;
   font-size: 15px;
   font-style: normal;
-  border-radius: 50px;
-  width: 45%;
+  border-radius: 10px;
+  margin-left: 48px;
+  width: 70%;
   text-transform: uppercase;
   border: 1px solid #4EB1BA;
   border-width: 1px 1px 3px;
@@ -141,33 +179,14 @@ input.ng-valid.ng-dirty {
   background-color: #d3133e;
   font-size: 15px;
   font-style: normal;
-  border-radius: 50px;
-  width: 45%;
+  border-radius: 10px;
+  margin-left: 48px;
+  width: 70%;
   text-transform: uppercase;
   border: 1px solid #d3133e;
   border-width: 1px 1px 3px;
   cursor: pointer;
   cursor: hand;
-}
-
-.error {
-  color: #E9E9E9;
-  font-style: italic;
-  background-color: rgba(211, 19, 62, 0.65);
-  border-radius: 20px;
-  border: 1px solid #d3133e;
-  width: 350px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  left: 580px;
-  top: 380px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.hideME {
-  visibility: hidden;
 }
 
 .push {

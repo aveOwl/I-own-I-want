@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(displayName = "AuthFilter", urlPatterns = {"/welcome", "/goalServlet"})
+@WebFilter(displayName = "AuthFilter", urlPatterns = {"/goalServlet"})
 public class AuthFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -44,7 +44,7 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(request, response);
         }
         else {
-            log.debug("You were redirected back to the login jsp");
+            log.debug("redirecting to login.jsp");
             httpServletResponse.sendRedirect("login.jsp");
         }
     }

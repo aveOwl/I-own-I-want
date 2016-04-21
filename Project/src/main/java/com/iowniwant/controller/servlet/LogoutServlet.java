@@ -17,17 +17,18 @@ import java.io.IOException;
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
 public class LogoutServlet extends HttpServlet{
-    private Logger log = LoggerFactory.getLogger(LogoutServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LogoutServlet.class);
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         request.getServletContext().removeAttribute("token");
         request.getServletContext().removeAttribute("user_id");
-        log.trace("removing user_id and token attribute from ServletContext");
+        log.debug("removing user_id and token attribute from ServletContext");
 
         request.getSession().invalidate();
-        log.trace("invalidating session");
-        response.sendRedirect("login.jsp");
+        log.debug("invalidating session");
+        response.sendRedirect("main.jsp");
     }
 }

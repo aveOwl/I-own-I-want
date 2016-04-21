@@ -17,7 +17,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Provides GoalDao instance.
-     * @return the same GoalDao object each time its invoked.
+     * @return Every time the same GoalDao object is invoked.
      */
     public static GoalDao getInstance (){
         if (instance == null) {
@@ -42,10 +42,10 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(3, entity.getDescription());
             prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
+            prepStatement.setInt(6, entity.getUser().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -87,6 +87,32 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
+     * Creates a view that defines a new numeration order for the ids
+     * of the goals associated with a separate user. Partition is based
+     * on the user_id values.
+     * @param connection used to execute a creation of the view when the
+     *        goals list is demanded to be obtained
+     */
+    /*
+    Функция создания представления
+    public void createGoalsView(Connection connection) {
+        Statement stmt = null;
+        try {
+            String query = createGoalView();
+            stmt = connection.createStatement();
+            stmt.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        if (stmt != null)      try { stmt.close(); } catch (SQLException ignored) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+    }
+
+    }
+    */
+
+
+    /**
      * Returns a List of all Goals associated with user,
      * who's id is the userId parameter.
      * @param userId User identifier.
@@ -101,6 +127,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         ResultSet resultSet = null;
         try {
             connection = dbManager.getConnection();
+//            createGoalsView(connection);
             String query = getGoalByUserId();
             prepStatement = connection.prepareStatement(query);
             prepStatement.setInt(1, userId);
@@ -118,6 +145,46 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         }
 
         return goals;
+    }
+
+
+    /**
+     * Forced to create a duplicate method as soon as goal addition is being executed
+     * by pk_id's from the original table but deletion should be provided by v_id form the view table.
+     * With that said it is necessary to use a different query.
+     * @param id identifier from the view table that a depicts a new partition over the pk's in goals table
+     */
+    /*public Goal getByViewId(Integer id) {
+        Connection connection = null;
+        PreparedStatement prepStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbManager.getConnection();
+            String query = getByViewIdQuery();
+            prepStatement = connection.prepareStatement(query);
+            prepStatement.setInt(1, id);
+            resultSet = prepStatement.executeQuery();
+            if (resultSet.next()) {
+                return getEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
+            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
+            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+        }
+
+        return null;
+    }*/
+
+//    private String getByViewIdQuery() { return dbManager.getQuery("get.goal.view.by.id"); }
+
+    /**
+     * @return query to create a view based on the result-set of an SQL statement
+     */
+    private String createGoalView() {
+        return dbManager.getQuery("create.goal.view");
     }
 
     /**

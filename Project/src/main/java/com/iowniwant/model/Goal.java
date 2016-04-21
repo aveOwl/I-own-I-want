@@ -20,9 +20,10 @@ public class Goal implements Serializable, Comparable<Goal> {
     private Date pubdate;
     private String notes;
     private User user;
+    private int v_id;
 
     /**
-     * All serializable object required to have
+     * All serializable objects required to have
      * a default constructor without parameters.
      */
     public Goal() {
@@ -37,34 +38,33 @@ public class Goal implements Serializable, Comparable<Goal> {
      * @param pubdate goal's pubdate.
      * @param notes goal's notes.
      */
-    public Goal(String title, double cost, String description, Date pubdate, String notes) {
+    public Goal(String title, double cost, String description, Date pubdate, String notes, User user) {
         this.title = title;
         this.cost = cost;
         this.description = description;
         this.pubdate = pubdate;
         this.notes = notes;
+        this.user = user;
     }
 
     /**
-     * Initialize goal using given data from the obtained resultSet.
+     * Initialize goal using data from the obtained resultSet.
      * @param resultSet a table of data, obtained from the DataBase
      * in order to create a new goal instance.
-     * @throws SQLException if there is some sqlException occurred.
-     * @throws IllegalArgumentException if cost is NaN or infinitive.
+     * @throws SQLException if some sqlException occurred.
+     * @throws IllegalArgumentException if cost is NaN or infinite.
      */
     public Goal (ResultSet resultSet, User user) throws SQLException {
         if (Double.isNaN(cost) || Double.isInfinite(cost))
-            throw new IllegalArgumentException("Cost cannot be NaN or infinitive");
+            throw new IllegalArgumentException("Cost cannot be NaN or infinite");
         this.id = resultSet.getInt("goals_id");
         this.title = resultSet.getString("title");
         this.description = resultSet.getString("description");
         this.pubdate = resultSet.getDate("pubdate");
         this.notes = resultSet.getString("notes");
         this.user = user;
-        if (cost == 0.0)
-            this.cost = 0.0; // to handle -0.0
-        else
-            this.cost = resultSet.getDouble("cost");
+        this.v_id = resultSet.getInt("v_goals_id");
+        this.cost = resultSet.getDouble("cost");
     }
 
     public int getId() {
@@ -121,6 +121,14 @@ public class Goal implements Serializable, Comparable<Goal> {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getV_id() {
+        return v_id;
+    }
+
+    public void setV_id(int v_id) {
+        this.v_id = v_id;
     }
 
     /**

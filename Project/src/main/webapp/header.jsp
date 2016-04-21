@@ -4,7 +4,10 @@
 <head>
   <title>Header</title>
   <meta charset="utf-8">
-  <link href="style/header-footer.css" rel='stylesheet'>
+  <link rel="stylesheet" href="style/header-footer.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="scripts/header.js"></script>
 </head>
 <body>
 
@@ -29,13 +32,21 @@
     <div class="header">
       <div class="container">
         <ul class="nav">
-          <a href="main.jsp"><li>Home</li></a>
-          <a href="#"><li>Team</li></a>
-          <a href="goalServlet"><li>Goals</li></a>
+          <li><a href="main.jsp">Home</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="goalServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
-          <a href="accountServlet"><li>My account</li></a>
-          <a href="logoutServlet"><li>Log out</li></a>
+          <div class="dropdown">
+            <li class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+              <a href="#">${sessionScope.username}</a>
+              <span class="caret"></span>
+            </li>
+            <ul class="dropdown-menu">
+              <li><a href="accountServlet" >My account</a></li>
+              <li><a href="logoutServlet">Log out</a></li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>
@@ -44,11 +55,11 @@
     <div class="header">
       <div class="container">
         <ul class="nav">
-          <a href="main.jsp"><li>Home</li></a>
-          <a href="#"><li>Team</li></a>
-          <a href="goalServlet"><li>Goals</li></a>
-          <a href="login.jsp"><li>Log in</li></a>
-          <a href="register.jsp"><li>Register</li></a>
+          <li><a href="main.jsp">Home</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="goalServlet">Goals</a></li>
+          <li><a href="login.jsp">Log in</a></li>
+          <li><a href="register.jsp">Register</a></li>
         </ul>
       </div>
     </div>
