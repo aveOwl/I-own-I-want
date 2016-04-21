@@ -9,7 +9,7 @@ $(document).on("submit", ".login", function myFunc() {
                 window.location.assign("goalServlet");
             } else {
                 $('#logError').removeClass("hideME");
-                $('#logError').effect( 'shake', {direction: "up", distance: 5}, 1000 );
+                $('#logError').effect( 'bounce', {direction: "up", distance: 5}, 1000 );
             }
         }
     });

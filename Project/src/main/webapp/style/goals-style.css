@@ -54,29 +54,6 @@ p {
   right: 0;
 }
 
-.profile {
-  cursor: pointer;
-}
-
-.menu {
-  /*	display:none;*/
-  clear: both;
-  margin: 20px 0 0 0;
-}
-
-.menu li {
-  font-size: 12px;
-  /*	margin:10px 0 0;*/
-}
-
-.menu li a {
-  color: #555;
-}
-
-.menu li:hover a {
-  color: #eee;
-}
-
 .wrapper {
   min-height: 100%;
   /*height: auto !important;*/
@@ -170,7 +147,6 @@ input {
   -webkit-transition: background 1s ease;
   -moz-transition: background 1s ease;
   -o-transition: background 1s ease;
-  /*-ms-transition: background 1s ease;*/
   transition: background 1s ease;
 }
 
@@ -215,7 +191,6 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
-  /*appearance: none;*/
   margin: 0;
 }
 
@@ -267,7 +242,7 @@ span {
   text-decoration: solid;
   font-style: italic;
   display: block;
-  margin-bottom: 8px;
+  /*margin-bottom: 8px;*/
 }
 
 .proceed {

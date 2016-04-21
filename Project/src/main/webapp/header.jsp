@@ -4,7 +4,10 @@
 <head>
   <title>Header</title>
   <meta charset="utf-8">
-  <link href="style/header-footer.css" rel='stylesheet'>
+  <link rel="stylesheet" href="style/header-footer.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="scripts/header.js"></script>
 </head>
 <body>
 
@@ -34,8 +37,16 @@
           <li><a href="goalServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
-          <li><a href="accountServlet">My account</a></li>
-          <li><a href="logoutServlet">Log out</a></li>
+          <div class="dropdown">
+            <li class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+              <a href="#">${sessionScope.username}</a>
+              <span class="caret"></span>
+            </li>
+            <ul class="dropdown-menu">
+              <li><a href="accountServlet" >My account</a></li>
+              <li><a href="logoutServlet">Log out</a></li>
+            </ul>
+          </div>
         </ul>
       </div>
     </div>
