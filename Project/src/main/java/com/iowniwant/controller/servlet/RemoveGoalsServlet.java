@@ -28,9 +28,12 @@ public class RemoveGoalsServlet extends HttpServlet {
         String temp = request.getParameter("id");
         Integer id = Integer.valueOf(temp.trim());
 
+        // fetching goal using goal_id
         Goal goal = goalDao.getById(id);
 
         log.debug("deleting goal : {}", goal);
+
+        // removing goal from DataBase
         goalDao.delete(id);
     }
 }

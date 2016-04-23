@@ -21,7 +21,6 @@ import java.sql.Date;
  */
 @WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
 public class AddGoalsServlet extends HttpServlet {
-
     private static Logger log = LoggerFactory.getLogger(AddGoalsServlet.class);
     private GoalDao goalDao = GoalDao.getInstance();
     private UserDao userDao = UserDao.getInstance();
@@ -46,16 +45,16 @@ public class AddGoalsServlet extends HttpServlet {
         log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
         log.debug("Description was obtained due to the ajax function: {}", description);
 
-        if (title != null && shorten != null && description != null) {
-            Goal goal = new Goal(title, cost, shorten, pubdate, description, user);
+        // persists ordinary goal without v_goal_id
+        Goal goal = goalDao.create(new Goal(title, cost, shorten, pubdate, description, user));
 
-            Goal viewGoal = goalDao.getById(goalDao.create(goal).getId());
+        // retrieves goal_view with v_goal_id using goal_id
+        Goal viewGoal = goalDao.getById(goal.getId());
 
-            // sends GoalId from view to ajax function, could be used via data object.
-            String jsonObject = "" + viewGoal.getV_id();
-            response.setContentType("text/plain");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().print(jsonObject);
-        }
+        // sends view_goal_id to ajax function, could be used via data object.
+        String jsonObject = "" + viewGoal.getV_id();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(jsonObject);
     }
 }

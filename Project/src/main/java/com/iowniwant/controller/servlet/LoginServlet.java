@@ -23,7 +23,6 @@ import static com.iowniwant.util.UserValidation.*;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
-
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     private UserDao userDao = UserDao.getInstance();
 

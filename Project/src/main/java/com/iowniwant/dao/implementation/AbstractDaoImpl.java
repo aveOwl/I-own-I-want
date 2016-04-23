@@ -35,12 +35,12 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             prepStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             fillCreateStatement(prepStatement, entity);
             int i = prepStatement.executeUpdate();
-            log.debug("Is creation executed : {}", i == 1);
+            log.debug("is creation executed : {}", i == 1);
 
             resultSet = prepStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 int generatedID = resultSet.getInt(1);
-                log.debug("Creating entity with id: {}", generatedID);
+                log.debug("creating entity with id: {}", generatedID);
                 return getById(generatedID);
             }
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             String query = getDeleteQuery();
             prepStatement = connection.prepareStatement(query);
             prepStatement.setInt(1, id);
-            log.debug("Deleting entity with id: {}", id);
+            log.debug("deleting entity with id: {}", id);
             prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

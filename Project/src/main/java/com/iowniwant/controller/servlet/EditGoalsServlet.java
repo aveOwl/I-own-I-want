@@ -15,9 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-@WebServlet(name = "EditGoalsServlet", urlPatterns = "editGoalsServlet")
+@WebServlet(name = "EditGoalsServlet", urlPatterns = "/editGoalsServlet")
 public class EditGoalsServlet extends HttpServlet{
-
     public static Logger log = LoggerFactory.getLogger(EditGoalsServlet.class);
     private UserDao userDao = UserDao.getInstance();
     private GoalDao goalDao = GoalDao.getInstance();
