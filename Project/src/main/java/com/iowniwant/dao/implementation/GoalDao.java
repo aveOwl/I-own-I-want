@@ -120,60 +120,13 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         return goals;
     }
 
-    /**
-     * Creates a view that defines a new numeration order for the ids
-     * of the goals associated with a separate user. Partition is based
-     * on the user_id values.
-     * @param connection used to execute a creation of the view when the
-     *        goals list is demanded to be obtained
-     */
-    /*
-    Функция создания представления
-    public void createGoalsView(Connection connection) {
-        Statement stmt = null;
-        try {
-            String query = createGoalView();
-            stmt = connection.createStatement();
-            stmt.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-        if (stmt != null)      try { stmt.close(); } catch (SQLException ignored) {}
-        if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
-    }
-
-    }
-    */
 
     /**
-     * Forced to create a duplicate method as soon as goal addition is being executed
-     * by pk_id's from the original table but deletion should be provided by v_id form the view table.
-     * With that said it is necessary to use a different query.
-     * @param id identifier from the view table that a depicts a new partition over the pk's in goals table
+     * @return query to retrieve all Goals_Views from the DataBase using user_id.
      */
-    /*public Goal getByViewId(Integer id) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = dbManager.getConnection();
-            String query = getByViewIdQuery();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, id);
-            resultSet = prepStatement.executeQuery();
-            if (resultSet.next()) {
-                return getEntity(resultSet);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
-        }
-
-        return null;
-    }*/
+    private String getGoalByUserId() {
+        return dbManager.getQuery("get.goal.view.by.user.id");
+    }
 
     /**
      * @return query to insert Goal into the DataBase.
@@ -208,31 +161,10 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * @return query to retrieve all Goals_Views from the DataBase using user_id.
-     */
-    private String getGoalByUserId() {
-        return dbManager.getQuery("get.goal.view.by.user.id");
-    }
-
-    /**
      * @return query to retrieve Goal_View from the DataBase using goal_id.
      */
     @Override
     public String getGetByIdQuery() {
         return dbManager.getQuery("get.goal.view.by.goal.id");
     }
-
-    /**
-     * @return query to retrieve Goal_View from the DataBase using goal_v_id.
-     */
-    private String getByViewIdQuery() {
-        return dbManager.getQuery("get.goal.view.by.view.id");
-    }
-
-    /**
-     * @return query to create a view based on the result-set of an SQL statement.
-     */
-    /*private String createGoalView() {
-        return dbManager.getQuery("create.goal.view");
-    }*/
 }

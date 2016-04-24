@@ -20,7 +20,7 @@ import java.util.Set;
  * Fetches goals for user who's id was obtained by ServletContext,
  * forwards obtained goals to goals page.
  */
-@WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/goalServlet"})
+@WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/showGoalsServlet"})
 public class ShowGoalsServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ShowGoalsServlet.class);
 
