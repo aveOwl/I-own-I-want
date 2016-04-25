@@ -6,7 +6,7 @@ $(document).on("submit", ".login", function myFunc() {
         data: $(".login").serialize(),
         success : function(response) {
             if (response == "success") {
-                window.location.assign("goalServlet");
+                window.location.assign("showGoalsServlet");
             } else {
                 $('#logError').removeClass("hideME");
                 $('#logError').effect( 'bounce', {direction: "up", distance: 5}, 1000 );

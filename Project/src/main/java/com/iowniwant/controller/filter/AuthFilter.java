@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(displayName = "AuthFilter", urlPatterns = {"/goalServlet"})
+@WebFilter(displayName = "AuthFilter", urlPatterns = {"/showGoalsServlet"})
 public class AuthFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 

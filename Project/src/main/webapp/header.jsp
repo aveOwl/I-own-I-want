@@ -34,7 +34,7 @@
         <ul class="nav">
           <li><a href="main.jsp">Home</a></li>
           <li><a href="#">Team</a></li>
-          <li><a href="goalServlet">Goals</a></li>
+          <li><a href="showGoalsServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
           <div class="dropdown">
@@ -57,7 +57,7 @@
         <ul class="nav">
           <li><a href="main.jsp">Home</a></li>
           <li><a href="#">Team</a></li>
-          <li><a href="goalServlet">Goals</a></li>
+          <li><a href="showGoalsServlet">Goals</a></li>
           <li><a href="login.jsp">Log in</a></li>
           <li><a href="register.jsp">Register</a></li>
         </ul>

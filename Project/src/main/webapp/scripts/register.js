@@ -45,7 +45,7 @@ $(document).on("submit", ".register", function myFunc() {
         data: $(".register").serialize(),
         success : function(response) {
             if (response == "success") {
-                window.location.assign("goalServlet");
+                window.location.assign("showGoalsServlet");
             }
         }
     });

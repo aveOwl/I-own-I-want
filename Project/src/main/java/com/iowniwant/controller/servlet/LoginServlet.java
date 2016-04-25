@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
+        getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
     }
 
     @Override

@@ -35,6 +35,8 @@ CREATE TABLE iowniwant.task (
   CONSTRAINT task_id_pk PRIMARY KEY (task_id),
   CONSTRAINT task_fk    FOREIGN KEY (goal_id)
   REFERENCES iowniwant.goal(goal_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 );
 
 CREATE OR REPLACE VIEW iowniwant.v_goal AS SELECT goal.goal_id,

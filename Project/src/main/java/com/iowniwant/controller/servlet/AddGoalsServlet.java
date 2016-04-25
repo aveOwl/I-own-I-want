@@ -49,10 +49,10 @@ public class AddGoalsServlet extends HttpServlet {
         Goal goal = goalDao.create(new Goal(title, cost, shorten, pubdate, description, user));
 
         // retrieves goal_view with v_goal_id using goal_id
-        Goal viewGoal = goalDao.getById(goal.getId());
+//        Goal viewGoal = goalDao.getById(goal.getId());
 
         // sends view_goal_id to ajax function, could be used via data object.
-        String jsonObject = "" + viewGoal.getV_id();
+        String jsonObject = "" + goal.getV_id();
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().print(jsonObject);
