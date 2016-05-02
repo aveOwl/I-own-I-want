@@ -101,7 +101,8 @@ $(document).on("click", "#confirm", function() {// When HTML DOM "click" event i
             //var numb = data.v_id;
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
-            var ind = data.toString().charAt(2);
+            //var ind = data.toString().charAt(2);
+            var ind = data;
 
 
             var html = '<div class="article"' + /*' id=' + articleId + */'>' +

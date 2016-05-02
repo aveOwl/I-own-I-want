@@ -32,7 +32,6 @@ public class AddGoalsServlet extends HttpServlet {
 
         User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
         log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
-        response.getWriter().println(request.getServletContext().getAttribute("user_id"));
         String title = request.getParameter("title");
         log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
