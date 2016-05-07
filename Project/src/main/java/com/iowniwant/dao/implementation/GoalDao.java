@@ -69,7 +69,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * Creates Goal entity by providing resultSet and user_id to
+     * Creates Goal entity by providing resultSet and user to
      * @see Goal class constructor.
      * @param resultSet a table of data representing a database result set.
      * @return Goal entity.

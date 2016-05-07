@@ -5,8 +5,8 @@
   <title>Goals</title>
   <meta charset="UTF-8">
   <link href="style/goals-style.css" rel="stylesheet">
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script src="scripts/goals.js"></script>
   <script src="scripts/goals-valid.js"></script>
 </head>

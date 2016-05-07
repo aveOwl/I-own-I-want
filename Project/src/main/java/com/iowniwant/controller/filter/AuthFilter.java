@@ -32,9 +32,6 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession(true);
-
-        log.debug("Session with ID: {} created", session.getId());
 
         String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 

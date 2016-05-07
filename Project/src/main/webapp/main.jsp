@@ -10,14 +10,12 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
-  <div class="front">
     <div class="container">
       <div class="banner">
         <h1>manage yourself</h1>
         <a class="banner-action" href="showGoalsServlet" role="button">get started</a>
       </div>
     </div>
-  </div>
   <div class="push"></div>
 </div>
 <jsp:include page="footer.jsp"/>

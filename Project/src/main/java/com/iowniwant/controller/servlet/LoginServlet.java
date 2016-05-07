@@ -46,10 +46,8 @@ public class LoginServlet extends HttpServlet {
 
             User user = userDao.getByNick(username);
 
-            log.debug("user_id from DataBase: {}", user.getId());
-
             request.getServletContext().setAttribute("user_id", user.getId());
-            log.debug("user_id successfully persisted in ServletContext", user.getId());
+            log.debug("user_id: {} successfully persisted in ServletContext", user.getId());
 
             request.getServletContext().setAttribute("token", "logged");
             log.trace("token successfully persisted in ServletContext");

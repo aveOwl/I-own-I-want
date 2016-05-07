@@ -209,6 +209,7 @@ public class Goal implements Serializable, Comparable<Goal> {
                 ", pubdate='" + pubdate + '\'' +
                 ", notes='" + notes + '\'' +
                 ", user_id=" + user.getId() +
+                ", goal_v_id=" + v_id +
                 '}';
     }
 }

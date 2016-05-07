@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link href="style/account-style.css" rel="stylesheet">
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
   <script type="text/javascript" src="scripts/account.js"></script>
   <script type="text/javascript">
     (function () {
@@ -22,7 +22,7 @@
           , new_password: ""
           , confirm_password: ""
         };
-      })
+      });
 
       app.directive('compareTo', function () {
         return {

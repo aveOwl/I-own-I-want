@@ -23,7 +23,6 @@ import java.util.Set;
 @WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/showGoalsServlet"})
 public class ShowGoalsServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ShowGoalsServlet.class);
-
     private GoalDao goalDao = GoalDao.getInstance();
 
     @Override

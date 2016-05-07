@@ -9,6 +9,13 @@ a {
   text-decoration: none;
 }
 
+body {
+  background-image: url("img/login-bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
 .header {
   background-color: #222930;
 }
@@ -38,12 +45,6 @@ a {
   height: auto !important;
   height: 100%;
   margin: 0 auto -2em;
-}
-
-.front {
-  height: 800px;
-  background: url("img/login-bg.jpg");
-  background-size: cover;
 }
 
 .container {
