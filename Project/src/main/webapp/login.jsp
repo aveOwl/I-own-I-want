@@ -23,12 +23,12 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
-    <div class="container">
-      <div id="logError" class="error hideME">
-        <b>ERROR:</b> User name or password is incorrect.
-      </div>
-      <div class="banner" ng-controller="MainController as ctrl">
+    <div class="container" ng-controller="MainController as ctrl">
+      <%--<div class="banner" ng-controller="MainController as ctrl">--%>
         <form name="frm" onSubmit="return myFunc()" action="loginServlet" method="post" class="login" novalidate>
+          <div id="logError" class="error hideME">
+            <b>ERROR:</b> User name or password is incorrect.
+          </div>
           <div>
             <label for="userName">User Name:</label>
             <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3" required />
@@ -43,7 +43,7 @@
                   ng-disabled="frm.$invalid">Log in
           </button>
         </form>
-      </div>
+      <%--</div>--%>
   </div>
   <div class="push"></div>
 </div>
