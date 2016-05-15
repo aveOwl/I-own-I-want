@@ -7,10 +7,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(displayName = "AuthFilter", urlPatterns = {"/goalServlet"})
+@WebFilter(displayName = "AuthFilter", urlPatterns = {"/showGoalsServlet"})
 public class AuthFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -32,9 +31,6 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession(true);
-
-        log.debug("Session with ID: {} created", session.getId());
 
         String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 

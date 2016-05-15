@@ -6,7 +6,6 @@ import com.iowniwant.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +31,9 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer user_id = (Integer) request.getServletContext().getAttribute("user_id");
-        log.debug("user_id from servletContext: {}", user_id);
-        User user = userDao.getById(user_id);
+        Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id from servletContext: {}", userId);
+        User user = userDao.getById(userId);
         log.debug("user from DataBase: {}", user);
 
         request.setAttribute("user", user);

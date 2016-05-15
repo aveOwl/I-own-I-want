@@ -21,7 +21,10 @@ $(function () {
     });
 });
 
-// add Goal => persist it in DataBase
+/**
+ * add Goal => persist it in the DataBase
+ * at the same time create a dynamic element that represents the goal added
+ */
 $(document).on("click", "#confirm", function() {
 
     counter++;
@@ -32,7 +35,7 @@ $(document).on("click", "#confirm", function() {
 
     $.ajax({
         url: 'addGoalsServlet',
-        type: 'post', // 'get' or 'post'
+        type: 'post', // The HTTP method to use for the request
         dataType: 'text',
         data: {title : title,
                cost : cost,
@@ -79,7 +82,7 @@ $(document).on("click", "#confirm", function() {
     });
 });
 
-// close goal => remove it from DataBase.
+// close goal => remove it from the DataBase.
 $(document).on('click', '.close', function () {
 
     var sp = $(this).closest("div").siblings().find("span").text();
@@ -88,7 +91,7 @@ $(document).on('click', '.close', function () {
 
     $.ajax({
         url: 'removeGoalsServlet',
-        type: 'post', // 'get' or 'post'
+        type: 'post', // The HTTP method to use for the request
         data: {id: sp}, // variable you want to send.
         success : function(data) {
         }
@@ -99,10 +102,14 @@ $(document).on('click', '.close', function () {
 $(document).on('click', '.edit', function () {
 
     var sp = $(this).closest("div").siblings().find("span").text();
+    var title = $(this).closest("div").siblings().find(".source").val();
+
+    $(".insertion").fadeIn();
+    $('input.title').val('Some text here');
 
     $.ajax({
         url: 'editGoalsServlet',
-        type: 'post', // 'get' or 'post'
+        type: 'post', // The HTTP method to use for the request
         data: {id: sp}, // variable you want to send.
         success : function(data) {
 

@@ -14,12 +14,12 @@ import java.sql.Date;
 public class Goal implements Serializable, Comparable<Goal> {
 
     private int id;
+    private int v_id;
     private String title;
     private double cost;
     private String description;
     private Date pubdate;
     private String notes;
-    private int v_id;
     private User user;
 
     /**
@@ -57,14 +57,14 @@ public class Goal implements Serializable, Comparable<Goal> {
     public Goal (ResultSet resultSet, User user) throws SQLException {
         if (Double.isNaN(cost) || Double.isInfinite(cost))
             throw new IllegalArgumentException("Cost cannot be NaN or infinite");
-        this.id = resultSet.getInt("goals_id");
+        this.id = resultSet.getInt("goal_id");
+        this.v_id = resultSet.getInt("v_goal_id");
         this.title = resultSet.getString("title");
         this.cost = resultSet.getDouble("cost");
         this.description = resultSet.getString("description");
         this.pubdate = resultSet.getDate("pubdate");
         this.notes = resultSet.getString("notes");
         this.user = user;
-        this.v_id = resultSet.getInt("v_goals_id");
     }
 
     public int getId() {
@@ -170,7 +170,7 @@ public class Goal implements Serializable, Comparable<Goal> {
             return titleComp;
 
         return (this.cost < that.cost ? -1 :
-               (this.cost == that.cost ? 0 : 1));
+                (this.cost == that.cost ? 0 : 1));
     }
 
     /**

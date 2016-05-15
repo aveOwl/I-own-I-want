@@ -73,7 +73,7 @@ ctrl specifies allias for the chosen controller, which we will use inside of our
                 <%--
                 red - name of the class to add
                 after the colon an expression to evaluate. If true, set class
-                to redm otherwise nothing
+                to red otherwise nothing
                 --%>
                 ng-class="{red: frm.$invalid}"
                 ng-disabled="frm.$invalid">Confirm</button>

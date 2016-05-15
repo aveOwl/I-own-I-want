@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import static com.iowniwant.util.UserValidation.*;
+import static com.iowniwant.util.UserValidation.isUserValid;
 
 /**
  * Obtains user name and password from the login page,
@@ -29,7 +31,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
+        getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
     }
 
     @Override
@@ -46,10 +48,8 @@ public class LoginServlet extends HttpServlet {
 
             User user = userDao.getByNick(username);
 
-            log.debug("user_id from DataBase: {}", user.getId());
-
             request.getServletContext().setAttribute("user_id", user.getId());
-            log.debug("user_id successfully persisted in ServletContext", user.getId());
+            log.debug("user_id: {} successfully persisted in ServletContext", user.getId());
 
             request.getServletContext().setAttribute("token", "logged");
             log.trace("token successfully persisted in ServletContext");
