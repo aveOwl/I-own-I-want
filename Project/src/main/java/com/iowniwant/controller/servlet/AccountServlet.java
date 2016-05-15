@@ -1,5 +1,6 @@
 package com.iowniwant.controller.servlet;
 
+import com.google.gson.Gson;
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
 import org.slf4j.Logger;
@@ -37,6 +38,11 @@ public class AccountServlet extends HttpServlet {
         log.debug("user from DataBase: {}", user);
 
         request.setAttribute("user", user);
+
+        String json = new Gson().toJson(user);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
 
         log.trace("sending data to account page");
         request.getRequestDispatcher("/account.jsp").forward(request, response);

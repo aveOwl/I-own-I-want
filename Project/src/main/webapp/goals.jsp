@@ -35,7 +35,7 @@ ctrl specifies allias for the chosen controller, which we will use inside of our
   <button class="goal">new Goal</button>
   <div class="insertion">
     <div class="itemForm">
-      <form name="frm" novalidate>
+      <form name="frm" id="frm" novalidate>
         <div class="buttonContainer">
           <button class="closeForm">✗</button>
         </div>
@@ -86,7 +86,7 @@ ctrl specifies allias for the chosen controller, which we will use inside of our
       <div class="article">
         <div class="item">
           <div class="row">
-            <p class="title"><span id="forDeletion">${goal.v_id} </span> ${goal.title}</p>
+            <p class="title"><span class="hideME">${goal.id}</span> #${goal.v_id} ${goal.title}</p>
           </div>
           <div class="item">
             <p class="source">${goal.description}</p>

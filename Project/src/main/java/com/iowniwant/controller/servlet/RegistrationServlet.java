@@ -38,6 +38,5 @@ public class RegistrationServlet extends HttpServlet {
         request.setAttribute("password", password);
 
         request.getServletContext().getRequestDispatcher("/loginServlet").forward(request,response);
-//        response.sendRedirect("/loginServlet");
     }
 }

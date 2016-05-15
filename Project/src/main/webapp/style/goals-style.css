@@ -14,6 +14,11 @@ body {
 
 a {
   text-decoration: none;
+  color: #E9E9E9;
+}
+
+a:hover {
+  color: #4EB1BA;
 }
 
 p {
@@ -142,7 +147,6 @@ input {
   -webkit-transition: background 1s ease;
   -moz-transition: background 1s ease;
   -o-transition: background 1s ease;
-  /*-ms-transition: background 1s ease;*/
   transition: background 1s ease;
 }
 
@@ -187,7 +191,6 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
-  /*appearance: none;*/
   margin: 0;
 }
 
@@ -233,21 +236,13 @@ input.ng-valid.ng-dirty {
   border-color: #2780e3;
 }
 
-.title span {
-  display: inline-block;
-  color: #ffffff;
-}
-
 span {
-  color: #ff0114;
+  color: #ff0039;
   text-align: left;
   text-decoration: solid;
+  font-style: italic;
   display: block;
-  margin-bottom: 8px;
-}
-
-.row .forDeletion {
-  display: inline-block;
+  /*margin-bottom: 8px;*/
 }
 
 .proceed {
@@ -406,4 +401,10 @@ span {
 .footer,
 .push {
   clear: both;
+}
+
+.hideME {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }

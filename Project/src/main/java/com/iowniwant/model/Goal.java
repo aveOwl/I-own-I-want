@@ -19,8 +19,8 @@ public class Goal implements Serializable, Comparable<Goal> {
     private String description;
     private Date pubdate;
     private String notes;
-    private User user;
     private int v_id;
+    private User user;
 
     /**
      * All serializable objects required to have
@@ -59,15 +59,12 @@ public class Goal implements Serializable, Comparable<Goal> {
             throw new IllegalArgumentException("Cost cannot be NaN or infinite");
         this.id = resultSet.getInt("goals_id");
         this.title = resultSet.getString("title");
+        this.cost = resultSet.getDouble("cost");
         this.description = resultSet.getString("description");
         this.pubdate = resultSet.getDate("pubdate");
         this.notes = resultSet.getString("notes");
         this.user = user;
         this.v_id = resultSet.getInt("v_goals_id");
-        if (cost == 0.0)
-            this.cost = 0.0; // to handle -0.0
-        else
-            this.cost = resultSet.getDouble("cost");
     }
 
     public int getId() {
@@ -141,9 +138,8 @@ public class Goal implements Serializable, Comparable<Goal> {
      */
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (other.getClass() != this.getClass()) return false;
+        if (!(other instanceof Goal))
+            return false;
         Goal that = (Goal) other;
         return (this.id == that.id);
     }
@@ -164,14 +160,17 @@ public class Goal implements Serializable, Comparable<Goal> {
      *
      * @param  that the other transaction
      * @return { a negative integer, zero, a positive integer}, depending
-     *         on whether the cost of this goal is { less than,
-     *         equal to, or greater than } the cost of that goal.
+     *         on whether the title, cost of this goal is { less than,
+     *         equal to, or greater than } the title, cost of that goal.
      */
     @Override
     public int compareTo(Goal that) {
-        if      (this.cost < that.cost) return -1;
-        else if (this.cost > that.cost) return +1;
-        return 0;
+        int titleComp = this.title.compareTo(that.title);
+        if (titleComp != 0)
+            return titleComp;
+
+        return (this.cost < that.cost ? -1 :
+               (this.cost == that.cost ? 0 : 1));
     }
 
     /**
@@ -209,7 +208,7 @@ public class Goal implements Serializable, Comparable<Goal> {
                 ", description='" + description + '\'' +
                 ", pubdate='" + pubdate + '\'' +
                 ", notes='" + notes + '\'' +
-                ", user=" + user +
+                ", user_id=" + user.getId() +
                 '}';
     }
 }

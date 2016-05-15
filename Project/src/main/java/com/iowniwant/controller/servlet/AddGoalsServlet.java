@@ -13,78 +13,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 
 /**
- * Created by sulfur on 13.04.16.
+ * Using users input persists new Goal in DataBase, bonds it with
+ * this user. Obtains essential data from the ajax on the clients side.
  */
-
 @WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
 public class AddGoalsServlet extends HttpServlet {
-
     private static Logger log = LoggerFactory.getLogger(AddGoalsServlet.class);
     private GoalDao goalDao = GoalDao.getInstance();
     private UserDao userDao = UserDao.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Integer userID = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id obtained from the servletContext: {}", userID);
 
-        User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
-        log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
+        // user associated with goal
+        User user = userDao.getById(userID);
+
         String title = request.getParameter("title");
-        log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
-        log.debug("Cost was obtained due to the ajax function: {}", cost);
         String shorten = request.getParameter("shorten");
-        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
         String description = request.getParameter("description");
-        log.debug("Description was obtained due to the ajax function: {}", description);
         Date pubdate = new Date(new java.util.Date().getTime());
-        log.debug("This date will be persisted in the databse: {}", pubdate);
 
-        if (title != null && shorten != null && description != null && pubdate != null) {
-            Goal goal = new Goal(title,cost,shorten,pubdate,description,user);
+        log.debug("Title was obtained due to the ajax function: {}", title);
+        log.debug("Cost was obtained due to the ajax function: {}", cost);
+        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
+        log.debug("Description was obtained due to the ajax function: {}", description);
 
-            Goal viewGoal = goalDao.getById(goalDao.create(goal).getId());
+        // persists ordinary goal without v_goal_id
+        Goal goal = goalDao.create(new Goal(title, cost, shorten, pubdate, description, user));
 
-            /*List<Integer> index = new ArrayList<>();
-            index.add(viewGoal.getV_id());
-            String json = new Gson().toJson(index);
+        // retrieves goal_view with v_goal_id using goal_id
+        Goal viewGoal = goalDao.getById(goal.getId());
 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);*/
-
-
-            /*IndexJSON jsonObject = new IndexJSON(viewGoal.getV_id());
-            String index = new Gson().toJson(jsonObject);
-            response.setContentType("application/json");
-            PrintWriter out = response.getWriter();
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(index);
-            out.flush();*/
-
-            response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-
-            PrintWriter out = response.getWriter();
-            String text = String.valueOf(viewGoal.getV_id());
-
-            out.write(text);
-
-
-            /*List<IndexJSON> list = new ArrayList<IndexJSON>();
-            list.add(new IndexJSON(viewGoal.getV_id()));
-            String json = new Gson().toJson(list);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);*/
-//            log.debug("JSON index: {}",text);
-
-//            response.getWriter().write(json.toString());
-
-        }
+        // sends view_goal_id to ajax function, could be used via data object.
+        String jsonObject = "" + viewGoal.getV_id();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(jsonObject);
     }
 }

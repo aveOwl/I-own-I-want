@@ -6,6 +6,23 @@ html, body {
 
 a {
   text-decoration: none;
+  color: #E9E9E9;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #4EB1BA;
+}
+
+.dropdown {
+  margin-left: 100px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+}
+
+.dropdown-toggle {
+  background-color: #222930;
+  border: none;
 }
 
 .header {
@@ -26,7 +43,7 @@ a {
 .right {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 30px;
 }
 
 .nav li {
@@ -44,7 +61,7 @@ a {
 }
 
 .banner h1 {
-  color: #ffffff;
+  color: #E9E9E9;
   font-family: 'Oswald', serif;
   font-weight: 600;
   font-size: 70px;
@@ -79,4 +96,98 @@ a {
   height: auto !important;
   height: 100%;
   margin: 0 auto -2em;
+}
+
+.caret {
+  display: inline-block;
+  color: #E9E9E9;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid \9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.dropdown {
+  position:relative
+}
+
+.dropdown-toggle:focus {
+  outline:0
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #222930;
+  border: 1px solid #222930;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  box-shadow:0 6px 12px rgba(0,0,0,0.175);
+  -webkit-background-clip:padding-box;
+  background-clip:padding-box
+}
+
+.dropdown-menu>li>a {
+  display:block;
+  padding:3px 20px;
+  clear:both;
+  font-weight:normal;
+  line-height:1.42857143;
+  color:#E9E9E9;
+  white-space:nowrap
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+  text-decoration:none;
+  color:#4eb1ba;
+  background-color:#222930
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus {
+  color:#E9E9E9;
+  text-decoration:none;
+  outline:0;
+  background-color:#4eb1ba;
+}
+
+.dropdown-menu>.disabled>a,
+.dropdown-menu>.disabled>a:hover,
+.dropdown-menu>.disabled>a:focus {
+  color:#E9E9E9;
+}
+
+.open>.dropdown-menu {
+  display:block;
+}
+
+.open>a {
+  outline:0;
+}
+
+.dropdown-menu-right {
+  left:auto;
+  right:0;
+}
+
+.dropdown-menu-left {
+  left:0;
+  right:auto;
 }

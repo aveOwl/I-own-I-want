@@ -14,7 +14,6 @@ import java.sql.SQLException;
  * @see User entity fields.
  */
 public class UserDao extends AbstractDaoImpl<User> {
-    private static final Logger log = LoggerFactory.getLogger(UserDao.class);
     private static UserDao instance;
     private UserDao() {}
 
@@ -26,7 +25,6 @@ public class UserDao extends AbstractDaoImpl<User> {
         if (instance == null) {
             instance = new UserDao();
         }
-        log.trace("UserDao instance invoked");
         return instance;
     }
 
@@ -119,13 +117,6 @@ public class UserDao extends AbstractDaoImpl<User> {
     }
 
     /**
-     * @return query to retrieve User from the DataBase using User's NickName.
-     */
-    private String getGetByNickQuery() {
-        return dbManager.getQuery("get.user.by.nick");
-    }
-
-    /**
      * @return query to insert User into the DataBase.
      */
     @Override
@@ -163,5 +154,12 @@ public class UserDao extends AbstractDaoImpl<User> {
     @Override
     public String getGetAllQuery() {
         return dbManager.getQuery("get.all.user");
+    }
+
+    /**
+     * @return query to retrieve User from the DataBase using User's NickName.
+     */
+    private String getGetByNickQuery() {
+        return dbManager.getQuery("get.user.by.nick");
     }
 }

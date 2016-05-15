@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static com.iowniwant.util.UserValidation.*;
 
@@ -22,14 +23,12 @@ import static com.iowniwant.util.UserValidation.*;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
-
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     private UserDao userDao = UserDao.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
@@ -39,6 +38,9 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
+
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
 
         if (isUserValid(username, password)) {
 
@@ -62,9 +64,9 @@ public class LoginServlet extends HttpServlet {
             log.debug("setting password: {} to passCookie: {}", password, passCookie.getName());
 
             log.trace("redirection to goals page");
-            response.sendRedirect("goalServlet");
+            response.getWriter().write("success");
         } else {
-            response.sendRedirect("login.jsp");
+            response.getWriter().write("fail");
         }
     }
 }

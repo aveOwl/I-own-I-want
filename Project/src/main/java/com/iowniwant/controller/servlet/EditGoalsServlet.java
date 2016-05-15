@@ -15,32 +15,34 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
-
-@WebServlet(name = "EditGoalsServlet", urlPatterns = "editGoals")
+@WebServlet(name = "EditGoalsServlet", urlPatterns = "/editGoalsServlet")
 public class EditGoalsServlet extends HttpServlet{
-
     public static Logger log = LoggerFactory.getLogger(EditGoalsServlet.class);
-    UserDao userDao = UserDao.getInstance();
-    GoalDao goalDao = GoalDao.getInstance();
+    private UserDao userDao = UserDao.getInstance();
+    private GoalDao goalDao = GoalDao.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
-        log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
-        response.getWriter().println(request.getServletContext().getAttribute("user_id"));
+        Integer userID = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id obtained from the servletContext: {}", userID);
+
+        // user associated with goal
+        User user = userDao.getById(userID);
+
         String title = request.getParameter("title");
-        log.debug("Title was obtained due to the ajax function: {}", title);
         Double cost = Double.valueOf(request.getParameter("cost"));
-        log.debug("Title was obtained due to the ajax function: {}", cost);
         String shorten = request.getParameter("shorten");
-        log.debug("Title was obtained due to the ajax function: {}", shorten);
         String description = request.getParameter("description");
-        log.debug("Title was obtained due to the ajax function: {}", description);
         Date pubdate = new Date(new java.util.Date().getTime());
-        log.debug("This date will be persisted in the databse: {}", pubdate);
 
-        Goal goal = new Goal(title,cost,description,pubdate,shorten,user);
+        log.debug("Title was obtained due to the ajax function: {}", title);
+        log.debug("Cost was obtained due to the ajax function: {}", cost);
+        log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
+        log.debug("Description was obtained due to the ajax function: {}", description);
+
+        Goal goal = new Goal(title, cost, description, pubdate, shorten, user);
         goalDao.update(goal);
     }
 }
