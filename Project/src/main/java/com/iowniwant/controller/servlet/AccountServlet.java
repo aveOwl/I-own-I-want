@@ -34,6 +34,7 @@ public class AccountServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
         log.debug("user_id from servletContext: {}", userId);
+        
         User user = userDao.getById(userId);
         log.debug("user from DataBase: {}", user);
 
