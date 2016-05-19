@@ -4,13 +4,14 @@
   <title>Register</title>
   <meta charset="utf-8">
   <link href="style/register-style.css" rel="stylesheet">
-  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="scripts/register.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
 <div class="wrapper" ng-controller="MainController as ctrl">
-  <form name="frm" action="registrationServlet" method="post" novalidate>
+  <form name="frm" action="registrationServlet" method="post" class="register" onSubmit="return myFunc()" novalidate>
     <div>
       <label for="firstName">First Name:</label>
       <input type="text" name="firstName" id="firstName" ng-model="ctrl.user.firstName" />

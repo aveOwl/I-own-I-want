@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link href="style/account-style.css" rel="stylesheet">
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
   <script type="text/javascript" src="scripts/account.js"></script>
   <script type="text/javascript">
     (function () {
@@ -22,8 +22,7 @@
           , new_password: ""
           , confirm_password: ""
         };
-      })
-
+      });
       app.directive('compareTo', function () {
         return {
           require: "ngModel"
@@ -31,11 +30,9 @@
             otherModelValue: "=compareTo"
           }
           , link: function (scope, element, attributes, ngModel) {
-
             ngModel.$validators.compareTo = function (modelValue) {
               return modelValue == scope.otherModelValue;
             };
-
             scope.$watch("otherModelValue", function () {
               ngModel.$validate();
             });
@@ -49,7 +46,6 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="wrapper" ng-controller="MainController as ctrl">
-  <%--to turn off a default HTML validation--%>
   <form name="frm" action="updateAccountServlet" method="post" novalidate>
     <fieldset>
       <legend><span class="number">1</span>Profile info</legend>
@@ -63,14 +59,12 @@
       </div>
       <div>
         <label for="userName">User Name:</label>
-        <%--mark fields that are requierd for our form--%>
         <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3" required />
         <span ng-show="frm.userName.$dirty && frm.userName.$error.required">Username is required.</span>
         <span ng-show="frm.userName.$dirty && frm.userName.$error.minlength">Username is too short.</span>
       </div>
       <div>
         <label for="email">Email:</label>
-        <%--mark fields that are requierd for our form--%>
         <input type="email" name="email" id="email" ng-model="ctrl.user.email" required />
         <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required.</span>
         <span ng-show="frm.email.$dirty && frm.email.$error.email">Enter a valid email.</span>
@@ -78,7 +72,6 @@
 
       <div>
         <label for="monthSalary">MonthSalary:</label>
-        <%--mark fields that are requierd for our form--%>
         <input type="number" name="monthSalary" id="monthSalary" ng-model="ctrl.user.monthSalary" required />
         <span ng-show="frm.monthSalary.$dirty && frm.monthSalary.$error.number">Enter a number.</span>
       </div>

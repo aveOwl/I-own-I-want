@@ -7,10 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.iowniwant.util.UserValidation.*;
+import static com.iowniwant.util.UserValidation.isUserValid;
 
 /**
  * Obtains user name and password from the login page,
@@ -22,15 +25,13 @@ import static com.iowniwant.util.UserValidation.*;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
-
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     private UserDao userDao = UserDao.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
+        getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
     }
 
     @Override
@@ -40,14 +41,15 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
 
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+
         if (isUserValid(username, password)) {
 
             User user = userDao.getByNick(username);
 
-            log.debug("user_id from DataBase: {}", user.getId());
-
             request.getServletContext().setAttribute("user_id", user.getId());
-            log.debug("user_id successfully persisted in ServletContext", user.getId());
+            log.debug("user_id: {} successfully persisted in ServletContext", user.getId());
 
             request.getServletContext().setAttribute("token", "logged");
             log.trace("token successfully persisted in ServletContext");
@@ -62,9 +64,9 @@ public class LoginServlet extends HttpServlet {
             log.debug("setting password: {} to passCookie: {}", password, passCookie.getName());
 
             log.trace("redirection to goals page");
-            response.sendRedirect("goalServlet");
+            response.getWriter().write("success");
         } else {
-            response.sendRedirect("login.jsp");
+            response.getWriter().write("fail");
         }
     }
 }

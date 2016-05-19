@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.GoalDao;
-import com.iowniwant.dao.implementation.UserDao;
-import com.iowniwant.model.User;
+import com.iowniwant.model.Goal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,31 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by sulfur on 14.04.16.
+ * Removes goal with the given ID from the DataBase.
  */
-
-
 @WebServlet(name = "RemoveGoalsServlet", urlPatterns = "/removeGoalsServlet")
-public class RemoveGoalsServlet extends HttpServlet{
-
-    private static Logger log = LoggerFactory.getLogger(AddGoalsServlet.class);
+public class RemoveGoalsServlet extends HttpServlet {
+    private static Logger log = LoggerFactory.getLogger(RemoveGoalsServlet.class);
     private GoalDao goalDao = GoalDao.getInstance();
-    private UserDao userDao = UserDao.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Integer id = Integer.valueOf(request.getParameter("id").trim());
 
-        User user = userDao.getById((Integer) request.getServletContext().getAttribute("user_id"));
-        log.debug("id obtained from the context: {}", request.getServletContext().getAttribute("user_id"));
-        response.getWriter().println(request.getServletContext().getAttribute("user_id"));
-        String temp = request.getParameter("id");
-        log.debug("Title was obtained due to the ajax function: {}", temp);
-        Integer id = Integer.valueOf(temp.trim());
-        log.debug("Goal with the following id is about to be deleted: {}", id);
-        goalDao.delete(goalDao.getByViewId(id).getId());
+        // fetching goal_view using goal_id
+        Goal goal = goalDao.getById(id);
 
-       /* if (title != null) {
+        log.debug("deleting goal : {}", goal);
 
-        }*/
+        // removing goal from DataBase
+        goalDao.delete(id);
     }
 }

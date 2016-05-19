@@ -17,10 +17,9 @@ import java.util.List;
  * Fetches goals for user who's id was obtained by ServletContext,
  * forwards obtained goals to goals page.
  */
-@WebServlet(name = "GoalServlet", urlPatterns = {"/goalServlet"})
-public class GoalServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(GoalServlet.class);
-
+@WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/showGoalsServlet"})
+public class ShowGoalsServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(ShowGoalsServlet.class);
     private GoalDao goalDao = GoalDao.getInstance();
 
     @Override
