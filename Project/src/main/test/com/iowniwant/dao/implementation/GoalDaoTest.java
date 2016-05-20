@@ -1,8 +1,12 @@
 package com.iowniwant.dao.implementation;
 
+import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
 import com.iowniwant.util.InitialContextFactoryMock;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,7 +23,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserDaoTest extends Mockito {
+public class GoalDaoTest extends Mockito {
     @Mock
     private DataSource dataSource;
     @Mock
@@ -29,9 +33,9 @@ public class UserDaoTest extends Mockito {
     @Mock
     private ResultSet resultSet;
 
+    private Goal goal = new Goal();
+    private GoalDao goalDao = GoalDao.getInstance();
     private int id = 99;
-    private User user = new User();
-    private UserDao userDao = UserDao.getInstance();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -50,6 +54,7 @@ public class UserDaoTest extends Mockito {
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
         doNothing().when(preparedStatement).setString(anyInt(), anyString());
         doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
+        doNothing().when(preparedStatement).setDate(anyInt(), any(Date.class));
         doNothing().when(preparedStatement).setInt(anyInt(), anyInt());
     }
 
@@ -59,81 +64,58 @@ public class UserDaoTest extends Mockito {
                 InitialContextFactory.class.getName());
     }
 
-    @Test
-    public void userDaoCreateTest() throws SQLException {
-        userDao.create(user);
+    /*@Test
+    public void goalDaoCreateTest() throws SQLException {
+        goalDao.create(goal);
 
-        verify(dataSource, times(2)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString(), anyInt());
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(5)).setString(anyInt(), anyString());
+        verify(preparedStatement, times(3)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
+        verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
+        verify(preparedStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(resultSet, times(2)).next();
+    }*/
+
+    @Test
+    public void goalDaoUpdateTest() throws SQLException {
+        goalDao.update(goal);
+
+        verify(dataSource, times(1)).getConnection();
+        verify(connection, times(1)).prepareStatement(anyString());
+        verify(preparedStatement, times(3)).setString(anyInt(), anyString());
+        verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
+        verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
         verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
         verify(preparedStatement, times(1)).executeUpdate();
-        verify(preparedStatement, times(1)).executeQuery();
-        verify(preparedStatement, times(1)).getGeneratedKeys();
-        verify(resultSet, times(1)).getInt(1);
+        verify(connection, times(1)).close();
+        verifyNoMoreInteractions(connection);
+    }
+
+    @Test
+    public void goalDaoGetByIdTest() throws SQLException {
+        goalDao.getById(id);
+
+        verify(dataSource, times(2)).getConnection();
+        verify(connection, times(2)).prepareStatement(anyString());
+        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(2)).executeQuery();
         verify(resultSet, times(2)).next();
+        verify(resultSet, times(2)).getInt("user_id");
         verify(connection, times(2)).close();
         verifyNoMoreInteractions(connection);
     }
 
     @Test
-    public void userDaoDeleteTest() throws SQLException {
-        userDao.delete(id);
+    public void goalDaoGetByNickTest() throws SQLException {
+        goalDao.getGoalsByUserId(id);
 
-        verify(dataSource, times(1)).getConnection();
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
-        verify(preparedStatement, times(1)).execute();
-        verify(connection, times(1)).close();
-        verifyNoMoreInteractions(connection);
-    }
-
-    @Test
-    public void userDaoUpdateTest() throws SQLException {
-        userDao.update(user);
-
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(5)).setString(anyInt(), anyString());
-        verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
-        verify(connection, times(1)).close();
-        verifyNoMoreInteractions(connection);
-    }
-
-    @Test
-    public void userDaoGetByIdTest() throws SQLException {
-        userDao.getById(id);
-
-        verify(dataSource, times(1)).getConnection();
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).setInt(eq(1), anyInt());
-        verify(preparedStatement, times(1)).executeQuery();
-        verify(resultSet, times(1)).next();
-        verify(connection, times(1)).close();
-        verifyNoMoreInteractions(connection);
-    }
-
-    @Test
-    public void userDaoGetAllTest() throws SQLException {
-        userDao.getAll();
-
-        verify(dataSource, times(1)).getConnection();
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).executeQuery();
+        verify(dataSource, times(2)).getConnection();
+        verify(connection, times(2)).prepareStatement(anyString());
+        verify(preparedStatement, times(2)).setInt(eq(1), eq(id));
+        verify(preparedStatement, times(2)).executeQuery();
         verify(resultSet, times(3)).next();
-        verify(connection, times(1)).close();
-        verifyNoMoreInteractions(connection);
-    }
 
-    @Test
-    public void userDaoGetByNickTest() throws SQLException {
-        userDao.getByNick("test");
-
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(resultSet, times(1)).next();
-        verify(connection, times(1)).close();
+        verify(connection, times(2)).close();
         verifyNoMoreInteractions(connection);
     }
 }

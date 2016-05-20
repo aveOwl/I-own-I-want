@@ -78,8 +78,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     public Goal getEntity(ResultSet resultSet) {
         try {
             int user_id = resultSet.getInt("user_id");
-            User user = userDao.getById(user_id);
-            return new Goal(resultSet, user);
+            return new Goal(resultSet, userDao.getById(user_id));
         } catch (SQLException e) {
             e.printStackTrace();
         }

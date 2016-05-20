@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthFilterTest extends Mockito {
-
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -27,6 +26,8 @@ public class AuthFilterTest extends Mockito {
     private HttpServletResponse response;
     @Mock
     private FilterChain filterChain;
+
+    private AuthFilter authFilter = new AuthFilter();
 
     @Before
     public void setUp() {
@@ -44,7 +45,7 @@ public class AuthFilterTest extends Mockito {
         when(servletContext.getAttribute("token")).thenReturn("logged");
 
         // exercise
-        new AuthFilter().doFilter(request, response, filterChain);
+        authFilter.doFilter(request, response, filterChain);
 
         // verify
         assertNotNull(servletContext.getAttribute("token"));
@@ -52,7 +53,7 @@ public class AuthFilterTest extends Mockito {
 
         // when user is logged out he should be redirected to login page
         when(servletContext.getAttribute("token")).thenReturn(null);
-        new AuthFilter().doFilter(request, response, filterChain);
+        authFilter.doFilter(request, response, filterChain);
         assertNull(servletContext.getAttribute("token"));
         verify(response, times(1)).sendRedirect("login.jsp");
     }

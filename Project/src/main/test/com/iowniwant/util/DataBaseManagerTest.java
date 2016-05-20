@@ -10,17 +10,14 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.spi.InitialContextFactory;
 import javax.sql.DataSource;
-import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Properties;
-
-import static com.googlecode.catchexception.CatchException.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DataBaseManagerTest extends Mockito {
     @Mock
     private DataSource dataSource;
+    @Mock
+    private Connection connection;
 
     @Before
     public void setUp() throws Exception {
@@ -29,7 +26,7 @@ public class DataBaseManagerTest extends Mockito {
                 InitialContextFactoryMock.class.getName());
         InitialContextFactoryMock.bind("java:/jbdc/data-postgres", dataSource);
 
-        when(dataSource.getConnection()).thenThrow(new SQLException());
+        when(dataSource.getConnection()).thenReturn(connection);
     }
 
     @After
@@ -45,10 +42,7 @@ public class DataBaseManagerTest extends Mockito {
 
         DataBaseManager.getInstance().getConnection();
 
-        verifyException(dataSource, SQLException.class).getConnection();
-
-        verify(dataSource, times(2)).getConnection();
-
+        verify(dataSource, times(1)).getConnection();
         verifyNoMoreInteractions(dataSource);
     }
 }

@@ -20,15 +20,15 @@ import java.util.List;
 abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T> {
     private static final Logger log = LoggerFactory.getLogger(AbstractDaoImpl.class);
     DataBaseManager dbManager = DataBaseManager.getInstance();
+    private Connection connection;
+    private PreparedStatement prepStatement;
+    private ResultSet resultSet;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public T create(T entity) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
         try {
             connection = dbManager.getConnection();
             String query = getCreateQuery();
@@ -58,8 +58,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public void delete(Integer id) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
         try {
             connection = dbManager.getConnection();
             String query = getDeleteQuery();
@@ -80,8 +78,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public T update(T entity) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
         try {
             connection = dbManager.getConnection();
             String query = getUpdateQuery();
@@ -103,9 +99,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public T getById(Integer id) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
         try {
             connection = dbManager.getConnection();
             String query = getGetByIdQuery();
@@ -131,9 +124,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public List<T> getAll() {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
         List<T> list = new ArrayList<>();
         try {
             connection = dbManager.getConnection();

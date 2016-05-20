@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import static com.iowniwant.util.UserValidation.*;
 
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
     }
 
     @Override
