@@ -13,18 +13,17 @@ import javax.naming.Context;
 import javax.naming.spi.InitialContextFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static org.junit.Assert.*;
+
 @RunWith(MockitoJUnitRunner.class)
-public class LoginServletTest extends Mockito {
+public class RegistrationServletTest extends Mockito {
     @Mock
     private DataSource dataSource;
     @Mock
@@ -40,11 +39,9 @@ public class LoginServletTest extends Mockito {
     @Mock
     private HttpServletResponse response;
     @Mock
-    private PrintWriter writer;
-    @Mock
     private RequestDispatcher requestDispatcher;
 
-    private LoginServlet loginServlet = new LoginServlet();
+    private RegistrationServlet registrationServlet = new RegistrationServlet();
 
     @Before
     public void setUp() throws Exception {
@@ -53,15 +50,17 @@ public class LoginServletTest extends Mockito {
         InitialContextFactoryMock.bind("java:/jbdc/data-postgres", dataSource);
 
         when(dataSource.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString(), anyInt())).thenReturn(preparedStatement);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE);
+        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE);
+        doNothing().when(preparedStatement).setString(anyInt(), anyString());
+        doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
+        doNothing().when(preparedStatement).setInt(anyInt(), anyInt());
 
-        when(request.getServletContext()).thenReturn(servletContext);
-        when(response.getWriter()).thenReturn(writer);
         when(servletContext.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(request.getParameter("userName")).thenReturn("test");
-        when(request.getParameter("password")).thenReturn("test");
+        when(request.getServletContext()).thenReturn(servletContext);
     }
 
     @After
@@ -71,34 +70,13 @@ public class LoginServletTest extends Mockito {
     }
 
     @Test
-    public void loginServletSuccessTest() throws Exception {
-        when(resultSet.getString("user_password")).thenReturn("test");
+    public void registrationServletSuccessTest() throws Exception {
+        registrationServlet.doPost(request, response);
 
-        loginServlet.doPost(request, response);
-
-        verify(request.getServletContext(), atLeastOnce()).setAttribute(eq("user_id"), anyInt());
-        verify(request.getServletContext(), atLeastOnce()).setAttribute(eq("token"), eq("logged"));
-        verify(response, times(2)).addCookie(any(Cookie.class));
-        verify(response.getWriter(), atLeastOnce()).write("success");
-    }
-
-    @Test
-    public void loginServletFailTest() throws Exception {
-        when(resultSet.getString("user_password")).thenReturn(null);
-
-        loginServlet.doPost(request, response);
-
-        verify(request.getServletContext(), never()).setAttribute(eq("user_id"), anyInt());
-        verify(request.getServletContext(), never()).setAttribute(eq("token"), eq("logged"));
-        verify(response, never()).addCookie(any(Cookie.class));
-        verify(response.getWriter(), atLeastOnce()).write("fail");
-    }
-
-    @Test
-    public void loginServletDoGetTest() throws Exception {
-        loginServlet.doGet(request, response);
-
-        verify(servletContext.getRequestDispatcher("/showGoalsServlet"), atLeastOnce())
+        verify(request, times(5)).getParameter(anyString());
+        verify(request, atLeastOnce()).setAttribute(eq("userName"), anyString());
+        verify(request, atLeastOnce()).setAttribute(eq("password"), anyString());
+        verify(servletContext.getRequestDispatcher("/loginServlet"), atLeastOnce())
                 .forward(request, response);
     }
 }

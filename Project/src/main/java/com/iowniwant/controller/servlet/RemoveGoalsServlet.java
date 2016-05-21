@@ -25,11 +25,11 @@ public class RemoveGoalsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.valueOf(request.getParameter("id").trim());
+        Integer id = Integer.parseInt(request.getParameter("id").trim());
+        log.debug("getting id of the goal to be deleted id: {}", id);
 
         // fetching goal_view using goal_id
         Goal goal = goalDao.getById(id);
-
         log.debug("deleting goal : {}", goal);
 
         // removing goal from DataBase

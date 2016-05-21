@@ -32,8 +32,9 @@ public class GoalDaoTest extends Mockito {
     private PreparedStatement preparedStatement;
     @Mock
     private ResultSet resultSet;
+    @Mock
+    private Goal goal;
 
-    private Goal goal = new Goal();
     private GoalDao goalDao = GoalDao.getInstance();
     private int id = 99;
 
@@ -52,6 +53,7 @@ public class GoalDaoTest extends Mockito {
         when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        when(goal.getUser()).thenReturn(new User());
         doNothing().when(preparedStatement).setString(anyInt(), anyString());
         doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
         doNothing().when(preparedStatement).setDate(anyInt(), any(Date.class));
@@ -64,7 +66,7 @@ public class GoalDaoTest extends Mockito {
                 InitialContextFactory.class.getName());
     }
 
-    /*@Test
+    @Test
     public void goalDaoCreateTest() throws SQLException {
         goalDao.create(goal);
 
@@ -72,9 +74,9 @@ public class GoalDaoTest extends Mockito {
         verify(preparedStatement, times(3)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
         verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
-        verify(preparedStatement, times(2)).setInt(anyInt(), anyInt());
-        verify(resultSet, times(2)).next();
-    }*/
+        verify(preparedStatement, times(3)).setInt(anyInt(), anyInt());
+        verify(resultSet, times(3)).next();
+    }
 
     @Test
     public void goalDaoUpdateTest() throws SQLException {

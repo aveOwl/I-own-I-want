@@ -29,14 +29,13 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (email != null && userName != null && password != null) {
-            User user = new User(firstName, lastName, userName, password, email);
-            userDao.create(user);
-        }
+        User user = new User(firstName, lastName, userName, password, email);
+        userDao.create(user);
 
         request.setAttribute("userName", userName);
         request.setAttribute("password", password);
 
-        request.getServletContext().getRequestDispatcher("/loginServlet").forward(request,response);
+        request.getServletContext().getRequestDispatcher("/loginServlet")
+                .forward(request, response);
     }
 }

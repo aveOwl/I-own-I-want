@@ -31,8 +31,9 @@ public class UpdateAccountServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer user_id = (Integer) request.getServletContext().getAttribute("user_id");
         log.debug("user_id from servletContext: {}", user_id);
+
         User user = userDao.getById(user_id);
-        log.debug("user from DataBase: {}", user);
+        log.debug("user from database: {}", user);
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -46,9 +47,7 @@ public class UpdateAccountServlet extends HttpServlet {
         user.setUserName(userName);
         user.setEmail(email);
         user.setMonthSalary(monthSalary);
-        if (password != null) {
-            user.setPassword(password);
-        }
+        user.setPassword(password);
 
         userDao.update(user);
         log.debug("user after Update: {}", user);

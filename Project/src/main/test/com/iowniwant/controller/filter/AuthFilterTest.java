@@ -35,25 +35,26 @@ public class AuthFilterTest extends Mockito {
     }
 
     @After
-    public void tearDown() {}
+    public void tearDown() {
+    }
 
     @Test
-    public void filterTest() throws ServletException, IOException {
+    public void authFilterSuccessTest() throws ServletException, IOException {
         // when user is logged in should proceed
-
-        // setup - expectations
         when(servletContext.getAttribute("token")).thenReturn("logged");
 
-        // exercise
         authFilter.doFilter(request, response, filterChain);
 
-        // verify
         assertNotNull(servletContext.getAttribute("token"));
         verify(filterChain, times(1)).doFilter(request, response);
+    }
 
+    public void authFilterFailTest() throws ServletException, IOException {
         // when user is logged out he should be redirected to login page
         when(servletContext.getAttribute("token")).thenReturn(null);
+
         authFilter.doFilter(request, response, filterChain);
+
         assertNull(servletContext.getAttribute("token"));
         verify(response, times(1)).sendRedirect("login.jsp");
     }
