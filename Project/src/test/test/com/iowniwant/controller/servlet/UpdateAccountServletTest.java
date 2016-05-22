@@ -1,5 +1,6 @@
 package com.iowniwant.controller.servlet;
 
+import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
 import com.iowniwant.util.InitialContextFactoryMock;
 import org.junit.After;
@@ -44,8 +45,6 @@ public class UpdateAccountServletTest extends Mockito {
     private PrintWriter writer;
     @Mock
     private RequestDispatcher requestDispatcher;
-    @Mock
-    private User user;
 
     private UpdateAccountServlet updateAccountServlet = new UpdateAccountServlet();
 

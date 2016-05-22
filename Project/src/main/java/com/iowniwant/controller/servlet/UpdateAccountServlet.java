@@ -21,12 +21,6 @@ public class UpdateAccountServlet extends HttpServlet {
     private UserDao userDao = UserDao.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doPost(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer user_id = (Integer) request.getServletContext().getAttribute("user_id");
@@ -47,7 +41,9 @@ public class UpdateAccountServlet extends HttpServlet {
         user.setUserName(userName);
         user.setEmail(email);
         user.setMonthSalary(monthSalary);
-        user.setPassword(password);
+        if (password != null) {
+            user.setPassword(password);
+        }
 
         userDao.update(user);
         log.debug("user after Update: {}", user);

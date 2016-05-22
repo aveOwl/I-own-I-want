@@ -12,7 +12,7 @@ body {
 }
 
 .banner-action {
-  background-color: #222930;
+  background-color: rgba(34, 41, 48, 0.9);
   color: #E9E9E9;
   font-family: 'Oswald', serif;
   font-weight: 600;
