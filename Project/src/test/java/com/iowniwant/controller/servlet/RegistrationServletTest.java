@@ -74,8 +74,8 @@ public class RegistrationServletTest extends Mockito {
         registrationServlet.doPost(request, response);
 
         verify(request, times(5)).getParameter(anyString());
-        verify(request, atLeastOnce()).setAttribute(eq("userName"), anyString());
-        verify(request, atLeastOnce()).setAttribute(eq("password"), anyString());
+        verify(request, atLeastOnce()).setAttribute(eq("userName"), request.getParameter("userName"));
+        verify(request, atLeastOnce()).setAttribute(eq("password"), request.getParameter("password"));
         verify(servletContext.getRequestDispatcher("/loginServlet"), atLeastOnce())
                 .forward(request, response);
     }

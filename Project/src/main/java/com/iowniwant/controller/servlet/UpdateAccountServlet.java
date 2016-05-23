@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import java.io.IOException;
  */
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = "/updateAccountServlet")
 public class UpdateAccountServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(AccountServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(UpdateAccountServlet.class);
     private UserDao userDao = UserDao.getInstance();
 
     @Override
@@ -38,9 +39,9 @@ public class UpdateAccountServlet extends HttpServlet {
 
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setUserName(userName);
         user.setEmail(email);
         user.setMonthSalary(monthSalary);
+        user.setUserName(userName);
         if (password != null) {
             user.setPassword(password);
         }
