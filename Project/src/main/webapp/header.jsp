@@ -10,7 +10,6 @@
   <script type="text/javascript" src="scripts/header.js"></script>
 </head>
 <body>
-
 <%
     Cookie[] theCookies = request.getCookies();
 
