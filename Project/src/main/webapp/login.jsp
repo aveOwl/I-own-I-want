@@ -14,7 +14,7 @@
       app.controller('MainController', function () {
         this.user = {
           userName: "${sessionScope.username}",
-          password: "${sessionScope.password}",
+          password: "${sessionScope.password}"
         };
       })
     })();
@@ -24,7 +24,6 @@
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
   <div class="container" ng-controller="MainController as ctrl">
-    <%--<div class="banner" ng-controller="MainController as ctrl">--%>
     <form name="frm" onSubmit="return myFunc()" action="loginServlet" method="post" class="login" novalidate>
       <div id="logError" class="error hideME">
         <b>ERROR:</b> User name or password is incorrect.
@@ -43,7 +42,6 @@
               ng-disabled="frm.$invalid">Log in
       </button>
     </form>
-    <%--</div>--%>
   </div>
   <div class="push"></div>
 </div>

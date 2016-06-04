@@ -169,6 +169,7 @@ public class User implements Serializable, Comparable<User> {
                 (this.monthSalary == that.monthSalary ? 0 : 1));
     }
 
+
     /**
      * Compares two users by monthSalary.
      */

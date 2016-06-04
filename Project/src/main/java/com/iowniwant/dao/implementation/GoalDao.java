@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fills the PreparedStatement with given
+ * Fills the <code>PreparedStatement</code> with given
  * @see Goal entity fields.
  */
 public class GoalDao extends AbstractDaoImpl<Goal> {
@@ -29,8 +29,8 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     private UserDao userDao = UserDao.getInstance();
 
     /**
-     * Fills the PreparedStatement with given Goal entity fields
-     * to persist Goal in the DataBase.
+     * Fills the <code>PreparedStatement</code> with the given Goal entity fields
+     * in order to persist the Goal in the DataBase
      * @param prepStatement object that represents a precompiled SQL statement.
      * @param entity goal to be persisted.
      */
@@ -69,7 +69,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     }
 
     /**
-     * Creates Goal entity by providing resultSet and user to
+     * Creates Goal entity providing <code>resultSet</code> and a user to the
      * @see Goal class constructor.
      * @param resultSet a table of data representing a database result set.
      * @return Goal entity.

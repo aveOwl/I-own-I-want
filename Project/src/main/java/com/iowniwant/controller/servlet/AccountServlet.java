@@ -32,7 +32,8 @@ public class AccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
-        log.debug("user_id from servletContext: {}", userId);
+//        log.debug("user_id from servletContext: {}", userId);
+
         User user = userDao.getById(userId);
         log.debug("user from DataBase: {}", user);
 

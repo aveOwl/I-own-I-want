@@ -1,8 +1,6 @@
 package com.iowniwant.dao.implementation;
 
 import com.iowniwant.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -100,7 +98,6 @@ public class UserDao extends AbstractDaoImpl<User> {
             String query = getGetByNickQuery();
             prepStatement = connection.prepareStatement(query);
             prepStatement.setString(1, nickname);
-
             resultSet = prepStatement.executeQuery();
             if (resultSet.next()) {
                 return getEntity(resultSet);

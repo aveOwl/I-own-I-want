@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration debug="true">
 
     <appender name="Console" class="org.apache.log4j.ConsoleAppender">
         <param name="target" value="System.out"/>
@@ -9,17 +9,17 @@
         </layout>
     </appender>
 
-    <appender name="File" class="org.apache.log4j.FileAppender">
-        <param name="file" value="logs/data-base-logs.log"/>
+    <appender name="MyFile" class="org.apache.log4j.FileAppender">
+        <param name="file" value="/home/sulfur/IdeaProjects/i-own-i-want/logs/main-logs.log"/>
         <param name="append" value="false"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{HH:mm:ss} [%t] %-5p %c{4}: %m%n"/>
         </layout>
     </appender>
 
-    <category name="com.iowniwant">
-        <priority value="debug"/>
-        <appender-ref ref="Console"/>
-    </category>
+    <logger name="com.iowniwant" additivity="false">
+        <level value="trace"/>
+        <appender-ref ref="MyFile"/>
+    </logger>
 
 </log4j:configuration>

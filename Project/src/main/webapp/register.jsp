@@ -4,7 +4,7 @@
   <title>Register</title>
   <meta charset="utf-8">
   <link href="style/register-style.css" rel="stylesheet">
-  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="scripts/register.js"></script>
 </head>

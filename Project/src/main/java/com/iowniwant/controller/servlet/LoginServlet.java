@@ -7,13 +7,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
-import static com.iowniwant.util.UserValidation.isUserValid;
+import static com.iowniwant.util.UserValidation.*;
 
 /**
  * Obtains user name and password from the login page,
@@ -31,7 +28,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
     }
 
     @Override

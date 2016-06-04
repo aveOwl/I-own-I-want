@@ -21,10 +21,7 @@ $(function () {
     });
 });
 
-/**
- * add Goal => persist it in the DataBase
- * at the same time create a dynamic element that represents the goal added
- */
+// add Goal => persist it in DataBase
 $(document).on("click", "#confirm", function() {
 
     counter++;
@@ -35,12 +32,12 @@ $(document).on("click", "#confirm", function() {
 
     $.ajax({
         url: 'addGoalsServlet',
-        type: 'post', // The HTTP method to use for the request
+        type: 'post', // 'get' or 'post'
         dataType: 'text',
         data: {title : title,
-               cost : cost,
-               shorten : shorten,
-               description : description}, // variable you want to send.
+            cost : cost,
+            shorten : shorten,
+            description : description}, // variable you want to send.
         success : function(data) {
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
@@ -51,8 +48,6 @@ $(document).on("click", "#confirm", function() {
 
             var time = new Date().getTime();
             var pubdate = new Date(time).toDateString();
-            //var ind = data.toString().charAt(2);
-            var ind = data;
 
             var html = '<div class="article"' + '>' +
                 '<div class="item"' + ' id=' + itemId + '>' +
@@ -82,7 +77,7 @@ $(document).on("click", "#confirm", function() {
     });
 });
 
-// close goal => remove it from the DataBase.
+// close goal => remove it from DataBase.
 $(document).on('click', '.close', function () {
 
     var sp = $(this).closest("div").siblings().find("span").text();
@@ -91,7 +86,7 @@ $(document).on('click', '.close', function () {
 
     $.ajax({
         url: 'removeGoalsServlet',
-        type: 'post', // The HTTP method to use for the request
+        type: 'post', // 'get' or 'post'
         data: {id: sp}, // variable you want to send.
         success : function(data) {
         }
@@ -102,14 +97,10 @@ $(document).on('click', '.close', function () {
 $(document).on('click', '.edit', function () {
 
     var sp = $(this).closest("div").siblings().find("span").text();
-    var title = $(this).closest("div").siblings().find(".source").val();
-
-    $(".insertion").fadeIn();
-    $('input.title').val('Some text here');
 
     $.ajax({
         url: 'editGoalsServlet',
-        type: 'post', // The HTTP method to use for the request
+        type: 'post', // 'get' or 'post'
         data: {id: sp}, // variable you want to send.
         success : function(data) {
 

@@ -47,7 +47,7 @@ public class DataBaseManager {
             Context context = new InitialContext();
             DataSource ds = (DataSource) context.lookup("java:/jbdc/data-postgres");
             this.connection = ds.getConnection();
-            log.debug("Establishing connection: {}", connection.getMetaData().getURL());
+//            log.debug("Establishing connection: {}", connection.getMetaData().getURL());
         } catch (SQLException | NamingException e) {
             log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
