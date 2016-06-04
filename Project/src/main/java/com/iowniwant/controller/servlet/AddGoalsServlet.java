@@ -28,11 +28,11 @@ public class AddGoalsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
-        log.debug("user_id obtained from the servletContext: {}", userId);
+        Integer userID = (Integer) request.getServletContext().getAttribute("user_id");
+        log.debug("user_id obtained from the servletContext: {}", userID);
 
         // user associated with goal
-        User user = userDao.getById(userId);
+        User user = userDao.getById(userID);
 
         String title = request.getParameter("title");
         Double cost = Double.valueOf(request.getParameter("cost"));
@@ -45,12 +45,14 @@ public class AddGoalsServlet extends HttpServlet {
         log.debug("Brief notes were obtained due to the ajax function: {}", shorten);
         log.debug("Description was obtained due to the ajax function: {}", description);
 
-        // persists goal_view
+        // persists ordinary goal without v_goal_id
         Goal goal = goalDao.create(new Goal(title, cost, shorten, pubdate, description, user));
-        log.debug("goal: {}", goal);
 
-        // sends view_goal_id to ajax function, could be used via data object
-        String jsonObject = "" + goal.getV_id();
+        // retrieves goal_view with v_goal_id using goal_id
+        Goal viewGoal = goalDao.getById(goal.getId());
+
+        // sends view_goal_id to ajax function, could be used via data object.
+        String jsonObject = "" + viewGoal.getV_id();
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().print(jsonObject);

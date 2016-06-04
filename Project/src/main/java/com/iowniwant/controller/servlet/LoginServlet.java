@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static com.iowniwant.util.UserValidation.*;
 
@@ -28,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
+        getServletContext().getRequestDispatcher("/goalServlet").forward(request, response);
     }
 
     @Override
@@ -45,8 +46,10 @@ public class LoginServlet extends HttpServlet {
 
             User user = userDao.getByNick(username);
 
+            log.debug("user_id from DataBase: {}", user.getId());
+
             request.getServletContext().setAttribute("user_id", user.getId());
-            log.debug("user_id: {} successfully persisted in ServletContext", user.getId());
+            log.debug("user_id successfully persisted in ServletContext", user.getId());
 
             request.getServletContext().setAttribute("token", "logged");
             log.trace("token successfully persisted in ServletContext");

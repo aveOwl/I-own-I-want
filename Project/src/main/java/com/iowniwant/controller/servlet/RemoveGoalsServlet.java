@@ -1,7 +1,9 @@
 package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.GoalDao;
+import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.Goal;
+import com.iowniwant.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

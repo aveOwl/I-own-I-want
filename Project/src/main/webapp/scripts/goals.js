@@ -34,10 +34,10 @@ $(document).on("click", "#confirm", function() {
         url: 'addGoalsServlet',
         type: 'post', // 'get' or 'post'
         dataType: 'text',
-        data: {title : title,
-            cost : cost,
-            shorten : shorten,
-            description : description}, // variable you want to send.
+        data: {title : title, 
+               cost : cost,
+               shorten : shorten, 
+               description : description}, // variable you want to send.
         success : function(data) {
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
@@ -83,7 +83,7 @@ $(document).on('click', '.close', function () {
     var sp = $(this).closest("div").siblings().find("span").text();
     var container = $(this).closest('.buttonContainer');
     container.closest('.article').remove();
-
+    
     $.ajax({
         url: 'removeGoalsServlet',
         type: 'post', // 'get' or 'post'
@@ -103,7 +103,7 @@ $(document).on('click', '.edit', function () {
         type: 'post', // 'get' or 'post'
         data: {id: sp}, // variable you want to send.
         success : function(data) {
-
+            
         }
     });
 });

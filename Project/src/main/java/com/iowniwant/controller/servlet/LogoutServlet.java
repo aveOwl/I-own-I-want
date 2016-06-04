@@ -15,7 +15,7 @@ import java.io.IOException;
  * invalidates Session, redirects user to login page.
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
-public class LogoutServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet{
     private static final Logger log = LoggerFactory.getLogger(LogoutServlet.class);
 
     @Override

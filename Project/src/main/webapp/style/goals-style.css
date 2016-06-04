@@ -12,8 +12,51 @@ body {
   background-position: center;
 }
 
+a {
+  text-decoration: none;
+  color: #E9E9E9;
+}
+
+a:hover {
+  color: #4EB1BA;
+}
+
+p {
+  margin: 0;
+}
+
+.header {
+  background-color: #222930;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.nav {
+  margin: 0;
+  padding: 20px 0;
+  font-size: 16px;
+}
+
+.nav li {
+  color: #E9E9E9;
+  font-family: 'Oswald', serif;
+  font-weight: 600;
+  padding: 20px 25px 20px 20px;
+  display: inline;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .wrapper {
   min-height: 100%;
+  /*height: auto !important;*/
   height: 100%;
   margin: 0 auto -2em;
 }
@@ -199,6 +242,7 @@ span {
   text-decoration: solid;
   font-style: italic;
   display: block;
+  /*margin-bottom: 8px;*/
 }
 
 .proceed {
@@ -335,6 +379,28 @@ span {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.push {
+  height: 2em;
+}
+
+.footer {
+  background-color: #222930;
+  color: #E9E9E9;
+  height: 2em;
+  padding: 10px 0;
+}
+
+.footer p {
+  font-family: 'Oswald', sans-serif;
+  text-align: center;
+  font-size: 11px;
+}
+
+.footer,
+.push {
+  clear: both;
 }
 
 .hideME {

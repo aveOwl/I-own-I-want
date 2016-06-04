@@ -12,17 +12,19 @@
 <body>
 
 <%
-  Cookie[] theCookies = request.getCookies();
-  if (theCookies != null) {
-    for (Cookie tempCookie : theCookies) {
-      if ("ioiw.username".equals(tempCookie.getName())) {
-        request.getSession().setAttribute("username", tempCookie.getValue());
-      }
-      if ("ioiw.password".equals(tempCookie.getName())) {
-        request.getSession().setAttribute("password", tempCookie.getValue());
+    Cookie[] theCookies = request.getCookies();
+
+    if (theCookies != null) {
+      for (Cookie tempCookie : theCookies) {
+
+        if ("ioiw.username".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("username", tempCookie.getValue());
+        }
+        if ("ioiw.password".equals(tempCookie.getName())) {
+          request.getSession().setAttribute("password", tempCookie.getValue());
+        }
       }
     }
-  }
 %>
 
 <c:choose>
@@ -32,7 +34,7 @@
         <ul class="nav">
           <li><a href="main.jsp">Home</a></li>
           <li><a href="#">Team</a></li>
-          <li><a href="showGoalsServlet">Goals</a></li>
+          <li><a href="goalServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
           <div class="dropdown">
@@ -55,7 +57,7 @@
         <ul class="nav">
           <li><a href="main.jsp">Home</a></li>
           <li><a href="#">Team</a></li>
-          <li><a href="showGoalsServlet">Goals</a></li>
+          <li><a href="goalServlet">Goals</a></li>
           <li><a href="login.jsp">Log in</a></li>
           <li><a href="register.jsp">Register</a></li>
         </ul>
