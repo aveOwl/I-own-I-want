@@ -1,59 +1,45 @@
-02:41:00 [default task-9] TRACE iowniwant.controller.filter.AuthFilter: initialize filter content
-02:41:00 [default task-9] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: null
-02:41:00 [default task-9] DEBUG iowniwant.controller.filter.AuthFilter: redirecting to login.jsp
-02:41:06 [default task-14] TRACE com.iowniwant.util.DataBaseManager: loading properties
-02:41:08 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
-02:41:08 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
-02:41:08 [default task-14] DEBUG iowniwant.controller.servlet.LoginServlet: user_id: 1 successfully persisted in ServletContext
-02:41:08 [default task-14] TRACE iowniwant.controller.servlet.LoginServlet: token successfully persisted in ServletContext
-02:41:08 [default task-14] DEBUG iowniwant.controller.servlet.LoginServlet: setting username: admin to userCookie: ioiw.username
-02:41:08 [default task-14] DEBUG iowniwant.controller.servlet.LoginServlet: setting password: admin to passCookie: ioiw.password
-02:41:08 [default task-14] TRACE iowniwant.controller.servlet.LoginServlet: redirection to goals page
-02:41:08 [default task-15] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-02:41:08 [default task-15] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-02:41:08 [default task-15] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:08 [default task-15] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-02:41:08 [default task-15] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=17, title='dafsd', cost=315.0, description='sdafsdf', pubdate='2016-05-21', notes='rsdarawer', user_id=1}]
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: user_id obtained from the servletContext: 1
-02:41:30 [default task-22] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Title was obtained due to the ajax function: adfsf
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Cost was obtained due to the ajax function: 3414.0
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Brief notes were obtained due to the ajax function: asdfsadf
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Description was obtained due to the ajax function: dsafsfsa
-02:41:30 [default task-22] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
-02:41:30 [default task-22] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : true
-02:41:30 [default task-22] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 18
-02:41:30 [default task-22] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-02:41:30 [default task-22] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:30 [default task-22] DEBUG iowniwant.controller.servlet.AddGoalsServlet: goal: Goal{id=18, title='adfsf', cost=3414.0, description='asdfsadf', pubdate='2016-05-26', notes='dsafsfsa', user_id=1}
-02:41:38 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-02:41:38 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:38 [default task-24] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: deleting goal : Goal{id=17, title='dafsd', cost=315.0, description='sdafsdf', pubdate='2016-05-21', notes='rsdarawer', user_id=1}
-02:41:38 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.goal.by.id
-02:41:38 [default task-24] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 17
-02:41:39 [default task-25] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-02:41:39 [default task-25] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-02:41:39 [default task-25] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:39 [default task-25] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-02:41:39 [default task-25] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=18, title='adfsf', cost=3414.0, description='asdfsadf', pubdate='2016-05-26', notes='dsafsfsa', user_id=1}]
-02:41:43 [default task-32] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-02:41:43 [default task-32] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-02:41:43 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:43 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-02:41:43 [default task-32] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=18, title='adfsf', cost=3414.0, description='asdfsadf', pubdate='2016-05-26', notes='dsafsfsa', user_id=1}]
-02:41:56 [default task-39] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-02:41:56 [default task-39] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:56 [default task-39] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: deleting goal : Goal{id=18, title='adfsf', cost=3414.0, description='asdfsadf', pubdate='2016-05-26', notes='dsafsfsa', user_id=1}
-02:41:56 [default task-39] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.goal.by.id
-02:41:56 [default task-39] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 18
-02:41:56 [default task-40] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-02:41:56 [default task-40] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-02:41:56 [default task-40] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:41:56 [default task-40] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-02:41:56 [default task-40] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: []
-02:42:07 [default task-47] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-02:42:07 [default task-47] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-02:42:07 [default task-47] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-02:42:07 [default task-47] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-02:42:07 [default task-47] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: []
-02:42:52 [ServerService Thread Pool -- 110] TRACE iowniwant.controller.filter.AuthFilter: destroy filter content
+21:57:34 [default task-9] TRACE iowniwant.controller.filter.AuthFilter: initialize filter content
+21:57:35 [default task-9] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: null
+21:57:35 [default task-9] DEBUG iowniwant.controller.filter.AuthFilter: redirecting to login.jsp
+21:57:40 [default task-16] TRACE com.iowniwant.util.DataBaseManager: loading properties
+21:57:42 [default task-16] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+21:57:42 [default task-16] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+21:57:42 [default task-16] DEBUG iowniwant.controller.servlet.LoginServlet: user_id: 1 successfully persisted in ServletContext
+21:57:42 [default task-16] TRACE iowniwant.controller.servlet.LoginServlet: token successfully persisted in ServletContext
+21:57:42 [default task-16] DEBUG iowniwant.controller.servlet.LoginServlet: setting username: admin to userCookie: ioiw.username
+21:57:42 [default task-16] DEBUG iowniwant.controller.servlet.LoginServlet: setting password: admin to passCookie: ioiw.password
+21:57:42 [default task-16] TRACE iowniwant.controller.servlet.LoginServlet: redirection to goals page
+21:57:42 [default task-17] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
+21:57:42 [default task-17] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
+21:57:42 [default task-17] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:57:42 [default task-17] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
+21:57:42 [default task-17] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: []
+21:58:17 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: user_id obtained from the servletContext: 1
+21:58:17 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:58:17 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Title was obtained due to the ajax function: afsdf
+21:58:17 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Cost was obtained due to the ajax function: 14.0
+21:58:17 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Brief notes were obtained due to the ajax function: fsadf
+21:58:17 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Description was obtained due to the ajax function: sadfsadf
+21:58:17 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
+21:58:18 [default task-24] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : true
+21:58:18 [default task-24] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 19
+21:58:18 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
+21:58:18 [default task-24] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:58:18 [default task-24] DEBUG iowniwant.controller.servlet.AddGoalsServlet: goal: Goal{id=19, title='afsdf', cost=14.0, description='fsadf', pubdate='2016-06-04', notes='sadfsadf', user_id=1}
+21:58:28 [default task-25] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
+21:58:28 [default task-25] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
+21:58:28 [default task-25] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:58:28 [default task-25] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
+21:58:28 [default task-25] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=19, title='afsdf', cost=14.0, description='fsadf', pubdate='2016-06-04', notes='sadfsadf', user_id=1}]
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: user_id obtained from the servletContext: 1
+21:58:38 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Title was obtained due to the ajax function: sdfasdf
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Cost was obtained due to the ajax function: 1341.0
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Brief notes were obtained due to the ajax function: sdafsgsg
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Description was obtained due to the ajax function: sagsagasa
+21:58:38 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
+21:58:38 [default task-32] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : true
+21:58:38 [default task-32] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 20
+21:58:38 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
+21:58:38 [default task-32] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+21:58:38 [default task-32] DEBUG iowniwant.controller.servlet.AddGoalsServlet: goal: Goal{id=20, title='sdfasdf', cost=1341.0, description='sdafsgsg', pubdate='2016-06-04', notes='sagsagasa', user_id=1}
