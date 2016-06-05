@@ -68,7 +68,7 @@ public class AddGoalsServletTest extends Mockito{
     @Test
     public void testDoPost() throws Exception {
 
-        doReturn(new Integer(1)).when(context).getAttribute("user_id");
+        doReturn(99).when(context).getAttribute("user_id");
         doReturn("314").when(request).getParameter("cost");
         doReturn("title").when(request).getParameter("title");
 

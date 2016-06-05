@@ -31,6 +31,7 @@ public class UserDaoTest extends Mockito {
     private User user = new User();
     private UserDao userDao = UserDao.getInstance();
 
+    public UserDaoTest() {}
     @Rule
     public ExpectedException exception = ExpectedException.none();
 

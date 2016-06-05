@@ -1,68 +1,107 @@
-14:39:33 [default task-8] TRACE iowniwant.controller.filter.AuthFilter: initialize filter content
-14:39:33 [default task-8] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: null
-14:39:33 [default task-8] DEBUG iowniwant.controller.filter.AuthFilter: redirecting to login-page.jsp
-14:39:34 [default task-13] TRACE com.iowniwant.util.DataBaseManager: loading properties
-14:39:35 [default task-13] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:35 [default task-13] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
-14:39:35 [default task-13] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:35 [default task-13] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
-14:39:35 [default task-13] DEBUG iowniwant.controller.servlet.LoginServlet: user_id: 1 successfully persisted in ServletContext
-14:39:35 [default task-13] TRACE iowniwant.controller.servlet.LoginServlet: token successfully persisted in ServletContext
-14:39:35 [default task-13] DEBUG iowniwant.controller.servlet.LoginServlet: setting username: admin to userCookie: ioiw.username
-14:39:35 [default task-13] DEBUG iowniwant.controller.servlet.LoginServlet: setting password: admin to passCookie: ioiw.password
-14:39:35 [default task-13] TRACE iowniwant.controller.servlet.LoginServlet: redirection to goals page
-14:39:35 [default task-14] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-14:39:35 [default task-14] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-14:39:35 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:35 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:39:35 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:35 [default task-14] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-14:39:35 [default task-14] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=1, title='Title Sample 1', cost=100.0, description='Description Sample 1', pubdate='2012-01-22', notes='Notes Sample 1', user_id=1, goal_v_id=1}]
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: user_id obtained from the servletContext: 1
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Title was obtained due to the ajax function: Red
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Cost was obtained due to the ajax function: 200.0
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Brief notes were obtained due to the ajax function: asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Description was obtained due to the ajax function: asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
-14:39:53 [default task-19] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : true
-14:39:53 [default task-19] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 3
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:39:53 [default task-19] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:39:53 [default task-19] DEBUG iowniwant.controller.servlet.AddGoalsServlet: goal: Goal{id=3, title='Red', cost=200.0, description='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', pubdate='2016-06-05', notes='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', user_id=1, goal_v_id=2}
-14:40:02 [default task-20] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-14:40:02 [default task-20] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-14:40:02 [default task-20] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:02 [default task-20] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:40:02 [default task-20] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:02 [default task-20] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-14:40:02 [default task-20] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: [Goal{id=1, title='Title Sample 1', cost=100.0, description='Description Sample 1', pubdate='2012-01-22', notes='Notes Sample 1', user_id=1, goal_v_id=1}, Goal{id=3, title='Red', cost=200.0, description='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', pubdate='2016-06-05', notes='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', user_id=1, goal_v_id=2}]
-14:40:04 [default task-28] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: getting id of the goal to be deleted id: 1
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:40:04 [default task-28] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: deleting goal : Goal{id=1, title='Title Sample 1', cost=100.0, description='Description Sample 1', pubdate='2012-01-22', notes='Notes Sample 1', user_id=1, goal_v_id=1}
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-28] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.goal.by.id
-14:40:04 [default task-28] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 1
-14:40:04 [default task-29] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: getting id of the goal to be deleted id: 3
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:40:04 [default task-29] DEBUG iowniwant.controller.servlet.RemoveGoalsServlet: deleting goal : Goal{id=3, title='Red', cost=200.0, description='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', pubdate='2016-06-05', notes='asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd', user_id=1, goal_v_id=1}
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-29] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.goal.by.id
-14:40:04 [default task-29] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 3
-14:40:04 [default task-30] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
-14:40:04 [default task-30] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 1
-14:40:04 [default task-30] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-30] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
-14:40:04 [default task-30] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
-14:40:04 [default task-30] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
-14:40:04 [default task-30] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: []
+14:59:03 [main] TRACE com.iowniwant.util.DataBaseManager: loading properties
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.all.user
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.user
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : false
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 0
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.user.by.id
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 99
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: update.user
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.all.goal
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : false
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 0
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: delete.goal.by.id
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: deleting entity with id: 99
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: update.goal
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+14:59:03 [main] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: null
+14:59:03 [main] DEBUG iowniwant.controller.filter.AuthFilter: redirecting to login-page.jsp
+14:59:03 [main] DEBUG iowniwant.controller.filter.AuthFilter: token attribute from ServletContext: logged
+14:59:03 [main] DEBUG iowniwant.controller.servlet.AccountServlet: user_id from servletContext: 1
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG iowniwant.controller.servlet.AccountServlet: user from DataBase: User{id=0, firstName='null', lastName='null', userName='null', password='null', email='null', monthSalary=0.0}
+14:59:03 [main] TRACE iowniwant.controller.servlet.AccountServlet: sending data to account page
+14:59:03 [main] DEBUG iowniwant.controller.servlet.AccountServlet: user_id from servletContext: 1
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG iowniwant.controller.servlet.AccountServlet: user from DataBase: User{id=0, firstName='null', lastName='null', userName='null', password='null', email='null', monthSalary=0.0}
+14:59:03 [main] TRACE iowniwant.controller.servlet.AccountServlet: sending data to account page
+14:59:03 [main] DEBUG iowniwant.controller.servlet.LogoutServlet: removing user_id and token attribute from ServletContext
+14:59:03 [main] DEBUG iowniwant.controller.servlet.LogoutServlet: invalidating session
+14:59:03 [main] DEBUG iowniwant.controller.servlet.UpdateAccountServlet: user_id from servletContext: 99
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG iowniwant.controller.servlet.UpdateAccountServlet: user from database: User{id=0, firstName='null', lastName='null', userName='null', password='null', email='null', monthSalary=0.0}
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: update.user
+14:59:03 [main] DEBUG iowniwant.controller.servlet.UpdateAccountServlet: user after Update: User{id=0, firstName='null', lastName='null', userName='null', password='null', email='null', monthSalary=100.0}
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.user
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : false
+14:59:03 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 0
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.nick
+14:59:03 [main] DEBUG iowniwant.controller.servlet.LoginServlet: user_id: 0 successfully persisted in ServletContext
+14:59:03 [main] TRACE iowniwant.controller.servlet.LoginServlet: token successfully persisted in ServletContext
+14:59:03 [main] DEBUG iowniwant.controller.servlet.LoginServlet: setting username: test to userCookie: ioiw.username
+14:59:03 [main] DEBUG iowniwant.controller.servlet.LoginServlet: setting password: test to passCookie: ioiw.password
+14:59:03 [main] TRACE iowniwant.controller.servlet.LoginServlet: redirection to goals page
+14:59:03 [main] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: fetching goals for user with id: 99
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:03 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.user.id
+14:59:03 [main] DEBUG iowniwant.controller.servlet.ShowGoalsServlet: goals fetched: []
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: user_id obtained from the servletContext: 99
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Title was obtained due to the ajax function: title
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Cost was obtained due to the ajax function: 314.0
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Brief notes were obtained due to the ajax function: null
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: Description was obtained due to the ajax function: null
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: create.goal
+14:59:04 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: is creation executed : false
+14:59:04 [main] DEBUG iowniwant.dao.implementation.AbstractDaoImpl: creating entity with id: 0
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.goal.view.by.goal.id
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Establishing connection
+14:59:04 [main] DEBUG com.iowniwant.util.DataBaseManager: Requested query: get.user.by.id
+14:59:04 [main] DEBUG iowniwant.controller.servlet.AddGoalsServlet: goal: Goal{id=0, title='null', cost=0.0, description='null', pubdate='null', notes='null', user_id=0, goal_v_id=0}

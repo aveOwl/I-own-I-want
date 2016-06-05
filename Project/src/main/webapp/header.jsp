@@ -30,7 +30,7 @@
       <div class="container">
         <ul class="nav">
           <li><a href="front-page.jsp">Home</a></li>
-          <li><a href="#">Team</a></li>
+          <li><a href="about-page.jsp">About</a></li>
           <li><a href="showGoalsServlet">Goals</a></li>
         </ul>
         <ul class="nav right">
@@ -53,7 +53,7 @@
       <div class="container">
         <ul class="nav">
           <li><a href="front-page.jsp">Home</a></li>
-          <li><a href="#">Team</a></li>
+          <li><a href="about-page.jsp">About</a></li>
           <li><a href="showGoalsServlet">Goals</a></li>
           <li><a href="login-page.jsp">Log in</a></li>
           <li><a href="register-page.jsp">Register</a></li>

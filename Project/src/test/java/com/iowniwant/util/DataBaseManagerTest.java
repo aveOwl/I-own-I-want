@@ -19,6 +19,7 @@ public class DataBaseManagerTest extends Mockito {
     @Mock
     private Connection connection;
 
+    public DataBaseManagerTest() {}
     @Before
     public void setUp() throws Exception {
         // sets up the InitialContextFactoryForMock as default factory.
