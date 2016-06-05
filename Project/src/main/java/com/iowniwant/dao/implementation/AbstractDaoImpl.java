@@ -115,7 +115,6 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
             if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
-
         return null;
     }
 

@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -67,56 +68,82 @@ public class GoalDaoTest extends Mockito {
     }
 
     @Test
-    public void goalDaoCreateTest() throws SQLException {
-        goalDao.create(goal);
+    public void GetGoalsByUserIdTest() throws Exception {
 
-        verify(connection, times(1)).prepareStatement(anyString(), anyInt());
-        verify(preparedStatement, times(3)).setString(anyInt(), anyString());
-        verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
-        verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
-        verify(preparedStatement, times(3)).setInt(anyInt(), anyInt());
-        verify(resultSet, times(3)).next();
+        goalDao.getGoalsByUserId(id);
+
+        verify(connection, times(2)).prepareStatement(anyString());
+        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(2)).executeQuery();
     }
 
     @Test
-    public void goalDaoUpdateTest() throws SQLException {
+    public void GoalDaoCreateTest() throws SQLException {
+
+        goalDao.create(goal);
+
+        verify(connection, atLeastOnce()).prepareStatement(anyString(), anyInt());
+        verify(preparedStatement, atLeastOnce()).executeUpdate();
+
+        InOrder inOrder = inOrder(connection, preparedStatement);
+        inOrder.verify(connection).prepareStatement(anyString());
+        inOrder.verify(preparedStatement).setInt(anyInt(), anyInt());
+        inOrder.verify(preparedStatement).executeQuery();
+    }
+
+    @Test
+    public void GoalDaoGetByIdTest() throws SQLException {
+
+        goalDao.getById(id);
+
+        InOrder inOrder = inOrder(connection, preparedStatement);
+        inOrder.verify(connection).prepareStatement(anyString());
+        inOrder.verify(preparedStatement).setInt(anyInt(),anyInt());
+        inOrder.verify(preparedStatement).executeQuery();
+    }
+
+    @Test
+    public void UpdateGoalTest() throws SQLException {
+
         goalDao.update(goal);
 
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(3)).setString(anyInt(), anyString());
+
+        verify(preparedStatement, times(3)).setString(anyInt(),anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
         verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
         verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
         verify(preparedStatement, times(1)).executeUpdate();
+
         verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
     }
 
     @Test
-    public void goalDaoGetByIdTest() throws SQLException {
-        goalDao.getById(id);
+    public void GoalDaoDeleteTest() throws SQLException {
 
-        verify(dataSource, times(2)).getConnection();
-        verify(connection, times(2)).prepareStatement(anyString());
-        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
-        verify(preparedStatement, times(2)).executeQuery();
-        verify(resultSet, times(2)).next();
-        verify(resultSet, times(2)).getInt("user_id");
-        verify(connection, times(2)).close();
+        goalDao.delete(id);
+
+        verify(dataSource, times(1)).getConnection();
+        verify(connection, atLeastOnce()).prepareStatement(anyString());
+        verify(preparedStatement, atLeastOnce()).setInt(eq(1), anyInt());
+        verify(preparedStatement, atLeastOnce()).execute();
+        verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
     }
 
     @Test
-    public void goalDaoGetByNickTest() throws SQLException {
-        goalDao.getGoalsByUserId(id);
+    public void GoalDaoGetAllTest() throws SQLException {
+
+        goalDao.getAll();
 
         verify(dataSource, times(2)).getConnection();
         verify(connection, times(2)).prepareStatement(anyString());
-        verify(preparedStatement, times(2)).setInt(eq(1), eq(id));
-        verify(preparedStatement, times(2)).executeQuery();
+        verify(preparedStatement, atLeastOnce()).executeQuery();
+        verify(preparedStatement, times(1)).setInt(eq(1), anyInt());
         verify(resultSet, times(3)).next();
-
         verify(connection, times(2)).close();
         verifyNoMoreInteractions(connection);
     }

@@ -14,13 +14,13 @@ import java.sql.Date;
 public class Goal implements Serializable, Comparable<Goal> {
 
     private int id;
-    private int v_id;
     private String title;
     private double cost;
     private String description;
     private Date pubdate;
     private String notes;
     private User user;
+    private int v_id;
 
     /**
      * All serializable objects required to have

@@ -1,7 +1,5 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
-import com.iowniwant.model.User;
 import com.iowniwant.util.InitialContextFactoryMock;
 import org.junit.After;
 import org.junit.Before;

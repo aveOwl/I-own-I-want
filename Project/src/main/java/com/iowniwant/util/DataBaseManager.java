@@ -76,12 +76,7 @@ public class DataBaseManager {
             log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
         } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException ignored) {
-                }
-            }
+            if (is != null)  try { is.close(); } catch (IOException ignored) {}
         }
     }
 }

@@ -32,6 +32,6 @@ public class ShowGoalsServlet extends HttpServlet {
         List<Goal> list = goalDao.getGoalsByUserId(user_id);
         log.debug("goals fetched: {}", list);
         request.setAttribute("goals_list", list);
-        request.getRequestDispatcher("/goals.jsp").forward(request, response);
+        request.getRequestDispatcher("/goals-page.jsp").forward(request, response);
     }
 }

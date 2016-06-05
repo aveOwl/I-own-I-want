@@ -60,11 +60,10 @@ values ('admin', 'admin', 'admin', 'admin', 'admin@gmail.com');
 INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
 values ('user', 'qwerty', 'user', 'admin', 'user@gmail.com');
 
-/*INSERT INTO iowniwant.goal (title, cost, description, pubdate, notes, user_id)
+INSERT INTO iowniwant.goal (title, cost, description, pubdate, notes, user_id)
 values ('Title Sample 1', 100.00, 'Description Sample 1', '22/01/12', 'Notes Sample 1', 1);
 INSERT INTO iowniwant.goal (title, cost, description, pubdate, notes, user_id)
 values ('Title Sample 2', 500.00, 'Description Sample 2', '13/05/14', 'Notes Sample 2', 2);
-
 INSERT INTO iowniwant.task (description, goal_id)
 values ('Description Task Sample 1', 1);
 INSERT INTO iowniwant.task (description, goal_id)
@@ -72,4 +71,4 @@ values ('Description Task Sample 2', 2);
 INSERT INTO iowniwant.task (description, goal_id)
 values ('Description Task Sample 3', 1);
 INSERT INTO iowniwant.task (description, goal_id)
-values ('Description Task Sample 4', 2);*/
+values ('Description Task Sample 4', 2);

@@ -38,24 +38,41 @@ public class AuthFilterTest extends Mockito {
     public void tearDown() {
     }
 
+    /**
+     * Tests whether the servlet passes control to a further servlet
+     * via reference to a {@link #filterChain} object. It also verifies
+     * that the invocation of {@code sendRedirect()} method has not occured
+     * @throws IOException
+     * @throws ServletException
+     */
     @Test
-    public void authFilterSuccessTest() throws ServletException, IOException {
-        // when user is logged in should proceed
+    public void loggedAttrTest() throws IOException, ServletException {
+
         when(servletContext.getAttribute("token")).thenReturn("logged");
 
-        authFilter.doFilter(request, response, filterChain);
+        new AuthFilter().doFilter(request,response,filterChain);
 
-        assertNotNull(servletContext.getAttribute("token"));
-        verify(filterChain, times(1)).doFilter(request, response);
+        verify(filterChain,times(1)).doFilter(request,response);
+        verify(response,never()).sendRedirect("login-page.jsp");
     }
 
-    public void authFilterFailTest() throws ServletException, IOException {
-        // when user is logged out he should be redirected to login page
+    /**
+     * Tests whether the servlet redirects back to a login-page.jsp
+     * and whether there were no references to the {@link #filterChain} object
+     * during an execution
+     * @throws IOException
+     * @throws ServletException
+     */
+    @Test
+    public void nullAttrTest() throws IOException, ServletException {
+
         when(servletContext.getAttribute("token")).thenReturn(null);
 
-        authFilter.doFilter(request, response, filterChain);
+        new AuthFilter().doFilter(request,response,filterChain);
 
-        assertNull(servletContext.getAttribute("token"));
-        verify(response, times(1)).sendRedirect("login.jsp");
+        verify(response,times(1)).sendRedirect("login-page.jsp");
+
+        verify(filterChain,never()).doFilter(request,response);
+
     }
 }

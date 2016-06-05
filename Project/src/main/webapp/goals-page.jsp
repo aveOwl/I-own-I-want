@@ -33,11 +33,11 @@
         </div>
         <div>
           <label for="shorten">Short Description:</label>
-          <textarea id="shorten" name="shorten" ng-model="ctrl.goal.shortDescr"></textarea>
+          <textarea id="shorten" name="shorten" ng-model="ctrl.goal.shortDescr" maxlength="255"></textarea>
         </div>
         <div>
           <label for="description">Description:</label>
-          <textarea id="description" name="description" ng-model="ctrl.goal.description"></textarea>
+          <textarea id="description" name="description" ng-model="ctrl.goal.description" maxlength="255"></textarea>
         </div>
         <button type="submit"
                 id="confirm"

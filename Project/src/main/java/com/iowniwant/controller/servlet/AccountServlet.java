@@ -6,6 +6,7 @@ import com.iowniwant.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,7 @@ public class AccountServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
         log.debug("user_id from servletContext: {}", userId);
-        
+
         User user = userDao.getById(userId);
         log.debug("user from DataBase: {}", user);
 
@@ -45,6 +46,6 @@ public class AccountServlet extends HttpServlet {
         response.getWriter().write(json);
 
         log.trace("sending data to account page");
-        request.getRequestDispatcher("/account.jsp").forward(request, response);
+        request.getRequestDispatcher("/account-page.jsp").forward(request, response);
     }
 }
