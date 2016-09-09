@@ -68,10 +68,10 @@ public class DataBaseManager {
     public Connection getConnection() {
         try {
             Context context = new InitialContext();
-            LOG.debug("fetching DataSource by jndi lookup: {}", JNDI_DATA_SOURCE);
+            LOG.debug("Fetching DataSource by jndi lookup: {}", JNDI_DATA_SOURCE);
             DataSource ds = (DataSource) context.lookup(JNDI_DATA_SOURCE);
             connection = ds.getConnection();
-            LOG.debug("establishing connection ...");
+            LOG.debug("Establishing connection ...");
         } catch (SQLException | NamingException e) {
             LOG.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
@@ -84,7 +84,7 @@ public class DataBaseManager {
      * @return query by the given identifier name.
      */
     public String getQuery(String name) {
-        LOG.debug("requested query: {}", name);
+        LOG.debug("Requested query: {}", name);
         if (queries == null)
             loadProperties();
         return queries.getProperty(name);

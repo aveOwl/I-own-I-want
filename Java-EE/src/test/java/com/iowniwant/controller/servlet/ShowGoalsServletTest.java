@@ -1,38 +1,25 @@
 package com.iowniwant.controller.servlet;
 
+import com.iowniwant.dao.implementation.GoalDao;
 import com.iowniwant.model.Goal;
-import com.iowniwant.util.InitialContextFactoryMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.naming.Context;
-import javax.naming.spi.InitialContextFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShowGoalsServletTest extends Mockito {
-    @Mock
-    private DataSource dataSource;
-    @Mock
-    private Connection connection;
-    @Mock
-    private PreparedStatement preparedStatement;
-    @Mock
-    private ResultSet resultSet;
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -41,29 +28,25 @@ public class ShowGoalsServletTest extends Mockito {
     private HttpServletResponse response;
     @Mock
     private RequestDispatcher requestDispatcher;
-    private List<Goal> list = new ArrayList<>();
+    @Mock
+    private GoalDao goalDao;
 
+    @InjectMocks
     private ShowGoalsServlet showGoalsServlet = new ShowGoalsServlet();
+
+    private List<Goal> list;
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactoryMock.class.getName());
-        InitialContextFactoryMock.bind("java:/jdbc/data-postgres", dataSource);
-
-        when(dataSource.getConnection()).thenReturn(connection);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-
         when(request.getServletContext()).thenReturn(servletContext);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+        list = new ArrayList<>();
     }
 
     @After
-    public void tearDown() {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactory.class.getName());
+    public void tearDown() throws Exception {
+        list = null;
     }
 
     @Test

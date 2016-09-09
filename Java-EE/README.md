@@ -1,3 +1,0 @@
-# JavaEE Project
-* Servlets
-* JSP

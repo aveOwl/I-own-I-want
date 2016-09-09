@@ -3,6 +3,7 @@ package com.iowniwant.controller.servlet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -23,6 +24,7 @@ public class LogoutServletTest extends Mockito {
     @Mock
     private HttpSession session;
 
+    @InjectMocks
     private LogoutServlet logoutServlet = new LogoutServlet();
 
     @Before

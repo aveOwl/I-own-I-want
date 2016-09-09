@@ -2,7 +2,7 @@ package com.iowniwant.dao.implementation;
 
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
-import com.iowniwant.util.InitialContextFactoryMock;
+import com.iowniwant.controller.helper.InitialContextFactoryMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -25,6 +26,8 @@ import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoalDaoTest extends Mockito {
+    private static final int GOAL_ID = 99;
+
     @Mock
     private DataSource dataSource;
     @Mock
@@ -36,8 +39,8 @@ public class GoalDaoTest extends Mockito {
     @Mock
     private Goal goal;
 
+    @InjectMocks
     private GoalDao goalDao = GoalDao.getInstance();
-    private int id = 99;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -69,7 +72,7 @@ public class GoalDaoTest extends Mockito {
 
     @Test
     public void shouldReturnGoalsByUserId() throws Exception {
-        goalDao.getGoalsByUserId(id);
+        goalDao.getGoalsByUserId(GOAL_ID);
 
         verify(connection, times(2)).prepareStatement(anyString());
         verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
@@ -92,7 +95,7 @@ public class GoalDaoTest extends Mockito {
 
     @Test
     public void shouldReturnGoalByGoalId() throws SQLException {
-        goalDao.getById(id);
+        goalDao.getById(GOAL_ID);
 
         InOrder inOrder = inOrder(connection, preparedStatement);
         inOrder.verify(connection).prepareStatement(anyString());
@@ -119,7 +122,7 @@ public class GoalDaoTest extends Mockito {
 
     @Test
     public void shouldDeleteGoal() throws SQLException {
-        goalDao.delete(id);
+        goalDao.delete(GOAL_ID);
 
         verify(dataSource, times(1)).getConnection();
         verify(connection, atLeastOnce()).prepareStatement(anyString());

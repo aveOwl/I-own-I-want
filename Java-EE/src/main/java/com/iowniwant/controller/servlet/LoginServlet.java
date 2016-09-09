@@ -10,8 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-import static com.iowniwant.util.UserValidation.*;
-
 /**
  * Obtains user name and password from the login page,
  * verifies if it present in the DataBase, remembers user_id and
@@ -48,9 +46,9 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
 
-        if (isUserValid(username, password)) {
+        User user = userDao.getByNick(username);
 
-            User user = userDao.getByNick(username);
+        if (user != null && password.equals(user.getPassword())) {
 
             request.getServletContext().setAttribute("user_id", user.getId());
             LOG.debug("user_id: {} successfully persisted in ServletContext", user.getId());

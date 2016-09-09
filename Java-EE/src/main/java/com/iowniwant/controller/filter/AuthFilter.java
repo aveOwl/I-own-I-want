@@ -23,7 +23,7 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        LOG.info("initialize filter content");
+        LOG.info("Initializing filter content...");
     }
 
     /**
@@ -42,19 +42,19 @@ public class AuthFilter implements Filter {
 
         String token = (String) httpServletRequest.getServletContext().getAttribute("token");
 
-        LOG.debug("token attribute from ServletContext: {}", token);
+        LOG.debug("Token attribute from ServletContext: {}", token);
 
         if (token != null) {
             filterChain.doFilter(request, response);
         }
         else {
-            LOG.info("redirecting to login-page.jsp");
+            LOG.info("Redirecting to login-page.jsp");
             httpServletResponse.sendRedirect("login-page.jsp");
         }
     }
 
     @Override
     public void destroy() {
-        LOG.info("destroy filter content");
+        LOG.info("Destroying filter content...");
     }
 }

@@ -1,5 +1,6 @@
 package com.iowniwant.util;
 
+import com.iowniwant.controller.helper.InitialContextFactoryMock;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,7 +20,6 @@ public class DataBaseManagerTest extends Mockito {
     @Mock
     private Connection connection;
 
-    public DataBaseManagerTest() {}
     @Before
     public void setUp() throws Exception {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY,

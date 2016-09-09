@@ -1,77 +1,74 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.util.InitialContextFactoryMock;
+import com.iowniwant.dao.implementation.GoalDao;
+import com.iowniwant.dao.implementation.UserDao;
+import com.iowniwant.model.Goal;
+import com.iowniwant.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.naming.Context;
-import javax.naming.spi.InitialContextFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import static com.iowniwant.controller.helper.TestEntity.getTestGoal;
+import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AddGoalsServletTest extends Mockito{
-
     @Mock
     private HttpServletRequest request;
     @Mock
     private HttpServletResponse response;
     @Mock
-    private DataSource dataSource;
-    @Mock
     private ServletContext context;
     @Mock
-    private Connection connection;
-    @Mock
-    private PreparedStatement preparedStatement;
-    @Mock
-    private ResultSet resultSet;
-    @Mock
     private PrintWriter writer;
+    @Mock
+    private GoalDao goalDao;
+    @Mock
+    private UserDao userDao;
 
+    @InjectMocks
     private AddGoalsServlet addGoalsServlet = new AddGoalsServlet();
+
+    private static User user;
+    private static Goal goal;
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactoryMock.class.getName());
-        InitialContextFactoryMock.bind("java:/jdbc/data-postgres", dataSource);
-
-        doReturn(writer).when(response).getWriter();
         when(response.getWriter()).thenReturn(writer);
-        when(resultSet.next()).thenReturn(Boolean.TRUE);
         when(request.getServletContext()).thenReturn(context);
-        doReturn(connection).when(dataSource).getConnection();
-        doReturn(preparedStatement).when(connection).prepareStatement(anyString(), anyInt());
-        doReturn(preparedStatement).when(connection).prepareStatement(anyString());
-        doNothing().when(preparedStatement).setInt(eq(1), anyInt());
         doNothing().when(writer).print(anyString());
-        doReturn(resultSet).when(preparedStatement).executeQuery();
-        doReturn(resultSet).when(preparedStatement).getGeneratedKeys();
+        doReturn(writer).when(response).getWriter();
+
+        user = getTestUser();
+        when(userDao.getById(user.getId())).thenReturn(user);
+
+        goal = getTestGoal();
+        when(goalDao.create(new Goal())).thenReturn(goal);
     }
 
     @After
-    public void tearDown() {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactory.class.getName());
+    public void tearDown() throws Exception {
+        user = null;
+        goal = null;
     }
 
     @Test
     public void shouldProceedPostRequest() throws Exception {
-        doReturn(99).when(context).getAttribute("user_id");
-        doReturn("314").when(request).getParameter("cost");
-        doReturn("title").when(request).getParameter("title");
+        when(context.getAttribute("user_id")).thenReturn(user.getId());
+        when(request.getParameter("title")).thenReturn(goal.getTitle());
+        when(request.getParameter("cost")).thenReturn("99.00");
+        when(request.getParameter("shorten")).thenReturn("test");
+        when(request.getParameter("description")).thenReturn(goal.getDescription());
 
         addGoalsServlet.doPost(request,response);
 

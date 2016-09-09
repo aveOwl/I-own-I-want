@@ -1,38 +1,27 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.util.InitialContextFactoryMock;
+import com.iowniwant.dao.implementation.UserDao;
+import com.iowniwant.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.naming.Context;
-import javax.naming.spi.InitialContextFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
+import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateAccountServletTest extends Mockito {
-    @Mock
-    private DataSource dataSource;
-    @Mock
-    private Connection connection;
-    @Mock
-    private PreparedStatement preparedStatement;
-    @Mock
-    private ResultSet resultSet;
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -43,39 +32,43 @@ public class UpdateAccountServletTest extends Mockito {
     private PrintWriter writer;
     @Mock
     private RequestDispatcher requestDispatcher;
+    @Mock
+    private UserDao userDao;
 
+    @InjectMocks
     private UpdateAccountServlet updateAccountServlet = new UpdateAccountServlet();
+
+    private static User user;
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactoryMock.class.getName());
-        InitialContextFactoryMock.bind("java:/jdbc/data-postgres", dataSource);
-
-        when(dataSource.getConnection()).thenReturn(connection);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE);
-
         when(request.getServletContext()).thenReturn(servletContext);
         when(response.getWriter()).thenReturn(writer);
         when(servletContext.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+        user = getTestUser();
+
+        when(servletContext.getAttribute("user_id")).thenReturn(user.getId());
+        when(userDao.getById(user.getId())).thenReturn(user);
     }
 
     @After
     public void tearDown() {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactory.class.getName());
+        user = null;
     }
 
     @Test
     public void shouldUpdateAccountSuccessfully() throws Exception {
-        when(servletContext.getAttribute("user_id")).thenReturn(99);
-        when(request.getParameter("monthSalary")).thenReturn("100.0");
+        when(request.getParameter("firstName")).thenReturn(user.getFirstName());
+        when(request.getParameter("lastName")).thenReturn(user.getLastName());
+        when(request.getParameter("userName")).thenReturn(user.getUserName());
+        when(request.getParameter("email")).thenReturn(user.getEmail());
+        when(request.getParameter("monthSalary")).thenReturn("99.00");
+        when(request.getParameter("confirm_password")).thenReturn(user.getPassword());
 
         updateAccountServlet.doPost(request, response);
 
-        assertNotNull(servletContext.getAttribute("user_id"));
+        verify(userDao, atLeastOnce()).update(user);
         verify(request, times(6)).getParameter(anyString());
         verify(response, atLeastOnce()).sendRedirect("showGoalsServlet");
     }

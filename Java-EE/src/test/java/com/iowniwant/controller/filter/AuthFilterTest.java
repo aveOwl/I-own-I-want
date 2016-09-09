@@ -3,6 +3,7 @@ package com.iowniwant.controller.filter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -25,6 +26,9 @@ public class AuthFilterTest extends Mockito {
     @Mock
     private FilterChain filterChain;
 
+    @InjectMocks
+    private AuthFilter authFilter;
+
     @Before
     public void setUp() {
         when(request.getServletContext()).thenReturn(servletContext);
@@ -39,13 +43,12 @@ public class AuthFilterTest extends Mockito {
      */
     @Test
     public void shouldNotRedirectIfLogged() throws IOException, ServletException {
-
         when(servletContext.getAttribute("token")).thenReturn("logged");
 
-        new AuthFilter().doFilter(request,response,filterChain);
+        authFilter.doFilter(request,response,filterChain);
 
-        verify(filterChain,times(1)).doFilter(request,response);
-        verify(response,never()).sendRedirect("login-page.jsp");
+        verify(filterChain, times(1)).doFilter(request,response);
+        verify(response, never()).sendRedirect("login-page.jsp");
     }
 
     /**
@@ -57,12 +60,11 @@ public class AuthFilterTest extends Mockito {
      */
     @Test
     public void shouldRedirectIfNotLogged() throws IOException, ServletException {
-
         when(servletContext.getAttribute("token")).thenReturn(null);
 
-        new AuthFilter().doFilter(request,response,filterChain);
+        authFilter.doFilter(request,response,filterChain);
 
-        verify(response,times(1)).sendRedirect("login-page.jsp");
-        verify(filterChain,never()).doFilter(request,response);
+        verify(response, times(1)).sendRedirect("login-page.jsp");
+        verify(filterChain, never()).doFilter(request,response);
     }
 }

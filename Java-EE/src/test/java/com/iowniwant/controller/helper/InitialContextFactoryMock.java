@@ -1,4 +1,4 @@
-package com.iowniwant.util;
+package com.iowniwant.controller.helper;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

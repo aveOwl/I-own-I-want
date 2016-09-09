@@ -1,37 +1,27 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.util.InitialContextFactoryMock;
+import com.iowniwant.dao.implementation.UserDao;
+import com.iowniwant.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.naming.Context;
-import javax.naming.spi.InitialContextFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServletTest extends Mockito {
-    @Mock
-    private DataSource dataSource;
-    @Mock
-    private Connection connection;
-    @Mock
-    private PreparedStatement preparedStatement;
-    @Mock
-    private ResultSet resultSet;
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -42,55 +32,55 @@ public class LoginServletTest extends Mockito {
     private PrintWriter writer;
     @Mock
     private RequestDispatcher requestDispatcher;
+    @Mock
+    private UserDao userDao;
 
+    @InjectMocks
     private LoginServlet loginServlet = new LoginServlet();
+
+    private static User user;
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactoryMock.class.getName());
-        InitialContextFactoryMock.bind("java:/jdbc/data-postgres", dataSource);
-
-        when(dataSource.getConnection()).thenReturn(connection);
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(Boolean.TRUE);
-
         when(request.getServletContext()).thenReturn(servletContext);
         when(response.getWriter()).thenReturn(writer);
-        when(servletContext.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(request.getParameter("userName")).thenReturn("test");
-        when(request.getParameter("password")).thenReturn("test");
+        when(servletContext.getRequestDispatcher("/showGoalsServlet")).thenReturn(requestDispatcher);
+
+        user = getTestUser();
+
+        when(request.getParameter("userName")).thenReturn(user.getUserName());
+        when(request.getParameter("password")).thenReturn(user.getPassword());
     }
 
     @After
-    public void tearDown() {
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                InitialContextFactory.class.getName());
+    public void tearDown() throws Exception {
+        user = null;
     }
 
     @Test
     public void shouldSucceedWithPassword() throws Exception {
-        when(resultSet.getString("user_password")).thenReturn("test");
+        when(userDao.getByNick(user.getUserName()))
+                .thenReturn(user);
 
         loginServlet.doPost(request, response);
 
         verify(request.getServletContext(), atLeastOnce()).setAttribute(eq("user_id"), anyInt());
-        verify(request.getServletContext(), atLeastOnce()).setAttribute(eq("token"), eq("logged"));
+        verify(request.getServletContext(), atLeastOnce()).setAttribute("token", "logged");
         verify(response, times(2)).addCookie(any(Cookie.class));
         verify(response.getWriter(), atLeastOnce()).write("success");
     }
 
     @Test
-    public void shouldFailWithoutPassword() throws Exception {
-        when(resultSet.getString("user_password")).thenReturn(null);
+    public void shouldFailOnNonExistingUser() throws Exception {
+        when(userDao.getByNick(user.getUserName()))
+                .thenReturn(null);
 
         loginServlet.doPost(request, response);
 
         verify(request.getServletContext(), never()).setAttribute(eq("user_id"), anyInt());
-        verify(request.getServletContext(), never()).setAttribute(eq("token"), eq("logged"));
+        verify(request.getServletContext(), never()).setAttribute("token", "logged");
         verify(response, never()).addCookie(any(Cookie.class));
-        verify(response.getWriter(), atLeastOnce()).write("fail");
+        verify(response.getWriter(), only()).write("fail");
     }
 
     @Test
