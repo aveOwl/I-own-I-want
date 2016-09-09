@@ -1,10 +1,10 @@
 # I-own-I-want
-![](https://coveralls.io/repos/github/RedSulfur/I-own-I-want/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/RedSulfur/I-own-I-want/badge.svg?branch=master)](https://coveralls.io/github/RedSulfur/I-own-I-want)
 
 # About
-Web Platform provides the possibility to determine your ambitions and to point out the milestones 
+*Web Platform provides the possibility to determine your ambitions and to point out the milestones 
 standing on the way of achieving those. 
-Such facility will help you to become the better version of yourself.
+Such facility will help you to become the better version of yourself.*
 
 **Technologies involved**
 * [Maven](https://maven.apache.org/)
