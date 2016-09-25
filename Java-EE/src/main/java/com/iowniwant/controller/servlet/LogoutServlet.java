@@ -16,9 +16,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
 public class LogoutServlet extends HttpServlet {
-    /**
-     * Logging system.
-     */
     private static final Logger LOG = LoggerFactory.getLogger(LogoutServlet.class);
 
     @Override
@@ -27,10 +24,12 @@ public class LogoutServlet extends HttpServlet {
 
         request.getServletContext().removeAttribute("token");
         request.getServletContext().removeAttribute("user_id");
-        LOG.debug("removing user_id and token attribute from ServletContext");
+        LOG.info("Removing user_id and token logged attribute from ServletContext...");
 
         request.getSession().invalidate();
-        LOG.debug("invalidating session");
+
+        LOG.info("Invalidating session...");
+        LOG.info("Redirecting to front page...");
         response.sendRedirect("front-page.jsp");
     }
 }

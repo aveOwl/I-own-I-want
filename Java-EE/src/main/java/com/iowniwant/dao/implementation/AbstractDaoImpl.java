@@ -6,7 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,29 +22,14 @@ import java.util.List;
  */
 
 abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T> {
-    /**
-     * LOGging system.
-     */
     private static final Logger LOG = LoggerFactory.getLogger(AbstractDaoImpl.class);
 
-    /**
-     * Single {@link DataBaseManager} instance.
-     */
     DataBaseManager dbManager = DataBaseManager.getInstance();
 
-    /**
-     * Database connection.
-     */
-    private Connection connection;
+    private Connection dbConnection;
 
-    /**
-     * JDBC {@link PreparedStatement}
-     */
     private PreparedStatement prepStatement;
 
-    /**
-     * JDBC {@link ResultSet}
-     */
     private ResultSet resultSet;
 
     /**
@@ -49,16 +38,16 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
     @Override
     public T create(T entity) {
         try {
-            connection = dbManager.getConnection();
+            dbConnection = dbManager.getDbConnection();
             String query = getCreateQuery();
-            prepStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepStatement = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             fillCreateStatement(prepStatement, entity);
             int i = prepStatement.executeUpdate();
             LOG.debug("is creation executed : {}", i == 1);
 
             resultSet = prepStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                int generatedID = resultSet.getInt(1);
+                Long generatedID = resultSet.getLong(1);
                 LOG.debug("creating entity with id: {}", generatedID);
                 return getById(generatedID);
             }
@@ -67,7 +56,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
         } finally {
             if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
             if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
         }
         return null;
     }
@@ -76,19 +65,19 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      * {@inheritDoc}
      */
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
-            connection = dbManager.getConnection();
+            dbConnection = dbManager.getDbConnection();
             String query = getDeleteQuery();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, id);
+            prepStatement = dbConnection.prepareStatement(query);
+            prepStatement.setLong(1, id);
             LOG.debug("deleting entity with id: {}", id);
             prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
         }
     }
 
@@ -98,9 +87,9 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
     @Override
     public T update(T entity) {
         try {
-            connection = dbManager.getConnection();
+            dbConnection = dbManager.getDbConnection();
             String query = getUpdateQuery();
-            prepStatement = connection.prepareStatement(query);
+            prepStatement = dbConnection.prepareStatement(query);
             fillUpdateStatement(prepStatement, entity);
             prepStatement.executeUpdate();
             return entity;
@@ -108,7 +97,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             e.printStackTrace();
         } finally {
             if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
         }
         return null;
     }
@@ -117,12 +106,12 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      * {@inheritDoc}
      */
     @Override
-    public T getById(Integer id) {
+    public T getById(Long id) {
         try {
-            connection = dbManager.getConnection();
+            dbConnection = dbManager.getDbConnection();
             String query = getGetByIdQuery();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, id);
+            prepStatement = dbConnection.prepareStatement(query);
+            prepStatement.setLong(1, id);
             resultSet = prepStatement.executeQuery();
             if (resultSet.next()) {
                 return getEntity(resultSet);
@@ -132,7 +121,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
         } finally {
             if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
             if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
         }
         return null;
     }
@@ -144,9 +133,9 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
     public List<T> getAll() {
         List<T> list = new ArrayList<>();
         try {
-            connection = dbManager.getConnection();
+            dbConnection = dbManager.getDbConnection();
             String query = getGetAllQuery();
-            prepStatement = connection.prepareStatement(query);
+            prepStatement = dbConnection.prepareStatement(query);
             resultSet = prepStatement.executeQuery();
             while (resultSet.next()) {
                 list.add(getEntity(resultSet));
@@ -156,7 +145,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
         } finally {
             if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
             if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
         }
         return list;
     }

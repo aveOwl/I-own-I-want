@@ -26,7 +26,7 @@ import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoalDaoTest extends Mockito {
-    private static final int GOAL_ID = 99;
+    private static final Long GOAL_ID = 99L;
 
     @Mock
     private DataSource dataSource;
@@ -38,9 +38,11 @@ public class GoalDaoTest extends Mockito {
     private ResultSet resultSet;
     @Mock
     private Goal goal;
+    @Mock
+    private User user;
 
     @InjectMocks
-    private GoalDao goalDao = GoalDao.getInstance();
+    private GoalDao goalDao = new GoalDao();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -61,7 +63,7 @@ public class GoalDaoTest extends Mockito {
         doNothing().when(preparedStatement).setString(anyInt(), anyString());
         doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
         doNothing().when(preparedStatement).setDate(anyInt(), any(Date.class));
-        doNothing().when(preparedStatement).setInt(anyInt(), anyInt());
+        doNothing().when(preparedStatement).setLong(anyInt(), anyInt());
     }
 
     @After
@@ -75,13 +77,15 @@ public class GoalDaoTest extends Mockito {
         goalDao.getGoalsByUserId(GOAL_ID);
 
         verify(connection, times(2)).prepareStatement(anyString());
-        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
-        verify(preparedStatement, times(2)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(2)).setLong(eq(1), anyInt());
+        verify(preparedStatement, times(2)).setLong(eq(1), anyInt());
         verify(preparedStatement, times(2)).executeQuery();
     }
 
     @Test
     public void shouldCreateGoal() throws SQLException {
+        when(goal.getUser()).thenReturn(user);
+
         goalDao.create(goal);
 
         verify(connection, atLeastOnce()).prepareStatement(anyString(), anyInt());
@@ -89,7 +93,7 @@ public class GoalDaoTest extends Mockito {
 
         InOrder inOrder = inOrder(connection, preparedStatement);
         inOrder.verify(connection).prepareStatement(anyString());
-        inOrder.verify(preparedStatement).setInt(anyInt(), anyInt());
+        inOrder.verify(preparedStatement).setLong(anyInt(), anyInt());
         inOrder.verify(preparedStatement).executeQuery();
     }
 
@@ -99,7 +103,7 @@ public class GoalDaoTest extends Mockito {
 
         InOrder inOrder = inOrder(connection, preparedStatement);
         inOrder.verify(connection).prepareStatement(anyString());
-        inOrder.verify(preparedStatement).setInt(anyInt(),anyInt());
+        inOrder.verify(preparedStatement).setLong(anyInt(),anyInt());
         inOrder.verify(preparedStatement).executeQuery();
     }
 
@@ -113,7 +117,7 @@ public class GoalDaoTest extends Mockito {
         verify(preparedStatement, times(3)).setString(anyInt(),anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
         verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
+        verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
         verify(preparedStatement, times(1)).executeUpdate();
 
         verify(connection, times(1)).close();
@@ -126,7 +130,7 @@ public class GoalDaoTest extends Mockito {
 
         verify(dataSource, times(1)).getConnection();
         verify(connection, atLeastOnce()).prepareStatement(anyString());
-        verify(preparedStatement, atLeastOnce()).setInt(eq(1), anyInt());
+        verify(preparedStatement, atLeastOnce()).setLong(eq(1), anyInt());
         verify(preparedStatement, atLeastOnce()).execute();
         verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
@@ -139,7 +143,7 @@ public class GoalDaoTest extends Mockito {
         verify(dataSource, times(2)).getConnection();
         verify(connection, times(2)).prepareStatement(anyString());
         verify(preparedStatement, atLeastOnce()).executeQuery();
-        verify(preparedStatement, times(1)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(1)).setLong(eq(1), anyInt());
         verify(resultSet, times(3)).next();
         verify(connection, times(2)).close();
         verifyNoMoreInteractions(connection);

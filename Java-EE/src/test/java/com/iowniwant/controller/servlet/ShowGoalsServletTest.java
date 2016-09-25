@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.GoalDao;
 import com.iowniwant.model.Goal;
+import com.iowniwant.service.impl.GoalService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class ShowGoalsServletTest extends Mockito {
     @Mock
     private RequestDispatcher requestDispatcher;
     @Mock
-    private GoalDao goalDao;
+    private GoalService goalService;
 
     @InjectMocks
     private ShowGoalsServlet showGoalsServlet = new ShowGoalsServlet();
@@ -38,10 +39,11 @@ public class ShowGoalsServletTest extends Mockito {
 
     @Before
     public void setUp() throws Exception {
+        list = new ArrayList<>();
+
         when(request.getServletContext()).thenReturn(servletContext);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-
-        list = new ArrayList<>();
+        when(goalService.getGoalsByUserId(99L)).thenReturn(list);
     }
 
     @After
@@ -51,7 +53,7 @@ public class ShowGoalsServletTest extends Mockito {
 
     @Test
     public void shouldShowGoals() throws Exception {
-        when(servletContext.getAttribute("user_id")).thenReturn(99);
+        when(servletContext.getAttribute("user_id")).thenReturn(99L);
 
         showGoalsServlet.doGet(request, response);
 

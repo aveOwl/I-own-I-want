@@ -40,7 +40,7 @@ public class DataBaseManagerTest extends Mockito {
         Context context = new InitialContext();
         dataSource = (DataSource) context.lookup("java:/jdbc/data-postgres");
 
-        DataBaseManager.getInstance().getConnection();
+        DataBaseManager.getInstance().getDbConnection();
 
         verify(dataSource, times(1)).getConnection();
         verifyNoMoreInteractions(dataSource);

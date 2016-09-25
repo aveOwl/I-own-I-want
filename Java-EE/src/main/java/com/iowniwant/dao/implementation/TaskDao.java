@@ -8,8 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TaskDao extends AbstractDaoImpl<Task> {
-    private final GoalDao goalDao = GoalDao.getInstance();
-    private TaskDao() {}
+    private GoalDao goalDao = new GoalDao();
 
     /**
      * Fills the PreparedStatement with given Task entity fields
@@ -21,7 +20,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
     public void fillCreateStatement(PreparedStatement prepStatement, Task entity) {
         try {
             prepStatement.setString(1, entity.getDescription());
-            prepStatement.setInt(2, entity.getGoal().getId());
+            prepStatement.setLong(2, entity.getGoal().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,7 +36,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
     public void fillUpdateStatement(PreparedStatement prepStatement, Task entity) {
         try {
             prepStatement.setString(1, entity.getDescription());
-            prepStatement.setInt(2, entity.getId());
+            prepStatement.setLong(2, entity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,8 +45,8 @@ public class TaskDao extends AbstractDaoImpl<Task> {
     @Override
     public Task getEntity(ResultSet resultSet) {
         try {
-            int goal_id = resultSet.getInt("goal_id");
-            Goal goal = goalDao.getById(goal_id);
+            Long goal_id = resultSet.getLong("goal_id");
+            Goal goal = this.goalDao.getById(goal_id);
             return new Task(resultSet, goal);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,7 +59,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
      */
     @Override
     public String getCreateQuery() {
-        return dbManager.getQuery("create.task");
+        return this.dbManager.getQuery("create.task");
     }
 
     /**
@@ -68,7 +67,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
      */
     @Override
     public String getDeleteQuery() {
-        return dbManager.getQuery("delete.task.by.id");
+        return this.dbManager.getQuery("delete.task.by.id");
     }
 
     /**
@@ -76,7 +75,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
      */
     @Override
     public String getUpdateQuery() {
-        return dbManager.getQuery("update.task");
+        return this.dbManager.getQuery("update.task");
     }
 
     /**
@@ -84,7 +83,7 @@ public class TaskDao extends AbstractDaoImpl<Task> {
      */
     @Override
     public String getGetAllQuery() {
-        return dbManager.getQuery("get.all.task");
+        return this.dbManager.getQuery("get.all.task");
     }
 
     /**
@@ -92,6 +91,6 @@ public class TaskDao extends AbstractDaoImpl<Task> {
      */
     @Override
     public String getGetByIdQuery() {
-        return dbManager.getQuery("get.task.view.by.task.id");
+        return this.dbManager.getQuery("get.task.view.by.task.id");
     }
 }

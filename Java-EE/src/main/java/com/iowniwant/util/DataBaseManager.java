@@ -14,33 +14,18 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Provides connection to the DataBase, manages queries access.
+ * Provides connection to the database, manages queries access.
  */
 public class DataBaseManager {
-    /**
-     * Logging system.
-     */
     private static final Logger LOG = LoggerFactory.getLogger(DataBaseManager.class);
 
-    /**
-     * Provides single {@link DataBaseManager} instance.
-     */
+    private static final String JNDI_DATA_SOURCE = "java:/jdbc/data-postgres";
+
     private static DataBaseManager instance;
 
-    /**
-     * Provides SQL queries.
-     */
     private Properties queries;
 
-    /**
-     * DataBase connection.
-     */
-    private Connection connection;
-
-    /**
-     * Link for JNDI Lookup for DataSource.
-     */
-    private static final String JNDI_DATA_SOURCE = "java:/jdbc/data-postgres";
+    private Connection dbConnection;
 
     /**
      * Provides DataBaseManager instance.
@@ -53,30 +38,27 @@ public class DataBaseManager {
         return instance;
     }
 
-    /**
-     * Prevents continuous object creation.
-     */
     private DataBaseManager() {
         LOG.trace("loading properties");
         loadProperties();
     }
 
     /**
-     * Establishes connection to the DataBase.
-     * @return connection to the DataBase.
+     * Establishes dbConnection to the DataBase.
+     * @return dbConnection to the DataBase.
      */
-    public Connection getConnection() {
+    public Connection getDbConnection() {
         try {
             Context context = new InitialContext();
             LOG.debug("Fetching DataSource by jndi lookup: {}", JNDI_DATA_SOURCE);
             DataSource ds = (DataSource) context.lookup(JNDI_DATA_SOURCE);
-            connection = ds.getConnection();
-            LOG.debug("Establishing connection ...");
+            this.dbConnection = ds.getConnection();
+            LOG.debug("Establishing dbConnection ...");
         } catch (SQLException | NamingException e) {
             LOG.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();
         }
-        return connection;
+        return this.dbConnection;
     }
 
     /**
@@ -85,9 +67,9 @@ public class DataBaseManager {
      */
     public String getQuery(String name) {
         LOG.debug("Requested query: {}", name);
-        if (queries == null)
+        if (this.queries == null)
             loadProperties();
-        return queries.getProperty(name);
+        return this.queries.getProperty(name);
     }
 
     /**
@@ -99,8 +81,8 @@ public class DataBaseManager {
         InputStream is = null;
         try {
             is = getClass().getResourceAsStream("/queries.properties");
-            queries = new Properties();
-            queries.load(is);
+            this.queries = new Properties();
+            this.queries.load(is);
         } catch (IOException e) {
             LOG.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
             e.printStackTrace();

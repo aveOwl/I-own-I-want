@@ -13,14 +13,14 @@ import java.sql.Date;
  */
 public class Goal implements Serializable, Comparable<Goal> {
 
-    private int id;
+    private Long id;
     private String title;
-    private double cost;
+    private Double cost;
     private String description;
     private Date pubdate;
     private String notes;
     private User user;
-    private int v_id;
+    private Long v_id;
 
     /**
      * All serializable objects required to have
@@ -38,7 +38,7 @@ public class Goal implements Serializable, Comparable<Goal> {
      * @param pubdate goal's pubdate.
      * @param notes goal's notes.
      */
-    public Goal(String title, double cost, String description, Date pubdate, String notes, User user) {
+    public Goal(String title, Double cost, String description, Date pubdate, String notes, User user) {
         this.title = title;
         this.cost = cost;
         this.description = description;
@@ -52,13 +52,10 @@ public class Goal implements Serializable, Comparable<Goal> {
      * @param resultSet a table of data, obtained from the DataBase
      * in order to create a new goal instance.
      * @throws SQLException if some sqlException occurred.
-     * @throws IllegalArgumentException if cost is NaN or infinite.
      */
     public Goal (ResultSet resultSet, User user) throws SQLException {
-        if (Double.isNaN(cost) || Double.isInfinite(cost))
-            throw new IllegalArgumentException("Cost cannot be NaN or infinite");
-        this.id = resultSet.getInt("goal_id");
-        this.v_id = resultSet.getInt("v_goal_id");
+        this.id = resultSet.getLong("goal_id");
+        this.v_id = resultSet.getLong("v_goal_id");
         this.title = resultSet.getString("title");
         this.cost = resultSet.getDouble("cost");
         this.description = resultSet.getString("description");
@@ -67,11 +64,11 @@ public class Goal implements Serializable, Comparable<Goal> {
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,11 +80,11 @@ public class Goal implements Serializable, Comparable<Goal> {
         this.title = title;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
@@ -123,11 +120,11 @@ public class Goal implements Serializable, Comparable<Goal> {
         this.user = user;
     }
 
-    public int getV_id() {
+    public Long getV_id() {
         return v_id;
     }
 
-    public void setV_id(int v_id) {
+    public void setV_id(Long v_id) {
         this.v_id = v_id;
     }
 
@@ -151,7 +148,7 @@ public class Goal implements Serializable, Comparable<Goal> {
     @Override
     public int hashCode() {
         int hash = 17;
-        hash = 31 * hash + ((Integer)id).hashCode();
+        hash = 31 * hash + this.id.hashCode();
         return hash;
     }
 

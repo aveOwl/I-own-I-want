@@ -19,7 +19,7 @@ public interface AbstractDAO<T> {
      * Makes persistent object transient. Removes it from the DataBase.
      * @param id objects id, which is used to identify it.
      */
-    void delete(Integer id);
+    void delete(Long id);
 
     /**
      * Makes detached object persistent. Updates it in the DataBase.
@@ -34,7 +34,7 @@ public interface AbstractDAO<T> {
      * @return persistent object of the type T with the given identifier or null if
      * there is no such persistent object
      */
-    T getById(Integer id);
+    T getById(Long id);
 
     /**
      * Fetches all persistent objects from the DataBase.

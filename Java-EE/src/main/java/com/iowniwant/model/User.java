@@ -12,13 +12,13 @@ import java.util.*;
  */
 public class User implements Serializable, Comparable<User> {
 
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
     private String email;
-    private double monthSalary;
+    private Double monthSalary;
 
     /**
      * All serializable object required to have
@@ -49,12 +49,9 @@ public class User implements Serializable, Comparable<User> {
      * @param resultSet a table of data, obtained from the DataBase
      * in order to create a new user instance.
      * @throws SQLException if there is some sqlException occurred.
-     * @throws IllegalArgumentException if monthSalary is NaN or infinitive.
      */
     public User(ResultSet resultSet) throws SQLException {
-        if (Double.isNaN(monthSalary) || Double.isInfinite(monthSalary))
-            throw new IllegalArgumentException("MonthSalary cannot be NaN or infinitive");
-        this.id = resultSet.getInt("user_id");
+        this.id = resultSet.getLong("user_id");
         this.firstName = resultSet.getString("first_name");
         this.lastName = resultSet.getString("last_name");
         this.userName = resultSet.getString("nick_name");
@@ -63,11 +60,11 @@ public class User implements Serializable, Comparable<User> {
         this.monthSalary = resultSet.getDouble("month_salary");
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -111,11 +108,11 @@ public class User implements Serializable, Comparable<User> {
         this.email = email;
     }
 
-    public double getMonthSalary() {
+    public Double getMonthSalary() {
         return monthSalary;
     }
 
-    public void setMonthSalary(double monthSalary) {
+    public void setMonthSalary(Double monthSalary) {
         this.monthSalary = monthSalary;
     }
 
@@ -141,10 +138,10 @@ public class User implements Serializable, Comparable<User> {
     @Override
     public int hashCode() {
         int hash = 17;
-        hash = 31 * hash + ((Integer)id).hashCode();
-        hash = 31 * hash + userName.hashCode();
-        hash = 31 * hash + password.hashCode();
-        hash = 31 * hash + email.hashCode();
+        hash = 31 * hash + this.id.hashCode();
+        hash = 31 * hash + this.userName.hashCode();
+        hash = 31 * hash + this.password.hashCode();
+        hash = 31 * hash + this.email.hashCode();
         return hash;
     }
 

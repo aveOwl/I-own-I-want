@@ -14,27 +14,6 @@ import java.sql.SQLException;
 public class UserDao extends AbstractDaoImpl<User> {
 
     /**
-     * Single {@link UserDao} instance.
-     */
-    private static UserDao instance;
-
-    /**
-     * Prevents class instantiation.
-     */
-    private UserDao() {}
-
-    /**
-     * Provides UserDao instance.
-     * @return the same UserDao object each time its invoked.
-     */
-    public static UserDao getInstance (){
-        if (instance == null) {
-            instance = new UserDao();
-        }
-        return instance;
-    }
-
-    /**
      * Fills the PreparedStatement with given User entity fields
      * to persist User in the DataBase.
      * @param prepStatement object that represents a precompiled SQL statement.
@@ -69,7 +48,7 @@ public class UserDao extends AbstractDaoImpl<User> {
             prepStatement.setString(4, entity.getPassword());
             prepStatement.setString(5, entity.getEmail());
             prepStatement.setDouble(6, entity.getMonthSalary());
-            prepStatement.setInt(7, entity.getId());
+            prepStatement.setLong(7, entity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,7 +81,7 @@ public class UserDao extends AbstractDaoImpl<User> {
         PreparedStatement prepStatement = null;
         ResultSet resultSet = null;
         try {
-            connection = dbManager.getConnection();
+            connection = this.dbManager.getDbConnection();
             String query = getGetByNickQuery();
             prepStatement = connection.prepareStatement(query);
             prepStatement.setString(1, nickname);
@@ -117,7 +96,6 @@ public class UserDao extends AbstractDaoImpl<User> {
             if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
             if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
         }
-
         return null;
     }
 
@@ -126,7 +104,7 @@ public class UserDao extends AbstractDaoImpl<User> {
      */
     @Override
     public String getCreateQuery() {
-        return dbManager.getQuery("create.user");
+        return this.dbManager.getQuery("create.user");
     }
 
     /**
@@ -134,7 +112,7 @@ public class UserDao extends AbstractDaoImpl<User> {
      */
     @Override
     public String getDeleteQuery() {
-        return dbManager.getQuery("delete.user.by.id");
+        return this.dbManager.getQuery("delete.user.by.id");
     }
 
     /**
@@ -142,7 +120,7 @@ public class UserDao extends AbstractDaoImpl<User> {
      */
     @Override
     public String getUpdateQuery() {
-        return dbManager.getQuery("update.user");
+        return this.dbManager.getQuery("update.user");
     }
 
     /**
@@ -150,7 +128,7 @@ public class UserDao extends AbstractDaoImpl<User> {
      */
     @Override
     public String getGetByIdQuery() {
-        return dbManager.getQuery("get.user.by.id");
+        return this.dbManager.getQuery("get.user.by.id");
     }
 
     /**
@@ -158,13 +136,13 @@ public class UserDao extends AbstractDaoImpl<User> {
      */
     @Override
     public String getGetAllQuery() {
-        return dbManager.getQuery("get.all.user");
+        return this.dbManager.getQuery("get.all.user");
     }
 
     /**
      * @return query to retrieve User from the DataBase using User's NickName.
      */
     private String getGetByNickQuery() {
-        return dbManager.getQuery("get.user.by.nick");
+        return this.dbManager.getQuery("get.user.by.nick");
     }
 }

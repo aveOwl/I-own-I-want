@@ -1,8 +1,8 @@
 package com.iowniwant.controller.servlet;
 
 import com.google.gson.Gson;
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +19,9 @@ import java.io.IOException;
  */
 @WebServlet(name = "AccountServlet", urlPatterns = "/accountServlet")
 public class AccountServlet extends HttpServlet {
-    /**
-     * Logging system.
-     */
     private static final Logger LOG = LoggerFactory.getLogger(AccountServlet.class);
 
-    /**
-     * Single {@link UserDao} instance.
-     */
-    private UserDao userDao = UserDao.getInstance();
+    private UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,11 +32,10 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
-        LOG.debug("user_id from servletContext: {}", userId);
+        Long id = (Long) request.getServletContext().getAttribute("user_id");
+        LOG.debug("Fetching user_id from servletContext: {}", id);
 
-        User user = userDao.getById(userId);
-        LOG.debug("user from DataBase: {}", user);
+        User user = this.userService.getById(id);
 
         request.setAttribute("user", user);
 
@@ -51,7 +44,7 @@ public class AccountServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
 
-        LOG.info("sending data to account page");
+        LOG.info("Sending user data to account page...");
         request.getRequestDispatcher("/account-page.jsp").forward(request, response);
     }
 }

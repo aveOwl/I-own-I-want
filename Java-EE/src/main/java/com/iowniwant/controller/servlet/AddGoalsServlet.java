@@ -1,9 +1,9 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.GoalDao;
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.GoalService;
+import com.iowniwant.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,29 +21,19 @@ import java.sql.Date;
  */
 @WebServlet(name = "AddGoalsServlet", urlPatterns = {"/addGoalsServlet"})
 public class AddGoalsServlet extends HttpServlet {
-    /**
-     * Logging system.
-     */
     private static Logger LOG = LoggerFactory.getLogger(AddGoalsServlet.class);
 
-    /**
-     * Single {@link GoalDao} instance.
-     */
-    private GoalDao goalDao = GoalDao.getInstance();
-
-    /**
-     * Single {@link UserDao} instance.
-     */
-    private UserDao userDao = UserDao.getInstance();
+    private UserService userService = new UserService();
+    private GoalService goalService = new GoalService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer userId = (Integer) request.getServletContext().getAttribute("user_id");
-        LOG.debug("user_id obtained from the servletContext: {}", userId);
+        Long id = (Long) request.getServletContext().getAttribute("user_id");
+        LOG.debug("Fetching user_id from the servletContext: {}", id);
 
         // user associated with goal
-        User user = userDao.getById(userId);
+        User user = this.userService.getById(id);
 
         String title = request.getParameter("title");
         Double cost = Double.valueOf(request.getParameter("cost"));
@@ -57,8 +47,7 @@ public class AddGoalsServlet extends HttpServlet {
         LOG.debug("Description was obtained due to the ajax function: {}", description);
 
         // persists goal_view
-        Goal goal = goalDao.create(new Goal(title, cost, shorten, pubdate, description, user));
-        LOG.debug("goal: {}", goal);
+        Goal goal = this.goalService.save(new Goal(title, cost, shorten, pubdate, description, user));
 
         // sends view_goal_id to ajax function, could be used via data object
         String jsonObject = "" + goal.getV_id();

@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class RegistrationServletTest extends Mockito {
     @Mock
     private RequestDispatcher requestDispatcher;
     @Mock
-    private UserDao userDao;
+    private UserService userService;
 
     @InjectMocks
     private RegistrationServlet registrationServlet = new RegistrationServlet();
@@ -40,7 +41,7 @@ public class RegistrationServletTest extends Mockito {
     public void setUp() throws Exception {
         user = getTestUser();
 
-        when(userDao.create(user)).thenReturn(user);
+        when(userService.save(user)).thenReturn(user);
         when(request.getServletContext()).thenReturn(servletContext);
         when(servletContext.getRequestDispatcher("/loginServlet")).thenReturn(requestDispatcher);
     }

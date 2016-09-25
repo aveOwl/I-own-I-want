@@ -12,28 +12,8 @@ import java.util.List;
  * @see Goal entity fields.
  */
 public class GoalDao extends AbstractDaoImpl<Goal> {
-    /**
-     * Single {@link GoalDao} instance.
-     */
-    private static GoalDao instance;
 
-    /**
-     * Prevents continuous object creation.
-     */
-    private GoalDao() {}
-
-    /**
-     * Provides GoalDao instance.
-     * @return Every time the same GoalDao object is invoked.
-     */
-    public static GoalDao getInstance (){
-        if (instance == null) {
-            instance = new GoalDao();
-        }
-        return instance;
-    }
-
-    private UserDao userDao = UserDao.getInstance();
+    private UserDao userDao = new UserDao();
 
     /**
      * Fills the <code>PreparedStatement</code> with the given Goal entity fields
@@ -49,7 +29,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(3, entity.getDescription());
             prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
-            prepStatement.setInt(6, entity.getUser().getId());
+            prepStatement.setLong(6, entity.getUser().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,7 +49,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(3, entity.getDescription());
             prepStatement.setDate(4, entity.getPubdate());
             prepStatement.setString(5, entity.getNotes());
-            prepStatement.setInt(6, entity.getId());
+            prepStatement.setLong(6, entity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,8 +64,8 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     @Override
     public Goal getEntity(ResultSet resultSet) {
         try {
-            int user_id = resultSet.getInt("user_id");
-            User user = userDao.getById(user_id);
+            Long user_id = resultSet.getLong("user_id");
+            User user = this.userDao.getById(user_id);
             return new Goal(resultSet, user);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,18 +79,18 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      * @param userId User identifier.
      * @return List of Goals.
      */
-    public List<Goal> getGoalsByUserId(Integer userId) {
+    public List<Goal> getGoalsByUserId(Long userId) {
         List<Goal> goals = new ArrayList<>();
-        User user = userDao.getById(userId);
+        User user = this.userDao.getById(userId);
 
         Connection connection = null;
         PreparedStatement prepStatement = null;
         ResultSet resultSet = null;
         try {
-            connection = dbManager.getConnection();
+            connection = this.dbManager.getDbConnection();
             String query = getGoalByUserId();
             prepStatement = connection.prepareStatement(query);
-            prepStatement.setInt(1, userId);
+            prepStatement.setLong(1, userId);
 
             resultSet = prepStatement.executeQuery();
             while (resultSet.next()) {
@@ -131,7 +111,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      * @return query to retrieve all Goals_Views from the DataBase using user_id.
      */
     private String getGoalByUserId() {
-        return dbManager.getQuery("get.goal.view.by.user.id");
+        return this.dbManager.getQuery("get.goal.view.by.user.id");
     }
 
     /**
@@ -139,7 +119,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      */
     @Override
     public String getCreateQuery() {
-        return dbManager.getQuery("create.goal");
+        return this.dbManager.getQuery("create.goal");
     }
 
     /**
@@ -147,7 +127,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      */
     @Override
     public String getDeleteQuery() {
-        return dbManager.getQuery("delete.goal.by.id");
+        return this.dbManager.getQuery("delete.goal.by.id");
     }
 
     /**
@@ -155,7 +135,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      */
     @Override
     public String getUpdateQuery() {
-        return dbManager.getQuery("update.goal");
+        return this.dbManager.getQuery("update.goal");
     }
 
     /**
@@ -163,7 +143,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      */
     @Override
     public String getGetAllQuery() {
-        return dbManager.getQuery("get.all.goal");
+        return this.dbManager.getQuery("get.all.goal");
     }
 
     /**
@@ -171,6 +151,6 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
      */
     @Override
     public String getGetByIdQuery() {
-        return dbManager.getQuery("get.goal.view.by.goal.id");
+        return this.dbManager.getQuery("get.goal.view.by.goal.id");
     }
 }

@@ -10,8 +10,8 @@ import java.sql.SQLException;
  * @see Goal
  */
 public class Task implements Serializable {
-    private int id;
-    private int v_id;
+    private Long id;
+    private Long v_id;
     private String description;
     private Goal goal;
 
@@ -40,8 +40,8 @@ public class Task implements Serializable {
      * @throws SQLException if some sqlException occurred.
      */
     public Task (ResultSet resultSet, Goal goal) throws SQLException {
-        this.id = resultSet.getInt("task_id");
-        this.v_id = resultSet.getInt("v_task_id");
+        this.id = resultSet.getLong("task_id");
+        this.v_id = resultSet.getLong("v_task_id");
         this.description = resultSet.getString("description");
         this.goal = goal;
     }
@@ -62,19 +62,19 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getV_id() {
+    public Long getV_id() {
         return v_id;
     }
 
-    public void setV_id(int v_id) {
+    public void setV_id(Long v_id) {
         this.v_id = v_id;
     }
 
@@ -98,7 +98,7 @@ public class Task implements Serializable {
     @Override
     public int hashCode() {
         int hash = 17;
-        hash = 31 * hash + ((Integer)id).hashCode();
+        hash = 31 * hash + this.id.hashCode();
         return hash;
     }
 

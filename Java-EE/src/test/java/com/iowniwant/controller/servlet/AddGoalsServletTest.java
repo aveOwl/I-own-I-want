@@ -4,6 +4,8 @@ import com.iowniwant.dao.implementation.GoalDao;
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.GoalService;
+import com.iowniwant.service.impl.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,9 +34,9 @@ public class AddGoalsServletTest extends Mockito{
     @Mock
     private PrintWriter writer;
     @Mock
-    private GoalDao goalDao;
+    private UserService userService;
     @Mock
-    private UserDao userDao;
+    private GoalService goalService;
 
     @InjectMocks
     private AddGoalsServlet addGoalsServlet = new AddGoalsServlet();
@@ -50,10 +52,10 @@ public class AddGoalsServletTest extends Mockito{
         doReturn(writer).when(response).getWriter();
 
         user = getTestUser();
-        when(userDao.getById(user.getId())).thenReturn(user);
+        when(userService.getById(user.getId())).thenReturn(user);
 
         goal = getTestGoal();
-        when(goalDao.create(new Goal())).thenReturn(goal);
+        when(goalService.save(new Goal())).thenReturn(goal);
     }
 
     @After

@@ -1,7 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,28 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Updates users private data.
- */
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = "/updateAccountServlet")
 public class UpdateAccountServlet extends HttpServlet {
-    /**
-     * Logging system.
-     */
     private static Logger LOG = LoggerFactory.getLogger(UpdateAccountServlet.class);
 
-    /**
-     * Single {@link UserDao} instance.
-     */
-    private UserDao userDao = UserDao.getInstance();
+    private UserService userService = new UserService();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer user_id = (Integer) request.getServletContext().getAttribute("user_id");
-        LOG.debug("user_id from servletContext: {}", user_id);
+        Long id = (Long) request.getServletContext().getAttribute("user_id");
+        LOG.debug("Fetching user_id from servletContext: {}", id);
 
-        User user = userDao.getById(user_id);
-        LOG.debug("user from database: {}", user);
+        User user = this.userService.getById(id);
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -47,12 +38,13 @@ public class UpdateAccountServlet extends HttpServlet {
         user.setEmail(email);
         user.setMonthSalary(monthSalary);
         user.setUserName(userName);
+
         if (password != null) {
             user.setPassword(password);
         }
 
-        userDao.update(user);
-        LOG.debug("user after Update: {}", user);
+        this.userService.update(user);
+        LOG.info("Redirecting to goalsServlet...");
         response.sendRedirect("showGoalsServlet");
     }
 }

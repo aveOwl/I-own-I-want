@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class AccountServletTest extends Mockito{
     @Mock
     private Context context;
     @Mock
-    private UserDao userDao;
+    private UserService userService;
 
     @InjectMocks
     private AccountServlet accountServlet = new AccountServlet();
@@ -52,7 +53,7 @@ public class AccountServletTest extends Mockito{
         user = getTestUser();
 
         when(servletContext.getAttribute("user_id")).thenReturn(user.getId());
-        when(userDao.getById(user.getId())).thenReturn(user);
+        when(userService.getById(user.getId())).thenReturn(user);
     }
 
     @After

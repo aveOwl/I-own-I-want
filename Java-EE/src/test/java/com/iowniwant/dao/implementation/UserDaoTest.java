@@ -25,7 +25,7 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDaoTest extends Mockito {
-    private static final int USER_ID = 99;
+    private static final Long USER_ID = 99L;
 
     @Mock
     private DataSource dataSource;
@@ -37,7 +37,7 @@ public class UserDaoTest extends Mockito {
     private ResultSet resultSet;
 
     @InjectMocks
-    private UserDao userDao = UserDao.getInstance();
+    private UserDao userDao = new UserDao();
 
     private static User user;
 
@@ -60,7 +60,7 @@ public class UserDaoTest extends Mockito {
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
         doNothing().when(preparedStatement).setString(anyInt(), anyString());
         doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
-        doNothing().when(preparedStatement).setInt(anyInt(), anyInt());
+        doNothing().when(preparedStatement).setLong(anyInt(), anyInt());
     }
 
     @After
@@ -80,11 +80,11 @@ public class UserDaoTest extends Mockito {
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(5)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
+        verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
         verify(preparedStatement, times(1)).executeUpdate();
         verify(preparedStatement, times(1)).executeQuery();
         verify(preparedStatement, times(1)).getGeneratedKeys();
-        verify(resultSet, times(1)).getInt(1);
+        verify(resultSet, times(1)).getLong(1);
         verify(resultSet, times(2)).next();
         verify(connection, times(2)).close();
         verifyNoMoreInteractions(connection);
@@ -96,7 +96,7 @@ public class UserDaoTest extends Mockito {
 
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
+        verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
         verify(preparedStatement, times(1)).execute();
         verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
@@ -109,7 +109,7 @@ public class UserDaoTest extends Mockito {
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(5)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
-        verify(preparedStatement, times(1)).setInt(anyInt(), anyInt());
+        verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
         verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
     }
@@ -120,7 +120,7 @@ public class UserDaoTest extends Mockito {
 
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).setInt(eq(1), anyInt());
+        verify(preparedStatement, times(1)).setLong(eq(1), anyInt());
         verify(preparedStatement, times(1)).executeQuery();
         verify(resultSet, times(1)).next();
         verify(connection, times(1)).close();

@@ -1,7 +1,9 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,10 +19,9 @@ import java.io.IOException;
  */
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
-    /**
-     * Single {@link UserDao} instance.
-     */
-    private UserDao userDao = UserDao.getInstance();
+    private static final Logger LOG = LoggerFactory.getLogger(RegistrationServlet.class);
+
+    private UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,12 +33,18 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        User user = new User(firstName, lastName, userName, password, email);
-        userDao.create(user);
+        LOG.debug("Obtained user info from registration form: \n " +
+                "FirstName = {}, LastName = {}, UserName = {}, Email = {}, Password = {}",
+                firstName, lastName, userName, email, password);
+
+        User savedUser = this.userService.save(new User(firstName, lastName, userName, password, email));
 
         request.setAttribute("userName", userName);
         request.setAttribute("password", password);
 
+        LOG.debug("User: {} registered", savedUser);
+
+        LOG.info("Forwarding request to loginServlet...");
         request.getServletContext().getRequestDispatcher("/loginServlet")
                 .forward(request, response);
     }

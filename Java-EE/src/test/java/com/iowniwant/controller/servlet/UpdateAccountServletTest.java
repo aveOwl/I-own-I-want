@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class UpdateAccountServletTest extends Mockito {
     @Mock
     private RequestDispatcher requestDispatcher;
     @Mock
-    private UserDao userDao;
+    private UserService userService;
 
     @InjectMocks
     private UpdateAccountServlet updateAccountServlet = new UpdateAccountServlet();
@@ -49,7 +50,7 @@ public class UpdateAccountServletTest extends Mockito {
         user = getTestUser();
 
         when(servletContext.getAttribute("user_id")).thenReturn(user.getId());
-        when(userDao.getById(user.getId())).thenReturn(user);
+        when(userService.getById(user.getId())).thenReturn(user);
     }
 
     @After
@@ -68,7 +69,7 @@ public class UpdateAccountServletTest extends Mockito {
 
         updateAccountServlet.doPost(request, response);
 
-        verify(userDao, atLeastOnce()).update(user);
+        verify(userService, atLeastOnce()).update(user);
         verify(request, times(6)).getParameter(anyString());
         verify(response, atLeastOnce()).sendRedirect("showGoalsServlet");
     }

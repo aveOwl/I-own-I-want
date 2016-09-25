@@ -2,6 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
+import com.iowniwant.service.impl.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class LoginServletTest extends Mockito {
     @Mock
     private RequestDispatcher requestDispatcher;
     @Mock
-    private UserDao userDao;
+    private UserService userService;
 
     @InjectMocks
     private LoginServlet loginServlet = new LoginServlet();
@@ -59,7 +60,7 @@ public class LoginServletTest extends Mockito {
 
     @Test
     public void shouldSucceedWithPassword() throws Exception {
-        when(userDao.getByNick(user.getUserName()))
+        when(userService.getByNickName(user.getUserName()))
                 .thenReturn(user);
 
         loginServlet.doPost(request, response);
@@ -72,7 +73,7 @@ public class LoginServletTest extends Mockito {
 
     @Test
     public void shouldFailOnNonExistingUser() throws Exception {
-        when(userDao.getByNick(user.getUserName()))
+        when(userService.getByNickName(user.getUserName()))
                 .thenReturn(null);
 
         loginServlet.doPost(request, response);
