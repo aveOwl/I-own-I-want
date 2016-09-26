@@ -1,5 +1,4 @@
 .idea
-Java-EE.iml
-main.iml
-target
 logs
+*.iml
+*/target
