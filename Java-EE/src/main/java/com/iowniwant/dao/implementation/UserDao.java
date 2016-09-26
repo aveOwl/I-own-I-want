@@ -28,7 +28,8 @@ public class UserDao extends AbstractDaoImpl<User> {
             prepStatement.setString(3, entity.getUserName());
             prepStatement.setString(4, entity.getPassword());
             prepStatement.setString(5, entity.getEmail());
-            prepStatement.setDouble(6, entity.getMonthSalary());
+            prepStatement.setDouble(6,
+                    entity.getMonthSalary() == null ? 0.0 : entity.getMonthSalary()); // need to fix this
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@
     </appender>
 
     <appender name="MyFile" class="org.apache.log4j.FileAppender">
-        <param name="file" value="/home/owl/JavaPractice/ownWant/I-own-I-want/logs/main-logs.log"/>
+        <param name="file" value="/home/ave/JavaPractice/I-own-I-want/logs/main-logs.log"/>
         <param name="append" value="false"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{HH:mm:ss} [%t] %-5p %c{4}: %m%n"/>
@@ -20,6 +20,11 @@
     <logger name="com.iowniwant" additivity="false">
         <level value="trace"/>
         <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="com.iowniwant" additivity="false">
+        <level value="trace"/>
+        <appender-ref ref="MyFile"/>
     </logger>
 
 </log4j:configuration>
