@@ -160,7 +160,7 @@ public class UserServiceTest {
                 .thenReturn(null);
 
         thrown.expect(EntityNotFoundException.class);
-        thrown.expectMessage("No users were found by userName: " + user.getUserName());
+        thrown.expectMessage("No users were found by UserName: " + user.getUserName());
 
         // when
         User userByNickName = userService.getByUserName(user.getUserName());

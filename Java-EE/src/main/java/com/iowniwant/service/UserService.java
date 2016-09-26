@@ -60,13 +60,13 @@ public class UserService {
     }
 
     public User getByUserName(final String userName) {
-        Objects.requireNonNull(userName, "NickName cannot be null");
+        Objects.requireNonNull(userName, "UserName cannot be null");
 
         User user = this.userDao.getByUserName(userName);
 
         if (user == null) {
-            LOG.error("Attempted to retrieve user but no users were found by NickName: {}", userName);
-            throw new EntityNotFoundException("No users were found by nickName: " + userName);
+            LOG.error("Attempted to retrieve user but no users were found by UserName: {}", userName);
+            throw new EntityNotFoundException("No users were found by UserName: " + userName);
         }
 
         LOG.debug("Fetching user: {}", user);
