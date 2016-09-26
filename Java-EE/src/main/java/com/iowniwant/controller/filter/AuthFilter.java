@@ -16,9 +16,6 @@ import java.io.IOException;
 
 @WebFilter(displayName = "AuthFilter", urlPatterns = {"/showGoalsServlet"})
 public class AuthFilter implements Filter {
-    /**
-     * Logging system.
-     */
     private static final Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
@@ -27,11 +24,11 @@ public class AuthFilter implements Filter {
     }
 
     /**
+     * Filters user request whether user logged into the system or not.
      * @param request - the request to pass along the chain.
      * @param response - the response to pass along the chain.
      * @throws IOException on error.
      * @throws ServletException on error.
-     * Filters user request whether user logged into the system or not.
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
@@ -48,7 +45,7 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(request, response);
         }
         else {
-            LOG.info("Redirecting to login-page.jsp");
+            LOG.info("Redirecting to login-page.jsp...");
             httpServletResponse.sendRedirect("login-page.jsp");
         }
     }

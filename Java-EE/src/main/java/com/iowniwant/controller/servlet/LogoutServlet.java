@@ -17,6 +17,7 @@ import java.io.IOException;
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logoutServlet"})
 public class LogoutServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(LogoutServlet.class);
+    private static final String FRONT_PAGE_URI = "front-page.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +31,6 @@ public class LogoutServlet extends HttpServlet {
 
         LOG.info("Invalidating session...");
         LOG.info("Redirecting to front page...");
-        response.sendRedirect("front-page.jsp");
+        response.sendRedirect(FRONT_PAGE_URI);
     }
 }

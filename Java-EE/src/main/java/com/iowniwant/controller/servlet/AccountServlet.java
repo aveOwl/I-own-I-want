@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
+
 /**
  * Fills the user's profile info, with the information
  * from the DataBase.
@@ -20,6 +22,7 @@ import java.io.IOException;
 @WebServlet(name = "AccountServlet", urlPatterns = "/accountServlet")
 public class AccountServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(AccountServlet.class);
+    private static final String ACCOUNT_PAGE_URI = "/account-page.jsp";
 
     private UserService userService = new UserService();
 
@@ -32,8 +35,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long id = (Long) request.getServletContext().getAttribute("user_id");
-        LOG.debug("Fetching user_id from servletContext: {}", id);
+        Long id = getUserIdFromServletContext(request);
 
         User user = this.userService.getById(id);
 
@@ -45,6 +47,6 @@ public class AccountServlet extends HttpServlet {
         response.getWriter().write(json);
 
         LOG.info("Sending user data to account page...");
-        request.getRequestDispatcher("/account-page.jsp").forward(request, response);
+        request.getRequestDispatcher(ACCOUNT_PAGE_URI).forward(request, response);
     }
 }

@@ -20,6 +20,7 @@ import java.io.IOException;
 @WebServlet(name = "RegistrationServlet", urlPatterns = "/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(RegistrationServlet.class);
+    private static final String LOGIN_PAGE_URI = "/loginServlet";
 
     private UserService userService = new UserService();
 
@@ -45,7 +46,7 @@ public class RegistrationServlet extends HttpServlet {
         LOG.debug("User: {} registered", savedUser);
 
         LOG.info("Forwarding request to loginServlet...");
-        request.getServletContext().getRequestDispatcher("/loginServlet")
+        request.getServletContext().getRequestDispatcher(LOGIN_PAGE_URI)
                 .forward(request, response);
     }
 }

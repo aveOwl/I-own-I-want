@@ -1,6 +1,7 @@
 package com.iowniwant.dao.implementation;
 
 import com.iowniwant.model.User;
+import com.iowniwant.util.exceptions.EntityConstructionException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -77,26 +78,24 @@ public class UserDao extends AbstractDaoImpl<User> {
      * there is no such persistent object.
      */
     public User getByUserName(String userName) {
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = this.dbManager.getDbConnection();
-            String query = getGetByUserNameQuery();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setString(1, userName);
-            resultSet = prepStatement.executeQuery();
-            if (resultSet.next()) {
-                return getEntity(resultSet);
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.byUserNamePreparedStatement(connection, userName);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return getEntity(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to fetch user entity by username: " + userName, e);
         }
         return null;
+    }
+
+    private PreparedStatement byUserNamePreparedStatement(Connection connection, String userName) throws SQLException {
+        String query = this.getGetByUserNameQuery();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, userName);
+
+        return ps;
     }
 
     /**

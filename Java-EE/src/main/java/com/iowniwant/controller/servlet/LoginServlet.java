@@ -24,13 +24,14 @@ import java.io.IOException;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(LoginServlet.class);
+    private static final String GOALS_PAGE_URI = "/showGoalsServlet";
 
     private UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getServletContext().getRequestDispatcher("/showGoalsServlet").forward(request, response);
+        request.getServletContext().getRequestDispatcher(GOALS_PAGE_URI).forward(request, response);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class LoginServlet extends HttpServlet {
             LOG.debug("New user_id: {} successfully persisted in ServletContext", user.getId());
 
             request.getServletContext().setAttribute("token", "logged");
-            LOG.info("Token logged successfully persisted in ServletContext");
+            LOG.info("Token=logged successfully persisted in ServletContext");
 
             Cookie userCookie = new Cookie("ioiw.username", username);
             Cookie passCookie = new Cookie("ioiw.password", password);

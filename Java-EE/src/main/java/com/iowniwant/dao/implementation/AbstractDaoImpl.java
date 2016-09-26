@@ -2,6 +2,7 @@ package com.iowniwant.dao.implementation;
 
 import com.iowniwant.dao.AbstractDAO;
 import com.iowniwant.util.DataBaseManager;
+import com.iowniwant.util.exceptions.EntityConstructionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,37 +27,21 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
 
     DataBaseManager dbManager = DataBaseManager.getInstance();
 
-    private Connection dbConnection;
-
-    private PreparedStatement prepStatement;
-
-    private ResultSet resultSet;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public T create(T entity) {
-        try {
-            dbConnection = dbManager.getDbConnection();
-            String query = getCreateQuery();
-            prepStatement = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            fillCreateStatement(prepStatement, entity);
-            int i = prepStatement.executeUpdate();
-            LOG.debug("is creation executed : {}", i == 1);
-
-            resultSet = prepStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                Long generatedID = resultSet.getLong(1);
-                LOG.debug("creating entity with id: {}", generatedID);
-                return getById(generatedID);
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.createPreparedStatement(connection, entity);
+             ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                Long generatedID = rs.getLong(1);
+                LOG.debug("Creating entity with id: {}", generatedID);
+                return this.getById(generatedID);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to create entity: " + entity, e);
         }
         return null;
     }
@@ -66,18 +51,11 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public void delete(Long id) {
-        try {
-            dbConnection = dbManager.getDbConnection();
-            String query = getDeleteQuery();
-            prepStatement = dbConnection.prepareStatement(query);
-            prepStatement.setLong(1, id);
-            LOG.debug("Deleting entity with id: {}", id);
-            prepStatement.execute();
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.deletePreparedStatement(connection, id)) {
+            ps.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to delete entity with id: " + id, e);
         }
     }
 
@@ -86,20 +64,13 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public T update(T entity) {
-        try {
-            dbConnection = dbManager.getDbConnection();
-            String query = getUpdateQuery();
-            prepStatement = dbConnection.prepareStatement(query);
-            fillUpdateStatement(prepStatement, entity);
-            prepStatement.executeUpdate();
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.updatePreparedStatement(connection, entity)) {
+            ps.executeUpdate();
             return entity;
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to update entity: " + entity, e);
         }
-        return null;
     }
 
     /**
@@ -107,21 +78,14 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
      */
     @Override
     public T getById(Long id) {
-        try {
-            dbConnection = dbManager.getDbConnection();
-            String query = getGetByIdQuery();
-            prepStatement = dbConnection.prepareStatement(query);
-            prepStatement.setLong(1, id);
-            resultSet = prepStatement.executeQuery();
-            if (resultSet.next()) {
-                return getEntity(resultSet);
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.getByIdPreparedStatement(connection, id);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return getEntity(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null)  try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to fetch entity by id: " + id, e);
         }
         return null;
     }
@@ -132,22 +96,61 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
     @Override
     public List<T> getAll() {
         List<T> list = new ArrayList<>();
-        try {
-            dbConnection = dbManager.getDbConnection();
-            String query = getGetAllQuery();
-            prepStatement = dbConnection.prepareStatement(query);
-            resultSet = prepStatement.executeQuery();
-            while (resultSet.next()) {
-                list.add(getEntity(resultSet));
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.getAllPreparedStatement(connection);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                list.add(getEntity(rs));
             }
+            LOG.debug("Fetched: {} entities", list.size());
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null) try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (dbConnection != null) try { dbConnection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to fetch entities", e);
         }
         return list;
+    }
+
+    private PreparedStatement createPreparedStatement(Connection connection, T entity) throws SQLException {
+        String query = this.getCreateQuery();
+        PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        this.fillCreateStatement(ps, entity);
+        int i = ps.executeUpdate();
+        LOG.debug("Creation status : {}", i == 1 ? "Success" : "Fail");
+
+        return ps;
+    }
+
+    private PreparedStatement deletePreparedStatement(Connection connection, Long id) throws SQLException {
+        String query = this.getDeleteQuery();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setLong(1, id);
+        LOG.debug("Deleting entity with id: {}", id);
+
+        return ps;
+    }
+
+    private PreparedStatement updatePreparedStatement(Connection connection, T entity) throws SQLException {
+        String query = this.getUpdateQuery();
+        PreparedStatement ps = connection.prepareStatement(query);
+        this.fillUpdateStatement(ps, entity);
+        LOG.debug("Updating entity: {}", entity);
+
+        return ps;
+    }
+
+    private PreparedStatement getByIdPreparedStatement(Connection connection, Long id) throws SQLException {
+        String query = this.getGetByIdQuery();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setLong(1, id);
+        LOG.debug("Fetching entity with id: {}", id);
+
+        return ps;
+    }
+
+    private PreparedStatement getAllPreparedStatement(Connection connection) throws SQLException {
+        String query = this.getGetAllQuery();
+        PreparedStatement ps = connection.prepareStatement(query);
+
+        return ps;
     }
 
     public abstract void fillCreateStatement(PreparedStatement prepStatement, T entity);

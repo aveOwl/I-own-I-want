@@ -2,6 +2,7 @@ package com.iowniwant.dao.implementation;
 
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
+import com.iowniwant.util.exceptions.EntityConstructionException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(5, entity.getNotes());
             prepStatement.setLong(6, entity.getUser().getId());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EntityConstructionException("Failed to fill create statement for Goal: " + entity, e);
         }
     }
 
@@ -51,7 +52,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             prepStatement.setString(5, entity.getNotes());
             prepStatement.setLong(6, entity.getId());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EntityConstructionException("Failed to fill update statement for Goal: " + entity, e);
         }
     }
 
@@ -64,13 +65,19 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     @Override
     public Goal getEntity(ResultSet resultSet) {
         try {
-            Long user_id = resultSet.getLong("user_id");
-            User user = this.userDao.getById(user_id);
-            return new Goal(resultSet, user);
+            User user = this.getUserForGoal(resultSet);
+            Goal createdGoal = new Goal(resultSet, user);
+            return createdGoal;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new EntityConstructionException("Failed to create goal entity", e);
         }
-        return null;
+    }
+
+    private User getUserForGoal(ResultSet resultSet) throws SQLException {
+        Long user_id = resultSet.getLong("user_id");
+        User user = this.userDao.getById(user_id);
+
+        return user;
     }
 
     /**
@@ -83,28 +90,24 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
         List<Goal> goals = new ArrayList<>();
         User user = this.userDao.getById(userId);
 
-        Connection connection = null;
-        PreparedStatement prepStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = this.dbManager.getDbConnection();
-            String query = getGoalByUserId();
-            prepStatement = connection.prepareStatement(query);
-            prepStatement.setLong(1, userId);
-
-            resultSet = prepStatement.executeQuery();
-            while (resultSet.next()) {
-                goals.add(new Goal(resultSet, user));
+        try (Connection connection = this.dbManager.getDbConnection();
+             PreparedStatement ps = this.goalsByUserIdPreparedStatement(connection, userId);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                goals.add(new Goal(rs, user));
             }
         } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null)  try { resultSet.close(); } catch (SQLException ignored) {}
-            if (prepStatement != null)      try { prepStatement.close(); } catch (SQLException ignored) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignored) {}
+            throw new EntityConstructionException("Failed to fetch goals for user with id: " + userId, e);
         }
-
         return goals;
+    }
+
+    private PreparedStatement goalsByUserIdPreparedStatement(Connection connection, Long id) throws SQLException {
+        String query = this.getGoalByUserId();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setLong(1, id);
+
+        return ps;
     }
 
     /**

@@ -54,7 +54,7 @@ public class User implements Serializable {
         this.id = resultSet.getLong("user_id");
         this.firstName = resultSet.getString("first_name");
         this.lastName = resultSet.getString("last_name");
-        this.userName = resultSet.getString("nick_name");
+        this.userName = resultSet.getString("user_name");
         this.password = resultSet.getString("user_password");
         this.email = resultSet.getString("email");
         this.monthSalary = resultSet.getDouble("month_salary");

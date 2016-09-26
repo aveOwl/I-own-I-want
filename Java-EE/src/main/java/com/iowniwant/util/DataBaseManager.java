@@ -1,16 +1,16 @@
 package com.iowniwant.util;
 
+import com.iowniwant.util.exceptions.ConnectionException;
+import com.iowniwant.util.exceptions.PropertyAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -18,8 +18,8 @@ import java.util.Properties;
  */
 public class DataBaseManager {
     private static final Logger LOG = LoggerFactory.getLogger(DataBaseManager.class);
-
     private static final String JNDI_DATA_SOURCE = "java:/jdbc/data-postgres";
+    private static final String QUERY_PROPERTIES_LOCATION = "/queries.properties";
 
     private static DataBaseManager instance;
 
@@ -39,32 +39,39 @@ public class DataBaseManager {
     }
 
     private DataBaseManager() {
-        LOG.trace("loading properties");
-        loadProperties();
+        LOG.trace("Loading properties...");
+        this.loadProperties();
     }
 
     /**
-     * Establishes dbConnection to the DataBase.
-     * @return dbConnection to the DataBase.
+     * Establishes connection to the DataBase.
+     * @return connection to the DataBase.
      */
     public Connection getDbConnection() {
         try {
-            Context context = new InitialContext();
-            LOG.debug("Fetching DataSource by jndi lookup: {}", JNDI_DATA_SOURCE);
-            DataSource ds = (DataSource) context.lookup(JNDI_DATA_SOURCE);
-            this.dbConnection = ds.getConnection();
-            LOG.debug("Establishing dbConnection ...");
-        } catch (SQLException | NamingException e) {
-            LOG.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
-            e.printStackTrace();
+            this.getConnectionFromContext();
+        } catch (Exception e) {
+            LOG.error("Failed to establish connection with the datasource {} Error: {}",
+                    JNDI_DATA_SOURCE, e.getClass().getCanonicalName(), e.getMessage());
+            throw new ConnectionException(
+                    "Failed to establish connection with the datasource: " + JNDI_DATA_SOURCE, e);
         }
         return this.dbConnection;
     }
 
-    /**
-     * @param name query name from the queries.properties.
-     * @return query by the given identifier name.
-     */
+    private Connection getConnectionFromContext() throws Exception {
+        Context context = new InitialContext();
+
+        LOG.debug("Fetching DataSource by JNDI lookup: {}", JNDI_DATA_SOURCE);
+
+        DataSource ds = (DataSource) context.lookup(JNDI_DATA_SOURCE);
+        this.dbConnection = ds.getConnection();
+
+        LOG.info("Establishing connection...");
+
+        return this.dbConnection;
+    }
+
     public String getQuery(String name) {
         LOG.debug("Requested query: {}", name);
         if (this.queries == null)
@@ -78,16 +85,13 @@ public class DataBaseManager {
      * and assigning it to {@link Properties} object.
      */
     private void loadProperties() {
-        InputStream is = null;
-        try {
-            is = getClass().getResourceAsStream("/queries.properties");
+        try (InputStream is = getClass().getResourceAsStream(QUERY_PROPERTIES_LOCATION)) {
             this.queries = new Properties();
             this.queries.load(is);
         } catch (IOException e) {
-            LOG.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
-            e.printStackTrace();
-        } finally {
-            if (is != null)  try { is.close(); } catch (IOException ignored) {}
+            LOG.error("Failed to access query properties from resource: {}", QUERY_PROPERTIES_LOCATION);
+            throw new PropertyAccessException(
+                    "Failed to access query properties from resource: " + QUERY_PROPERTIES_LOCATION, e);
         }
     }
 }

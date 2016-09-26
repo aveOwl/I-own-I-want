@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
+
 /**
  * Fetches goals for user who's id was obtained by ServletContext,
  * forwards obtained goals to goals page.
@@ -20,21 +22,20 @@ import java.util.List;
 @WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/showGoalsServlet"})
 public class ShowGoalsServlet extends HttpServlet {
     private static Logger LOG = LoggerFactory.getLogger(ShowGoalsServlet.class);
+    private static final String GOALS_PAGE_URI = "/goals-page.jsp";
 
     private GoalService goalService = new GoalService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Long id = (Long) request.getServletContext().getAttribute("user_id");
-        LOG.debug("Fetching goals for user with id: {}", id);
+        Long id = getUserIdFromServletContext(request);
 
         List<Goal> goalsList = this.goalService.getGoalsByUserId(id);
 
         request.setAttribute("goals_list", goalsList);
 
         LOG.info("Sending data to goals page...");
-        request.getRequestDispatcher("/goals-page.jsp").forward(request, response);
+        request.getRequestDispatcher(GOALS_PAGE_URI).forward(request, response);
     }
 }

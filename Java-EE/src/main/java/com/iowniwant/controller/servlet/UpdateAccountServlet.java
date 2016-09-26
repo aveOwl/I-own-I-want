@@ -12,17 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
+
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = "/updateAccountServlet")
 public class UpdateAccountServlet extends HttpServlet {
     private static Logger LOG = LoggerFactory.getLogger(UpdateAccountServlet.class);
+    private static final String GOLAS_PAGE_URI = "showGoalsServlet";
 
     private UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long id = (Long) request.getServletContext().getAttribute("user_id");
-        LOG.debug("Fetching user_id from servletContext: {}", id);
+        Long id = getUserIdFromServletContext(request);
 
         User user = this.userService.getById(id);
 
@@ -44,7 +46,7 @@ public class UpdateAccountServlet extends HttpServlet {
         }
 
         this.userService.update(user);
-        LOG.info("Redirecting to goalsServlet...");
-        response.sendRedirect("showGoalsServlet");
+        LOG.info("Redirecting to goals page...");
+        response.sendRedirect(GOLAS_PAGE_URI);
     }
 }
