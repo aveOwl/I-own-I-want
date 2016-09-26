@@ -17,6 +17,8 @@ import java.io.IOException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthFilterTest extends Mockito {
+    private static final String REDIRECT_TARGET = "login-page.jsp";
+
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -37,34 +39,36 @@ public class AuthFilterTest extends Mockito {
     /**
      * Tests whether the servlet passes control to a further servlet
      * via reference to a {@link #filterChain} object. It also verifies
-     * that the invocation of {@code sendRedirect()} method has not occurred
-     * @throws IOException on error.
-     * @throws ServletException on error.
+     * that the invocation of {@code sendRedirect()} method has not occurred.
      */
     @Test
-    public void shouldNotRedirectIfLogged() throws IOException, ServletException {
+    public void shouldNotRedirectIfLogged() throws Exception {
+        // given
         when(servletContext.getAttribute("token")).thenReturn("logged");
 
-        authFilter.doFilter(request,response,filterChain);
+        // when
+        authFilter.doFilter(request, response, filterChain);
 
-        verify(filterChain, times(1)).doFilter(request,response);
-        verify(response, never()).sendRedirect("login-page.jsp");
+        // then
+        verify(filterChain, times(1)).doFilter(request, response);
+        verify(response, never()).sendRedirect(REDIRECT_TARGET);
     }
 
     /**
      * Tests whether the servlet redirects back to a login-page.jsp
      * and whether there were no references to the {@link #filterChain} object
-     * during an execution
-     * @throws IOException on error.
-     * @throws ServletException on error.
+     * during an execution.
      */
     @Test
-    public void shouldRedirectIfNotLogged() throws IOException, ServletException {
+    public void shouldRedirectIfNotLogged() throws Exception {
+        // given
         when(servletContext.getAttribute("token")).thenReturn(null);
 
-        authFilter.doFilter(request,response,filterChain);
+        // when
+        authFilter.doFilter(request, response, filterChain);
 
-        verify(response, times(1)).sendRedirect("login-page.jsp");
-        verify(filterChain, never()).doFilter(request,response);
+        // then
+        verify(response, times(1)).sendRedirect(REDIRECT_TARGET);
+        verify(filterChain, never()).doFilter(request, response);
     }
 }

@@ -11,7 +11,7 @@ import java.sql.Date;
  * properties of a goal created by a
  * @see User
  */
-public class Goal implements Serializable, Comparable<Goal> {
+public class Goal implements Serializable {
 
     private Long id;
     private String title;
@@ -150,46 +150,6 @@ public class Goal implements Serializable, Comparable<Goal> {
         int hash = 17;
         hash = 31 * hash + this.id.hashCode();
         return hash;
-    }
-
-    /**
-     * Compares this goal to the specified goal.
-     *
-     * @param  that the other transaction
-     * @return { a negative integer, zero, a positive integer}, depending
-     *         on whether the title, cost of this goal is { less than,
-     *         equal to, or greater than } the title, cost of that goal.
-     */
-    @Override
-    public int compareTo(Goal that) {
-        int titleComp = this.title.compareTo(that.title);
-        if (titleComp != 0)
-            return titleComp;
-
-        return (this.cost < that.cost ? -1 :
-               (this.cost == that.cost ? 0 : 1));
-    }
-
-    /**
-     * Compares two goals by cost.
-     */
-    public static class howMuchCost implements Comparator<Goal> {
-        @Override
-        public int compare(Goal v, Goal w) {
-            if      (v.cost < w.cost) return -1;
-            else if (v.cost > w.cost) return +1;
-            else                      return 0;
-        }
-    }
-
-    /**
-     * Compares two transactions by pubDate.
-     */
-    public static class whenPublished implements Comparator<Goal> {
-        @Override
-        public int compare(Goal v, Goal w) {
-            return v.pubdate.compareTo(w.pubdate);
-        }
     }
 
     /**

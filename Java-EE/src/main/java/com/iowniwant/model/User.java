@@ -10,7 +10,7 @@ import java.util.*;
  * properties of a person involved in process of interaction with
  * the application.
  */
-public class User implements Serializable, Comparable<User> {
+public class User implements Serializable {
 
     private Long id;
     private String firstName;
@@ -143,39 +143,6 @@ public class User implements Serializable, Comparable<User> {
         hash = 31 * hash + this.password.hashCode();
         hash = 31 * hash + this.email.hashCode();
         return hash;
-    }
-
-    /**
-     * Compares this user to the specified user.
-     *
-     * @param  that the other transaction
-     * @return { a negative integer, zero, a positive integer}, depending
-     *         on whether the firstName, lastName, monthSalary of this user is { less than,
-     *         equal to, or greater than } the firstName, lastName, monthSalary of that user.
-     */
-    @Override
-    public int compareTo(User that) {
-        int firstNameComp = this.firstName.compareTo(that.firstName);
-        int lastNameComp = this.lastName.compareTo(that.lastName);
-        if (firstNameComp != 0)
-            return firstNameComp;
-        if (lastNameComp != 0)
-            return lastNameComp;
-
-        return (this.monthSalary < that.monthSalary ? -1 :
-                (this.monthSalary == that.monthSalary ? 0 : 1));
-    }
-
-    /**
-     * Compares two users by monthSalary.
-     */
-    public static class howMuchGain implements Comparator<User> {
-        @Override
-        public int compare(User v, User w) {
-            if      (v.monthSalary < w.monthSalary) return -1;
-            else if (v.monthSalary > w.monthSalary) return +1;
-            else                                    return 0;
-        }
     }
 
     /**

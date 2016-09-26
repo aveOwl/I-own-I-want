@@ -71,7 +71,7 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
             String query = getDeleteQuery();
             prepStatement = dbConnection.prepareStatement(query);
             prepStatement.setLong(1, id);
-            LOG.debug("deleting entity with id: {}", id);
+            LOG.debug("Deleting entity with id: {}", id);
             prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

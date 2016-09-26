@@ -8,7 +8,7 @@ CREATE TABLE iowniwant.user (
   user_id         BIGSERIAL NOT NULL,
   first_name      VARCHAR(60) NOT NULL,
   last_name       VARCHAR(60) NOT NULL,
-  nick_name       VARCHAR(60) NOT NULL UNIQUE,
+  user_name       VARCHAR(60) NOT NULL UNIQUE,
   user_password   VARCHAR(60) NOT NULL,
   email           VARCHAR(60),
   month_salary    REAL DEFAULT 0,
@@ -55,9 +55,9 @@ CREATE OR REPLACE VIEW iowniwant.v_task AS SELECT task.task_id,
     row_number() OVER (PARTITION BY task.goal_id ORDER BY task.task_id) AS v_task_id
     FROM iowniwant.task;
 
-INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
+INSERT INTO iowniwant.user (first_name, last_name, user_name, user_password, email)
 values ('admin', 'admin', 'admin', 'admin', 'admin@gmail.com');
-INSERT INTO iowniwant.user (first_name, last_name, nick_name, user_password, email)
+INSERT INTO iowniwant.user (first_name, last_name, user_name, user_password, email)
 values ('user', 'qwerty', 'user', 'admin', 'user@gmail.com');
 
 INSERT INTO iowniwant.goal (title, cost, description, pubdate, notes, user_id)

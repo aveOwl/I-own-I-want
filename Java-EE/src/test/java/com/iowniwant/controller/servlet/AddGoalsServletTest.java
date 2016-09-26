@@ -1,11 +1,9 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.GoalDao;
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.GoalService;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.GoalService;
+import com.iowniwant.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,8 +39,8 @@ public class AddGoalsServletTest extends Mockito{
     @InjectMocks
     private AddGoalsServlet addGoalsServlet = new AddGoalsServlet();
 
-    private static User user;
-    private static Goal goal;
+    private User user;
+    private Goal goal;
 
     @Before
     public void setUp() throws Exception {
@@ -55,7 +53,7 @@ public class AddGoalsServletTest extends Mockito{
         when(userService.getById(user.getId())).thenReturn(user);
 
         goal = getTestGoal();
-        when(goalService.save(new Goal())).thenReturn(goal);
+        when(goalService.save(any(Goal.class))).thenReturn(goal);
     }
 
     @After
@@ -66,14 +64,17 @@ public class AddGoalsServletTest extends Mockito{
 
     @Test
     public void shouldProceedPostRequest() throws Exception {
+        // given
         when(context.getAttribute("user_id")).thenReturn(user.getId());
         when(request.getParameter("title")).thenReturn(goal.getTitle());
         when(request.getParameter("cost")).thenReturn("99.00");
         when(request.getParameter("shorten")).thenReturn("test");
         when(request.getParameter("description")).thenReturn(goal.getDescription());
 
+        // when
         addGoalsServlet.doPost(request,response);
 
+        // then
         verify(request, times(4)).getParameter(anyString());
 
         verify(response).setContentType("text/plain");

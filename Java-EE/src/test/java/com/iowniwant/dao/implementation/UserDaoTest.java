@@ -25,7 +25,7 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDaoTest extends Mockito {
-    private static final Long USER_ID = 99L;
+    private static final Long TEST_ID = 99L;
 
     @Mock
     private DataSource dataSource;
@@ -39,7 +39,7 @@ public class UserDaoTest extends Mockito {
     @InjectMocks
     private UserDao userDao = new UserDao();
 
-    private static User user;
+    private User user;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -67,14 +67,15 @@ public class UserDaoTest extends Mockito {
     public void tearDown() {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
                 InitialContextFactory.class.getName());
-
         user = null;
     }
 
     @Test
     public void shouldCreateUser() throws SQLException {
+        // when
         userDao.create(user);
 
+        // then
         verify(dataSource, times(2)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString(), anyInt());
         verify(connection, times(1)).prepareStatement(anyString());
@@ -92,8 +93,10 @@ public class UserDaoTest extends Mockito {
 
     @Test
     public void shouldDeleteUser() throws SQLException {
-        userDao.delete(USER_ID);
+        // when
+        userDao.delete(TEST_ID);
 
+        // then
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
@@ -104,8 +107,10 @@ public class UserDaoTest extends Mockito {
 
     @Test
     public void shouldUpdateUser() throws SQLException {
+        // when
         userDao.update(user);
 
+        // then
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(5)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
@@ -116,8 +121,10 @@ public class UserDaoTest extends Mockito {
 
     @Test
     public void shouldReturnUserByUserId() throws SQLException {
-        userDao.getById(USER_ID);
+        // when
+        userDao.getById(TEST_ID);
 
+        // then
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(1)).setLong(eq(1), anyInt());
@@ -129,8 +136,10 @@ public class UserDaoTest extends Mockito {
 
     @Test
     public void shouldReturnAllUsers() throws SQLException {
+        // when
         userDao.getAll();
 
+        // then
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(1)).executeQuery();
@@ -141,8 +150,10 @@ public class UserDaoTest extends Mockito {
 
     @Test
     public void shouldReturnUserByUserName() throws SQLException {
-        userDao.getByNick(user.getUserName());
+        // when
+        userDao.getByUserName(user.getUserName());
 
+        // then
         verify(connection, times(1)).prepareStatement(anyString());
         verify(resultSet, times(1)).next();
         verify(connection, times(1)).close();

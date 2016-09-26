@@ -26,7 +26,7 @@ import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoalDaoTest extends Mockito {
-    private static final Long GOAL_ID = 99L;
+    private static final Long TEST_ID = 99L;
 
     @Mock
     private DataSource dataSource;
@@ -40,6 +40,8 @@ public class GoalDaoTest extends Mockito {
     private Goal goal;
     @Mock
     private User user;
+    @Mock
+    private UserDao userDao;
 
     @InjectMocks
     private GoalDao goalDao = new GoalDao();
@@ -48,7 +50,7 @@ public class GoalDaoTest extends Mockito {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() throws Exception {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
                 InitialContextFactoryMock.class.getName());
         InitialContextFactoryMock.bind("java:/jdbc/data-postgres", dataSource);
@@ -59,7 +61,7 @@ public class GoalDaoTest extends Mockito {
         when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
-        when(goal.getUser()).thenReturn(new User());
+        when(goal.getUser()).thenReturn(user);
         doNothing().when(preparedStatement).setString(anyInt(), anyString());
         doNothing().when(preparedStatement).setDouble(anyInt(), anyDouble());
         doNothing().when(preparedStatement).setDate(anyInt(), any(Date.class));
@@ -74,20 +76,30 @@ public class GoalDaoTest extends Mockito {
 
     @Test
     public void shouldReturnGoalsByUserId() throws Exception {
-        goalDao.getGoalsByUserId(GOAL_ID);
+        // given
+        when(userDao.getById(TEST_ID))
+                .thenReturn(user);
 
-        verify(connection, times(2)).prepareStatement(anyString());
-        verify(preparedStatement, times(2)).setLong(eq(1), anyInt());
-        verify(preparedStatement, times(2)).setLong(eq(1), anyInt());
-        verify(preparedStatement, times(2)).executeQuery();
+        // when
+        goalDao.getGoalsByUserId(TEST_ID);
+
+        // then
+        verify(userDao, atLeastOnce()).getById(TEST_ID);
+        verify(connection, times(1)).prepareStatement(anyString());
+        verify(preparedStatement, times(1)).setLong(eq(1), anyInt());
+        verify(preparedStatement, times(1)).executeQuery();
     }
 
     @Test
-    public void shouldCreateGoal() throws SQLException {
-        when(goal.getUser()).thenReturn(user);
+    public void shouldCreateGoal() throws Exception {
+        // given
+        when(goal.getUser())
+                .thenReturn(user);
 
+        // when
         goalDao.create(goal);
 
+        // then
         verify(connection, atLeastOnce()).prepareStatement(anyString(), anyInt());
         verify(preparedStatement, atLeastOnce()).executeUpdate();
 
@@ -98,8 +110,8 @@ public class GoalDaoTest extends Mockito {
     }
 
     @Test
-    public void shouldReturnGoalByGoalId() throws SQLException {
-        goalDao.getById(GOAL_ID);
+    public void shouldReturnGoalByGoalId() throws Exception {
+        goalDao.getById(TEST_ID);
 
         InOrder inOrder = inOrder(connection, preparedStatement);
         inOrder.verify(connection).prepareStatement(anyString());
@@ -108,9 +120,11 @@ public class GoalDaoTest extends Mockito {
     }
 
     @Test
-    public void shouldUpdateGoal() throws SQLException {
+    public void shouldUpdateGoal() throws Exception {
+        // when
         goalDao.update(goal);
 
+        // then
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
 
@@ -125,9 +139,11 @@ public class GoalDaoTest extends Mockito {
     }
 
     @Test
-    public void shouldDeleteGoal() throws SQLException {
-        goalDao.delete(GOAL_ID);
+    public void shouldDeleteGoal() throws Exception {
+        // when
+        goalDao.delete(TEST_ID);
 
+        // then
         verify(dataSource, times(1)).getConnection();
         verify(connection, atLeastOnce()).prepareStatement(anyString());
         verify(preparedStatement, atLeastOnce()).setLong(eq(1), anyInt());
@@ -137,15 +153,20 @@ public class GoalDaoTest extends Mockito {
     }
 
     @Test
-    public void shouldReturnAllGoals() throws SQLException {
+    public void shouldReturnAllGoals() throws Exception {
+        // given
+        when(goal.getUser())
+                .thenReturn(user);
+
+        // when
         goalDao.getAll();
 
-        verify(dataSource, times(2)).getConnection();
-        verify(connection, times(2)).prepareStatement(anyString());
+        // then
+        verify(dataSource, times(1)).getConnection();
+        verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, atLeastOnce()).executeQuery();
-        verify(preparedStatement, times(1)).setLong(eq(1), anyInt());
         verify(resultSet, times(3)).next();
-        verify(connection, times(2)).close();
+        verify(connection, times(1)).close();
         verifyNoMoreInteractions(connection);
     }
 }

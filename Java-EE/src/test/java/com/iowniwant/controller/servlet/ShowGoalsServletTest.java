@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.GoalDao;
 import com.iowniwant.model.Goal;
-import com.iowniwant.service.impl.GoalService;
+import com.iowniwant.service.GoalService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,8 @@ import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShowGoalsServletTest extends Mockito {
+    private static final String FORWARD_TARGET = "/goal.jsp";
+
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -53,13 +54,16 @@ public class ShowGoalsServletTest extends Mockito {
 
     @Test
     public void shouldShowGoals() throws Exception {
+        // given
         when(servletContext.getAttribute("user_id")).thenReturn(99L);
 
+        // when
         showGoalsServlet.doGet(request, response);
 
+        // then
         verify(servletContext, atLeastOnce()).getAttribute("user_id");
         verify(request, atLeastOnce()).setAttribute("goals_list", list);
-        verify(request.getRequestDispatcher("/goal.jsp"), atLeastOnce())
+        verify(request.getRequestDispatcher(FORWARD_TARGET), atLeastOnce())
                 .forward(request, response);
     }
 }

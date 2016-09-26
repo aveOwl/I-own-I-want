@@ -1,7 +1,7 @@
 package com.iowniwant.controller.servlet;
 
 import com.iowniwant.model.Goal;
-import com.iowniwant.service.impl.GoalService;
+import com.iowniwant.service.GoalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,8 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationServletTest extends Mockito {
+    private static final String FORWARD_TARGET = "/loginServlet";
+
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -35,7 +36,7 @@ public class RegistrationServletTest extends Mockito {
     @InjectMocks
     private RegistrationServlet registrationServlet = new RegistrationServlet();
 
-    private static User user;
+    private User user;
 
     @Before
     public void setUp() throws Exception {
@@ -43,7 +44,7 @@ public class RegistrationServletTest extends Mockito {
 
         when(userService.save(user)).thenReturn(user);
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getRequestDispatcher("/loginServlet")).thenReturn(requestDispatcher);
+        when(servletContext.getRequestDispatcher(FORWARD_TARGET)).thenReturn(requestDispatcher);
     }
 
     @After
@@ -53,15 +54,18 @@ public class RegistrationServletTest extends Mockito {
 
     @Test
     public void shouldRegisterSuccessfully() throws Exception {
+        // given
         when(request.getParameter("userName")).thenReturn(user.getUserName());
         when(request.getParameter("password")).thenReturn(user.getPassword());
 
+        // when
         registrationServlet.doPost(request, response);
 
+        // then
         verify(request, times(5)).getParameter(anyString());
         verify(request, atLeastOnce()).setAttribute("userName", user.getUserName());
         verify(request, atLeastOnce()).setAttribute("password", user.getPassword());
-        verify(servletContext.getRequestDispatcher("/loginServlet"), atLeastOnce())
+        verify(servletContext.getRequestDispatcher(FORWARD_TARGET), atLeastOnce())
                 .forward(request, response);
     }
 }

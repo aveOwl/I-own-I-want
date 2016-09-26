@@ -1,6 +1,5 @@
 package com.iowniwant.controller.servlet;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,16 +26,16 @@ public class LogoutServletTest extends Mockito {
     @InjectMocks
     private LogoutServlet logoutServlet = new LogoutServlet();
 
-    @Before
-    public void setUp() throws Exception {
-        when(request.getServletContext()).thenReturn(servletContext);
-        when(request.getSession()).thenReturn(session);
-    }
-
     @Test
     public void shouldLogOutSuccessfully() throws Exception {
+        // given
+        when(request.getServletContext()).thenReturn(servletContext);
+        when(request.getSession()).thenReturn(session);
+
+        // when
         logoutServlet.doGet(request, response);
 
+        // then
         verify(request.getServletContext(), atLeastOnce()).removeAttribute("token");
         verify(request.getServletContext(), atLeastOnce()).removeAttribute("user_id");
         verify(request.getSession(), atLeastOnce()).invalidate();

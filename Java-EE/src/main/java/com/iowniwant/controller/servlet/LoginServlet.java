@@ -1,7 +1,7 @@
 package com.iowniwant.controller.servlet;
 
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
 
-        User user = this.userService.getByNickName(username);
+        User user = this.userService.getByUserName(username);
 
         if (user != null && password.equals(user.getPassword())) {
 

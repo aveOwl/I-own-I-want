@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 import static com.iowniwant.controller.helper.TestEntity.getTestUser;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateAccountServletTest extends Mockito {
+    private static final String REDIRECT_TARGET = "showGoalsServlet";
+
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -60,6 +60,7 @@ public class UpdateAccountServletTest extends Mockito {
 
     @Test
     public void shouldUpdateAccountSuccessfully() throws Exception {
+        // given
         when(request.getParameter("firstName")).thenReturn(user.getFirstName());
         when(request.getParameter("lastName")).thenReturn(user.getLastName());
         when(request.getParameter("userName")).thenReturn(user.getUserName());
@@ -67,10 +68,12 @@ public class UpdateAccountServletTest extends Mockito {
         when(request.getParameter("monthSalary")).thenReturn("99.00");
         when(request.getParameter("confirm_password")).thenReturn(user.getPassword());
 
+        // when
         updateAccountServlet.doPost(request, response);
 
+        // then
         verify(userService, atLeastOnce()).update(user);
         verify(request, times(6)).getParameter(anyString());
-        verify(response, atLeastOnce()).sendRedirect("showGoalsServlet");
+        verify(response, atLeastOnce()).sendRedirect(REDIRECT_TARGET);
     }
 }

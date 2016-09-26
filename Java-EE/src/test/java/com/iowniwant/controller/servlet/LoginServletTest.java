@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +22,8 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServletTest extends Mockito {
+    private static final String FORWARD_TARGET = "/showGoalsServlet";
+
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -39,13 +40,13 @@ public class LoginServletTest extends Mockito {
     @InjectMocks
     private LoginServlet loginServlet = new LoginServlet();
 
-    private static User user;
+    private User user;
 
     @Before
     public void setUp() throws Exception {
         when(request.getServletContext()).thenReturn(servletContext);
         when(response.getWriter()).thenReturn(writer);
-        when(servletContext.getRequestDispatcher("/showGoalsServlet")).thenReturn(requestDispatcher);
+        when(servletContext.getRequestDispatcher(FORWARD_TARGET)).thenReturn(requestDispatcher);
 
         user = getTestUser();
 
@@ -60,12 +61,15 @@ public class LoginServletTest extends Mockito {
 
     @Test
     public void shouldSucceedWithPassword() throws Exception {
-        when(userService.getByNickName(user.getUserName()))
+        // given
+        when(userService.getByUserName(user.getUserName()))
                 .thenReturn(user);
 
+        // when
         loginServlet.doPost(request, response);
 
-        verify(request.getServletContext(), atLeastOnce()).setAttribute(eq("user_id"), anyInt());
+        // then
+        verify(request.getServletContext(), atLeastOnce()).setAttribute("user_id", user.getId());
         verify(request.getServletContext(), atLeastOnce()).setAttribute("token", "logged");
         verify(response, times(2)).addCookie(any(Cookie.class));
         verify(response.getWriter(), atLeastOnce()).write("success");
@@ -73,12 +77,15 @@ public class LoginServletTest extends Mockito {
 
     @Test
     public void shouldFailOnNonExistingUser() throws Exception {
-        when(userService.getByNickName(user.getUserName()))
+        // given
+        when(userService.getByUserName(user.getUserName()))
                 .thenReturn(null);
 
+        // when
         loginServlet.doPost(request, response);
 
-        verify(request.getServletContext(), never()).setAttribute(eq("user_id"), anyInt());
+        // then
+        verify(request.getServletContext(), never()).setAttribute("user_id", user.getId());
         verify(request.getServletContext(), never()).setAttribute("token", "logged");
         verify(response, never()).addCookie(any(Cookie.class));
         verify(response.getWriter(), only()).write("fail");
@@ -86,9 +93,11 @@ public class LoginServletTest extends Mockito {
 
     @Test
     public void shouldProceedGetRequest() throws Exception {
+        // when
         loginServlet.doGet(request, response);
 
-        verify(servletContext.getRequestDispatcher("/showGoalsServlet"), atLeastOnce())
+        // then
+        verify(servletContext.getRequestDispatcher(FORWARD_TARGET), atLeastOnce())
                 .forward(request, response);
     }
 }

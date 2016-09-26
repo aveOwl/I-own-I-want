@@ -1,8 +1,7 @@
-package com.iowniwant.service.impl;
+package com.iowniwant.service;
 
 import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-import com.iowniwant.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,13 +9,12 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
 
-public class UserService implements Service<User> {
+public class UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     private UserDao userDao = new UserDao();
 
-    @Override
     public User save(final User user) {
         Objects.requireNonNull(user, "User cannot be null");
 
@@ -32,7 +30,6 @@ public class UserService implements Service<User> {
         return savedUser;
     }
 
-    @Override
     public User getById(final Long id) {
         Objects.requireNonNull(id, "id cannot be null");
 
@@ -62,14 +59,14 @@ public class UserService implements Service<User> {
         return updatedUser;
     }
 
-    public User getByNickName(final String nickName) {
-        Objects.requireNonNull(nickName, "NickName cannot be null");
+    public User getByUserName(final String userName) {
+        Objects.requireNonNull(userName, "NickName cannot be null");
 
-        User user = this.userDao.getByNick(nickName);
+        User user = this.userDao.getByUserName(userName);
 
         if (user == null) {
-            LOG.error("Attempted to retrieve user but no users were found by NickName: {}", nickName);
-            throw new EntityNotFoundException("No users were found by nickName: " + nickName);
+            LOG.error("Attempted to retrieve user but no users were found by NickName: {}", userName);
+            throw new EntityNotFoundException("No users were found by nickName: " + userName);
         }
 
         LOG.debug("Fetching user: {}", user);

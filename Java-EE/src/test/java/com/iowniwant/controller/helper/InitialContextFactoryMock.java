@@ -17,8 +17,7 @@ public class InitialContextFactoryMock implements InitialContextFactory {
                 Map<String, Object> bindings = new HashMap<>();
 
                 @Override
-                public void bind(String name, Object obj)
-                        throws NamingException {
+                public void bind(String name, Object obj) throws NamingException {
                     bindings.put(name, obj);
                 }
 
@@ -31,6 +30,7 @@ public class InitialContextFactoryMock implements InitialContextFactory {
             throw new RuntimeException(ex);
         }
     }
+
     @Override
     public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
         return context;

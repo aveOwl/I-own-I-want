@@ -72,19 +72,19 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Returns persistent object with given identifier.
-     * @param nickname object identifier.
+     * @param userName object identifier.
      * @return persistent User object with the given identifier or null if
      * there is no such persistent object.
      */
-    public User getByNick(String nickname) {
+    public User getByUserName(String userName) {
         Connection connection = null;
         PreparedStatement prepStatement = null;
         ResultSet resultSet = null;
         try {
             connection = this.dbManager.getDbConnection();
-            String query = getGetByNickQuery();
+            String query = getGetByUserNameQuery();
             prepStatement = connection.prepareStatement(query);
-            prepStatement.setString(1, nickname);
+            prepStatement.setString(1, userName);
             resultSet = prepStatement.executeQuery();
             if (resultSet.next()) {
                 return getEntity(resultSet);
@@ -142,7 +142,7 @@ public class UserDao extends AbstractDaoImpl<User> {
     /**
      * @return query to retrieve User from the DataBase using User's NickName.
      */
-    private String getGetByNickQuery() {
-        return this.dbManager.getQuery("get.user.by.nick");
+    private String getGetByUserNameQuery() {
+        return this.dbManager.getQuery("get.user.by.user_name");
     }
 }

@@ -2,7 +2,7 @@ package com.iowniwant.controller.servlet;
 
 import com.google.gson.Gson;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

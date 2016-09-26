@@ -1,8 +1,7 @@
 package com.iowniwant.controller.servlet;
 
-import com.iowniwant.dao.implementation.UserDao;
 import com.iowniwant.model.User;
-import com.iowniwant.service.impl.UserService;
+import com.iowniwant.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +22,11 @@ import java.io.PrintWriter;
 import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AccountServletTest extends Mockito{
+public class AccountServletTest extends Mockito {
+    private static final String FORWARD_TARGET = "/account-page.jsp";
+
+    private static final Long TEST_ID = 99L;
+
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -48,12 +51,9 @@ public class AccountServletTest extends Mockito{
     public void setUp() throws Exception {
         when(request.getServletContext()).thenReturn(servletContext);
         when(response.getWriter()).thenReturn(printWriter);
-        when(request.getRequestDispatcher("/account-page.jsp")).thenReturn(requestDispatcher);
+        when(request.getRequestDispatcher(FORWARD_TARGET)).thenReturn(requestDispatcher);
 
         user = getTestUser();
-
-        when(servletContext.getAttribute("user_id")).thenReturn(user.getId());
-        when(userService.getById(user.getId())).thenReturn(user);
     }
 
     @After
@@ -63,17 +63,26 @@ public class AccountServletTest extends Mockito{
 
     @Test
     public void shouldProceedPostRequest() throws Exception {
+        // given
+        when(servletContext.getAttribute("user_id")).thenReturn(TEST_ID);
+
+        when(userService.getById(TEST_ID))
+                .thenReturn(user);
+
         doNothing().when(printWriter).write(anyString());
 
-        accountServlet.doPost(request,response);
+        // when
+        accountServlet.doPost(request, response);
 
-        InOrder inOrder = inOrder(request,response);
+        // then
+        InOrder inOrder = inOrder(request, response);
 
         inOrder.verify(request).getServletContext();
         inOrder.verify(request).setAttribute("user", user);
         inOrder.verify(response).setContentType("application/json");
         inOrder.verify(response).setCharacterEncoding("UTF-8");
 
-        verify(requestDispatcher, atLeastOnce()).forward(request,response);
+        verify(request, atLeastOnce()).getRequestDispatcher(FORWARD_TARGET);
+        verify(requestDispatcher, atLeastOnce()).forward(request, response);
     }
 }
