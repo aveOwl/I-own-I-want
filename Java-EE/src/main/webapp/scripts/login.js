@@ -1,5 +1,5 @@
 $(document).on("submit", ".login", function myFunc() {
-    
+
     $.ajax({
         url: $(".login").attr('action'),
         type: 'post', // 'get' or 'post'
