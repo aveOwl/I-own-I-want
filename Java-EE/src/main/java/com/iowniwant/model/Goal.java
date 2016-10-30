@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * The Goal class is a mutable data type to encapsulate
@@ -138,7 +139,7 @@ public class Goal implements Serializable {
         if (!(other instanceof Goal))
             return false;
         Goal that = (Goal) other;
-        return (this.id == that.id);
+        return (Objects.equals(this.id, that.id));
     }
 
     /**

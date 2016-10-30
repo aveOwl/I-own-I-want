@@ -18,6 +18,7 @@ import javax.persistence.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.iowniwant.controller.helper.TestEntity.getTestGoal;
@@ -52,7 +53,7 @@ public class GoalServiceTest {
     @Before
     public void setUp() throws Exception {
         goal = getTestGoal();
-        goalList = new ArrayList<>(Arrays.asList(goal));
+        goalList = new ArrayList<>(Collections.singletonList(goal));
     }
 
     @After

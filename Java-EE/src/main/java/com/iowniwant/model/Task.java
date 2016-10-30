@@ -3,6 +3,7 @@ package com.iowniwant.model;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * The Task class is a mutable data type to encapsulate
@@ -88,7 +89,7 @@ public class Task implements Serializable {
         if (!(other instanceof Task))
             return false;
         Task that = (Task) other;
-        return (this.id == that.id);
+        return (Objects.equals(this.id, that.id));
     }
 
     /**

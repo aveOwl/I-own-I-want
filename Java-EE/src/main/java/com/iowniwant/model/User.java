@@ -126,7 +126,7 @@ public class User implements Serializable {
         if (!(other instanceof User))
             return false;
         User that = (User) other;
-        return (this.id == that.id) && (this.userName.equals(that.userName))
+        return (Objects.equals(this.id, that.id)) && (this.userName.equals(that.userName))
                                     && (this.password.equals(that.password))
                                     && (this.email.equals(that.email));
     }
