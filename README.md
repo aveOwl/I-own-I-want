@@ -1,4 +1,5 @@
 # I-own-I-want
+[![Build Status](https://travis-ci.org/aveowl/I-own-I-want.svg?branch=master)](https://travis-ci.org/aveowl/I-own-I-want)
 [![Coverage Status](https://coveralls.io/repos/github/RedSulfur/I-own-I-want/badge.svg?branch=master)](https://coveralls.io/github/RedSulfur/I-own-I-want)
 
 # About
