@@ -6,11 +6,9 @@ import com.iowniwant.model.User;
 import java.sql.Date;
 
 public class TestEntity {
-    private static User user;
-    private static Goal goal;
 
     public static User getTestUser() {
-        user = new User();
+        User user = new User();
         user.setId(99L);
         user.setUserName("test");
         user.setPassword("test");
@@ -22,7 +20,7 @@ public class TestEntity {
     }
 
     public static Goal getTestGoal() {
-        goal = new Goal();
+        Goal goal = new Goal();
         goal.setId(99L);
         goal.setDescription("test");
         goal.setNotes("test");

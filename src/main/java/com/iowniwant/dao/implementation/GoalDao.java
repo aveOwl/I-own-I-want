@@ -4,12 +4,16 @@ import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
 import com.iowniwant.util.exceptions.EntityConstructionException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Fills the <code>PreparedStatement</code> with given
+ *
  * @see Goal entity fields.
  */
 public class GoalDao extends AbstractDaoImpl<Goal> {
@@ -19,8 +23,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     /**
      * Fills the <code>PreparedStatement</code> with the given Goal entity fields
      * in order to persist the Goal in the DataBase
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity goal to be persisted.
+     * @param entity        goal to be persisted.
      */
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, Goal entity) {
@@ -39,8 +44,9 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
     /**
      * Fills the PreparedStatement with given Goal entity fields
      * to update Goal in the DataBase.
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity goal to be updated.
+     * @param entity        goal to be updated.
      */
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, Goal entity) {
@@ -58,16 +64,16 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     /**
      * Creates Goal entity providing <code>resultSet</code> and a user to the
-     * @see Goal class constructor.
+     *
      * @param resultSet a table of data representing a database result set.
      * @return Goal entity.
+     * @see Goal class constructor.
      */
     @Override
     public Goal getEntity(ResultSet resultSet) {
         try {
             User user = this.getUserForGoal(resultSet);
-            Goal createdGoal = new Goal(resultSet, user);
-            return createdGoal;
+            return new Goal(resultSet, user);
         } catch (SQLException e) {
             throw new EntityConstructionException("Failed to create goal entity", e);
         }
@@ -75,14 +81,14 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
 
     private User getUserForGoal(ResultSet resultSet) throws SQLException {
         Long user_id = resultSet.getLong("user_id");
-        User user = this.userDao.getById(user_id);
 
-        return user;
+        return this.userDao.getById(user_id);
     }
 
     /**
      * Returns a List of all Goals associated with user,
      * who's id is the userId parameter.
+     *
      * @param userId User identifier.
      * @return List of Goals.
      */
@@ -96,7 +102,7 @@ public class GoalDao extends AbstractDaoImpl<Goal> {
             while (rs.next()) {
                 goals.add(new Goal(rs, user));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new EntityConstructionException("Failed to fetch goals for user with id: " + userId, e);
         }
         return goals;

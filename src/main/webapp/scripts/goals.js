@@ -22,23 +22,25 @@ $(function () {
 });
 
 // add Goal => persist it in DataBase
-$(document).on("click", "#confirm", function() {
+$(document).on("click", "#confirm", function () {
 
     counter++;
-    var title =         document.getElementById("title").value;
-    var cost =          document.getElementById("cost").value;
-    var shorten =       document.getElementById("shorten").value;
-    var description =   document.getElementById("description").value;
+    var title = document.getElementById("title").value;
+    var cost = document.getElementById("cost").value;
+    var shorten = document.getElementById("shorten").value;
+    var description = document.getElementById("description").value;
 
     $.ajax({
         url: 'addGoalsServlet',
         type: 'post', // 'get' or 'post'
         dataType: 'text',
-        data: {title : title,
-            cost : cost,
-            shorten : shorten,
-            description : description}, // variable you want to send.
-        success : function(data) {
+        data: {
+            title: title,
+            cost: cost,
+            shorten: shorten,
+            description: description
+        }, // variable you want to send.
+        success: function (data) {
             var itemId = 'item' + counter;
             var rowId = 'row' + counter;
             var titleId = 'title' + counter;
@@ -88,7 +90,7 @@ $(document).on('click', '.close', function () {
         url: 'removeGoalsServlet',
         type: 'post', // 'get' or 'post'
         data: {id: sp}, // variable you want to send.
-        success : function(data) {
+        success: function (data) {
         }
     });
 });
@@ -102,7 +104,7 @@ $(document).on('click', '.edit', function () {
         url: 'editGoalsServlet',
         type: 'post', // 'get' or 'post'
         data: {id: sp}, // variable you want to send.
-        success : function(data) {
+        success: function (data) {
 
         }
     });

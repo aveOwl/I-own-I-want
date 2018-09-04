@@ -1,7 +1,9 @@
 package com.iowniwant.util;
 
 import com.iowniwant.controller.helper.InitialContextFactoryMock;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,7 +32,7 @@ public class DataBaseManagerTest extends Mockito {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
                 InitialContextFactory.class.getName());
     }

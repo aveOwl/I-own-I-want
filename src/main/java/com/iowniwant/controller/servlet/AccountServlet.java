@@ -19,6 +19,7 @@ import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
  * Fills the user's profile info, with the information
  * from the DataBase.
  */
+@SuppressWarnings("CanBeFinal")
 @WebServlet(name = "AccountServlet", urlPatterns = "/accountServlet")
 public class AccountServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(AccountServlet.class);

@@ -8,11 +8,12 @@
  * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=51860a96baa4466dfb82cf6143d80afa)
  * Config saved to config.json and https://gist.github.com/51860a96baa4466dfb82cf6143d80afa
  */
-if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requires jQuery"); + function (t) {
+if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requires jQuery");
++function (t) {
     "use strict";
     var e = t.fn.jquery.split(" ")[0].split(".");
     if (e[0] < 2 && e[1] < 9 || 1 == e[0] && 9 == e[1] && e[2] < 1 || e[0] > 2) throw new Error("Bootstrap's JavaScript requires jQuery version 1.9.1 or higher, but lower than version 3")
-}(jQuery), + function (t) {
+}(jQuery), +function (t) {
     "use strict";
 
     function e(e) {
@@ -40,6 +41,7 @@ if ("undefined" == typeof jQuery) throw new Error("Bootstrap's JavaScript requir
             o || r.data("bs.dropdown", o = new i(this)), "string" == typeof e && o[e].call(r)
         })
     }
+
     var n = ".dropdown-backdrop"
         , a = '[data-toggle="dropdown"]'
         , i = function (e) {

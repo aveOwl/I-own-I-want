@@ -11,7 +11,8 @@ public class ContextHolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(ContextHolder.class);
 
-    private ContextHolder() {}
+    private ContextHolder() {
+    }
 
     public static Long getUserIdFromServletContext(final HttpServletRequest request) {
         Long id = (Long) request.getServletContext().getAttribute(USER_ID);

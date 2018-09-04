@@ -35,7 +35,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         LOG.debug("Obtained user info from registration form: \n " +
-                "FirstName = {}, LastName = {}, UserName = {}, Email = {}, Password = {}",
+                        "FirstName = {}, LastName = {}, UserName = {}, Email = {}, Password = {}",
                 firstName, lastName, userName, email, password);
 
         User savedUser = this.userService.save(new User(firstName, lastName, userName, password, email));

@@ -15,55 +15,48 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static com.iowniwant.controller.helper.TestEntity.getTestGoal;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoalServiceTest {
-    @Mock
-    private GoalDao goalDao;
-
-    @Mock
-    private UserService userService;
-
-    @Mock
-    private User user;
-
-    @InjectMocks
-    private GoalService goalService;
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
+    @Mock
+    private GoalDao goalDao;
+    @Mock
+    private UserService userService;
+    @Mock
+    private User user;
+    @InjectMocks
+    private GoalService goalService;
     private Goal goal;
     private List<Goal> goalList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         goal = getTestGoal();
         goalList = new ArrayList<>(Collections.singletonList(goal));
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         goal = null;
         goalList = null;
     }
 
     @Test
-    public void shouldSaveGoal() throws Exception {
+    public void shouldSaveGoal() {
         // given
         goal.setId(null);
 
@@ -78,7 +71,7 @@ public class GoalServiceTest {
     }
 
     @Test
-    public void shouldNotSaveExistingGoal() throws Exception {
+    public void shouldNotSaveExistingGoal() {
         // given
         when(goalDao.create(goal))
                 .thenReturn(goal);
@@ -94,7 +87,7 @@ public class GoalServiceTest {
     }
 
     @Test
-    public void shouldFetchGoalById() throws Exception {
+    public void shouldFetchGoalById() {
         // given
         when(goalDao.getById(goal.getId()))
                 .thenReturn(goal);
@@ -108,7 +101,7 @@ public class GoalServiceTest {
     }
 
     @Test
-    public void shouldNotFetchNullGoalById() throws Exception {
+    public void shouldNotFetchNullGoalById() {
         // given
         when(goalDao.getById(goal.getId()))
                 .thenReturn(null);
@@ -121,11 +114,11 @@ public class GoalServiceTest {
 
         // then
         verify(goalDao, atLeastOnce()).getById(goal.getId());
-        assertEquals("goal is null", goalById, null);
+        assertNull("goal is null", goalById);
     }
 
     @Test
-    public void shouldFetchGoalsByUserId() throws Exception {
+    public void shouldFetchGoalsByUserId() {
         // given
         when(userService.getById(99L))
                 .thenReturn(user);
@@ -141,7 +134,7 @@ public class GoalServiceTest {
     }
 
     @Test
-    public void shouldNotFetchGoalsByUserId() throws Exception {
+    public void shouldNotFetchGoalsByUserId() {
         // given
         Long userId = 99L;
         when(userService.getById(userId))
@@ -155,6 +148,6 @@ public class GoalServiceTest {
 
         // then
         verify(goalDao, never()).getGoalsByUserId(anyLong());
-        assertEquals("fetched goals", goalListByUserId, null);
+        assertNull("fetched goals", goalListByUserId);
     }
 }

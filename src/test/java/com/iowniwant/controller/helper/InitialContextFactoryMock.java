@@ -17,12 +17,12 @@ public class InitialContextFactoryMock implements InitialContextFactory {
                 Map<String, Object> bindings = new HashMap<>();
 
                 @Override
-                public void bind(String name, Object obj) throws NamingException {
+                public void bind(String name, Object obj) {
                     bindings.put(name, obj);
                 }
 
                 @Override
-                public Object lookup(String name) throws NamingException {
+                public Object lookup(String name) {
                     return bindings.get(name);
                 }
             };
@@ -31,16 +31,16 @@ public class InitialContextFactoryMock implements InitialContextFactory {
         }
     }
 
-    @Override
-    public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
-        return context;
-    }
-
     public static void bind(String name, Object obj) {
         try {
             context.bind(name, obj);
         } catch (NamingException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public Context getInitialContext(Hashtable<?, ?> environment) {
+        return context;
     }
 }

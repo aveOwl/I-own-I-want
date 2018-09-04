@@ -146,7 +146,7 @@ a:hover {
     background-clip: padding-box
 }
 
-.dropdown-menu>li>a {
+.dropdown-menu > li > a {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -156,31 +156,31 @@ a:hover {
     white-space: nowrap
 }
 
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
     text-decoration: none;
     color: #4eb1ba;
 }
 
-.dropdown-menu>.active>a,
-.dropdown-menu>.active>a:hover,
-.dropdown-menu>.active>a:focus {
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
     color: #E9E9E9;
     text-decoration: none;
     outline: 0;
 }
 
-.dropdown-menu>.disabled>a,
-.dropdown-menu>.disabled>a:hover,
-.dropdown-menu>.disabled>a:focus {
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
     color: #E9E9E9;
 }
 
-.open>.dropdown-menu {
+.open > .dropdown-menu {
     display: block;
 }
 
-.open>a {
+.open > a {
     outline: 0;
 }
 

@@ -3,7 +3,7 @@ package com.iowniwant.model;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Objects;
 
 /**
  * The User class is a mutable data type to encapsulate
@@ -30,11 +30,12 @@ public class User implements Serializable {
     /**
      * Initialize a new user after his registration
      * using his firstName, lastName, username, password, email.
+     *
      * @param firstName user's firstName from the registration page.
-     * @param lastName user's lastName from the registration page.
-     * @param userName user's userName from the registration page.
-     * @param password user's password from the registration page.
-     * @param email user's email from the registration page.
+     * @param lastName  user's lastName from the registration page.
+     * @param userName  user's userName from the registration page.
+     * @param password  user's password from the registration page.
+     * @param email     user's email from the registration page.
      */
     public User(String firstName, String lastName, String userName, String password, String email) {
         this.firstName = firstName;
@@ -46,8 +47,9 @@ public class User implements Serializable {
 
     /**
      * Initialize user using given data from the obtained resultSet.
+     *
      * @param resultSet a table of data, obtained from the DataBase
-     * in order to create a new user instance.
+     *                  in order to create a new user instance.
      * @throws SQLException if there is some sqlException occurred.
      */
     public User(ResultSet resultSet) throws SQLException {
@@ -118,6 +120,7 @@ public class User implements Serializable {
 
     /**
      * Compares this user to the specified user.
+     *
      * @param other the other user.
      * @return true if this user equals other; false otherwise.
      */
@@ -127,12 +130,13 @@ public class User implements Serializable {
             return false;
         User that = (User) other;
         return (Objects.equals(this.id, that.id)) && (this.userName.equals(that.userName))
-                                    && (this.password.equals(that.password))
-                                    && (this.email.equals(that.email));
+                && (this.password.equals(that.password))
+                && (this.email.equals(that.email));
     }
 
     /**
      * Returns a hash code for this user.
+     *
      * @return a hash code for this user.
      */
     @Override
@@ -147,6 +151,7 @@ public class User implements Serializable {
 
     /**
      * Returns a string representation of this user.
+     *
      * @return a string representation of this user.
      */
     @Override

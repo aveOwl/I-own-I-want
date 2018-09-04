@@ -39,7 +39,7 @@ public class RegistrationServletTest extends Mockito {
     private User user;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         user = getTestUser();
 
         when(userService.save(user)).thenReturn(user);

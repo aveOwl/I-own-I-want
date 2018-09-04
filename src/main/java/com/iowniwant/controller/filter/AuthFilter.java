@@ -19,15 +19,16 @@ public class AuthFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         LOG.info("Initializing filter content...");
     }
 
     /**
      * Filters user request whether user logged into the system or not.
-     * @param request - the request to pass along the chain.
+     *
+     * @param request  - the request to pass along the chain.
      * @param response - the response to pass along the chain.
-     * @throws IOException on error.
+     * @throws IOException      on error.
      * @throws ServletException on error.
      */
     @Override
@@ -43,8 +44,7 @@ public class AuthFilter implements Filter {
 
         if (token != null) {
             filterChain.doFilter(request, response);
-        }
-        else {
+        } else {
             LOG.info("Redirecting to login-page.jsp...");
             httpServletResponse.sendRedirect("login-page.jsp");
         }

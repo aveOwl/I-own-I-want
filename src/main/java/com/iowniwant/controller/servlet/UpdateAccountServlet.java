@@ -5,7 +5,6 @@ import com.iowniwant.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,14 +15,13 @@ import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
 
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = "/updateAccountServlet")
 public class UpdateAccountServlet extends HttpServlet {
-    private static Logger LOG = LoggerFactory.getLogger(UpdateAccountServlet.class);
     private static final String GOLAS_PAGE_URI = "showGoalsServlet";
-
+    private static Logger LOG = LoggerFactory.getLogger(UpdateAccountServlet.class);
     private UserService userService = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         Long id = getUserIdFromServletContext(request);
 
         User user = this.userService.getById(id);

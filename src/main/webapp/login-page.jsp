@@ -30,11 +30,13 @@
             </div>
             <div>
                 <label for="userName">User Name:</label>
-                <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3" required />
+                <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3"
+                       required/>
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" ng-model="ctrl.user.password" ng-minlength="5" required />
+                <input type="password" name="password" id="password" ng-model="ctrl.user.password" ng-minlength="5"
+                       required/>
             </div>
             <button type="submit"
                     class="proceed"

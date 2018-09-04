@@ -26,7 +26,7 @@ public class AccountServletTest extends Mockito {
     private static final String FORWARD_TARGET = "/account-page.jsp";
 
     private static final Long TEST_ID = 99L;
-
+    private static User user;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -41,11 +41,8 @@ public class AccountServletTest extends Mockito {
     private Context context;
     @Mock
     private UserService userService;
-
     @InjectMocks
     private AccountServlet accountServlet = new AccountServlet();
-
-    private static User user;
 
     @Before
     public void setUp() throws Exception {

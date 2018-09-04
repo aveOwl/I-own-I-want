@@ -5,7 +5,7 @@
     <title>Goals</title>
     <meta charset="UTF-8">
     <link href="style/goals-style.css" rel="stylesheet">
-    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
     <script src="scripts/goals.js"></script>
     <script src="scripts/goals-valid.js"></script>
@@ -37,13 +37,15 @@
                 </div>
                 <div>
                     <label for="description">Description:</label>
-                    <textarea id="description" name="description" ng-model="ctrl.goal.description" maxlength="255"></textarea>
+                    <textarea id="description" name="description" ng-model="ctrl.goal.description"
+                              maxlength="255"></textarea>
                 </div>
                 <button type="submit"
                         id="confirm"
                         class="proceed"
                         ng-class="{red: frm.$invalid}"
-                        ng-disabled="frm.$invalid">Confirm</button>
+                        ng-disabled="frm.$invalid">Confirm
+                </button>
             </form>
         </div>
     </div>

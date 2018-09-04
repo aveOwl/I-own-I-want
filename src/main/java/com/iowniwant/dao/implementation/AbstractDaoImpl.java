@@ -17,8 +17,9 @@ import java.util.List;
 
 /**
  * Implements basic CRUD operations using
- * @see DataBaseManager to get connection to the DataBase.
+ *
  * @param <T> type of object that implements
+ * @see DataBaseManager to get connection to the DataBase.
  * @see Serializable interface.
  */
 
@@ -148,18 +149,23 @@ abstract class AbstractDaoImpl<T extends Serializable> implements AbstractDAO<T>
 
     private PreparedStatement getAllPreparedStatement(Connection connection) throws SQLException {
         String query = this.getGetAllQuery();
-        PreparedStatement ps = connection.prepareStatement(query);
 
-        return ps;
+        return connection.prepareStatement(query);
     }
 
-    public abstract void fillCreateStatement(PreparedStatement prepStatement, T entity);
-    public abstract void fillUpdateStatement(PreparedStatement prepStatement, T entity);
-    public abstract T getEntity(ResultSet resultSet);
+    protected abstract void fillCreateStatement(PreparedStatement prepStatement, T entity);
 
-    public abstract String getCreateQuery();
-    public abstract String getDeleteQuery();
-    public abstract String getUpdateQuery();
-    public abstract String getGetByIdQuery();
-    public abstract String getGetAllQuery();
+    protected abstract void fillUpdateStatement(PreparedStatement prepStatement, T entity);
+
+    protected abstract T getEntity(ResultSet resultSet);
+
+    protected abstract String getCreateQuery();
+
+    protected abstract String getDeleteQuery();
+
+    protected abstract String getUpdateQuery();
+
+    protected abstract String getGetByIdQuery();
+
+    protected abstract String getGetAllQuery();
 }

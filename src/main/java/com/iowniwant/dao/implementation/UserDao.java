@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * Fills the PreparedStatement with given
+ *
  * @see User entity fields.
  */
 public class UserDao extends AbstractDaoImpl<User> {
@@ -17,8 +18,9 @@ public class UserDao extends AbstractDaoImpl<User> {
     /**
      * Fills the PreparedStatement with given User entity fields
      * to persist User in the DataBase.
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity user to be persisted.
+     * @param entity        user to be persisted.
      */
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, User entity) {
@@ -38,8 +40,9 @@ public class UserDao extends AbstractDaoImpl<User> {
     /**
      * Fills the PreparedStatement with given User entity fields
      * to update User in the DataBase.
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity user to be updated.
+     * @param entity        user to be updated.
      */
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, User entity) {
@@ -58,9 +61,10 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Creates User entity by providing resultSet to
-     * @see User class constructor.
+     *
      * @param resultSet a table of data representing a database result set.
      * @return User entity.
+     * @see User class constructor.
      */
     @Override
     public User getEntity(ResultSet resultSet) {
@@ -74,6 +78,7 @@ public class UserDao extends AbstractDaoImpl<User> {
 
     /**
      * Returns persistent object with given identifier.
+     *
      * @param userName object identifier.
      * @return persistent User object with the given identifier or null if
      * there is no such persistent object.

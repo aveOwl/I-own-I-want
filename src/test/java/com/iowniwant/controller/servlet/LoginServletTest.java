@@ -55,7 +55,7 @@ public class LoginServletTest extends Mockito {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         user = null;
     }
 

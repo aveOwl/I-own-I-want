@@ -13,8 +13,9 @@ public class TaskDao extends AbstractDaoImpl<Task> {
     /**
      * Fills the PreparedStatement with given Task entity fields
      * to persist Task in the DataBase.
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity task to be persisted.
+     * @param entity        task to be persisted.
      */
     @Override
     public void fillCreateStatement(PreparedStatement prepStatement, Task entity) {
@@ -29,8 +30,9 @@ public class TaskDao extends AbstractDaoImpl<Task> {
     /**
      * Fills the PreparedStatement with given Task entity fields
      * to update Task in the DataBase.
+     *
      * @param prepStatement object that represents a precompiled SQL statement.
-     * @param entity task to be updated.
+     * @param entity        task to be updated.
      */
     @Override
     public void fillUpdateStatement(PreparedStatement prepStatement, Task entity) {

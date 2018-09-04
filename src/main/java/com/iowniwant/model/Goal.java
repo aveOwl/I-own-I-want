@@ -1,15 +1,15 @@
 package com.iowniwant.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Comparator;
-import java.sql.Date;
 import java.util.Objects;
 
 /**
  * The Goal class is a mutable data type to encapsulate
  * properties of a goal created by a
+ *
  * @see User
  */
 public class Goal implements Serializable {
@@ -33,11 +33,12 @@ public class Goal implements Serializable {
     /**
      * Initialize a new goal after its creation by a user
      * using its title, cost, description, pubdate, notes.
-     * @param title goal's title.
-     * @param cost goal's cost.
+     *
+     * @param title       goal's title.
+     * @param cost        goal's cost.
      * @param description goal's description.
-     * @param pubdate goal's pubdate.
-     * @param notes goal's notes.
+     * @param pubdate     goal's pubdate.
+     * @param notes       goal's notes.
      */
     public Goal(String title, Double cost, String description, Date pubdate, String notes, User user) {
         this.title = title;
@@ -50,11 +51,12 @@ public class Goal implements Serializable {
 
     /**
      * Initialize goal using data from the obtained resultSet.
+     *
      * @param resultSet a table of data, obtained from the DataBase
-     * in order to create a new goal instance.
+     *                  in order to create a new goal instance.
      * @throws SQLException if some sqlException occurred.
      */
-    public Goal (ResultSet resultSet, User user) throws SQLException {
+    public Goal(ResultSet resultSet, User user) throws SQLException {
         this.id = resultSet.getLong("goal_id");
         this.v_id = resultSet.getLong("v_goal_id");
         this.title = resultSet.getString("title");
@@ -131,6 +133,7 @@ public class Goal implements Serializable {
 
     /**
      * Compares this goal to the specified goal.
+     *
      * @param other the other goal.
      * @return true if this goal equals other; false otherwise.
      */
@@ -144,6 +147,7 @@ public class Goal implements Serializable {
 
     /**
      * Returns a hash code for this goal.
+     *
      * @return a hash code for this goal.
      */
     @Override
@@ -155,6 +159,7 @@ public class Goal implements Serializable {
 
     /**
      * Returns a string representation of this goal.
+     *
      * @return a string representation of this goal.
      */
     @Override

@@ -40,7 +40,7 @@
                             <span class="caret"></span>
                         </li>
                         <ul class="dropdown-menu">
-                            <li><a href="accountServlet" >My account</a></li>
+                            <li><a href="accountServlet">My account</a></li>
                             <li><a href="logoutServlet">Log out</a></li>
                         </ul>
                     </div>

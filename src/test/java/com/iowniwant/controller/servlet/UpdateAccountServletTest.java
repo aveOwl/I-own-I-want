@@ -22,7 +22,7 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateAccountServletTest extends Mockito {
     private static final String REDIRECT_TARGET = "showGoalsServlet";
-
+    private static User user;
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -35,11 +35,8 @@ public class UpdateAccountServletTest extends Mockito {
     private RequestDispatcher requestDispatcher;
     @Mock
     private UserService userService;
-
     @InjectMocks
     private UpdateAccountServlet updateAccountServlet = new UpdateAccountServlet();
-
-    private static User user;
 
     @Before
     public void setUp() throws Exception {

@@ -1,7 +1,7 @@
 package com.iowniwant.dao.implementation;
 
-import com.iowniwant.model.User;
 import com.iowniwant.controller.helper.InitialContextFactoryMock;
+import com.iowniwant.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,7 +26,8 @@ import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 @RunWith(MockitoJUnitRunner.class)
 public class UserDaoTest extends Mockito {
     private static final Long TEST_ID = 99L;
-
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
     @Mock
     private DataSource dataSource;
     @Mock
@@ -35,14 +36,9 @@ public class UserDaoTest extends Mockito {
     private PreparedStatement preparedStatement;
     @Mock
     private ResultSet resultSet;
-
     @InjectMocks
     private UserDao userDao = new UserDao();
-
     private User user;
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() throws SQLException {

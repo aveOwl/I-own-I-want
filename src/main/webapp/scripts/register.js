@@ -37,7 +37,7 @@ $(document).on("submit", ".register", function myFunc() {
         url: $(".register").attr('action'),
         type: 'post', // 'get' or 'post'
         data: $(".register").serialize(),
-        success : function(response) {
+        success: function (response) {
             if (response == "success") {
                 window.location.assign("showGoalsServlet");
             }

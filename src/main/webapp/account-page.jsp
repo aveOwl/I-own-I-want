@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link href="style/account-style.css" rel="stylesheet">
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script src="scripts/account.js"></script>
     <script>
         (function () {
@@ -53,34 +53,37 @@
             <legend><span class="number">1</span>Profile info</legend>
             <div>
                 <label for="firstName">First Name:</label>
-                <input type="text" name="firstName" id="firstName" ng-model="ctrl.user.firstName" />
+                <input type="text" name="firstName" id="firstName" ng-model="ctrl.user.firstName"/>
             </div>
             <div>
                 <label for="lastName">Last Name:</label>
-                <input type="text" name="lastName" id="lastName" ng-model="ctrl.user.lastName" />
+                <input type="text" name="lastName" id="lastName" ng-model="ctrl.user.lastName"/>
             </div>
             <div>
                 <label for="userName">User Name:</label>
-                <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3" required />
+                <input type="text" name="userName" id="userName" ng-model="ctrl.user.userName" ng-minlength="3"
+                       required/>
                 <span ng-show="frm.userName.$dirty && frm.userName.$error.required">Username is required.</span>
                 <span ng-show="frm.userName.$dirty && frm.userName.$error.minlength">Username is too short.</span>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" ng-model="ctrl.user.email" required />
+                <input type="email" name="email" id="email" ng-model="ctrl.user.email" required/>
                 <span ng-show="frm.email.$dirty && frm.email.$error.required">Email is required.</span>
                 <span ng-show="frm.email.$dirty && frm.email.$error.email">Enter a valid email.</span>
             </div>
 
             <div>
                 <label for="monthSalary">MonthSalary:</label>
-                <input type="number" name="monthSalary" id="monthSalary" ng-model="ctrl.user.monthSalary" required />
+                <input type="number" name="monthSalary" id="monthSalary" ng-model="ctrl.user.monthSalary" required/>
                 <span ng-show="frm.monthSalary.$dirty && frm.monthSalary.$error.number">Enter a number.</span>
             </div>
 
             <div>
                 <label for="current_password">Current Password:</label>
-                <input type="password" name="current_password" id="current_password" ng-model="ctrl.user.current_password" compare-to="ctrl.user.password_check" ng-minlength="5" required />
+                <input type="password" name="current_password" id="current_password"
+                       ng-model="ctrl.user.current_password" compare-to="ctrl.user.password_check" ng-minlength="5"
+                       required/>
                 <span ng-show="frm.current_password.$dirty && frm.current_password.$error.required">Password is required.</span>
                 <span ng-show="frm.current_password.$dirty && frm.current_password.$error.compareTo">Wrong password.</span>
             </div>
@@ -92,12 +95,15 @@
             <div class="password">
                 <div>
                     <label for="new_password">New Password:</label>
-                    <input type="password" name="new_password" id="new_password" ng-model="ctrl.user.new_password" ng-minlength="5" ng-disabled="frm.current_password.$invalid" required />
+                    <input type="password" name="new_password" id="new_password" ng-model="ctrl.user.new_password"
+                           ng-minlength="5" ng-disabled="frm.current_password.$invalid" required/>
                     <span ng-show="frm.new_password.$dirty && frm.new_password.$error.minlength">Password is too short.</span>
                 </div>
                 <div>
                     <label for="confirm_password">Confirm Password:</label>
-                    <input type="password" name="confirm_password" id="confirm_password" ng-model="ctrl.user.confirm_password" compare-to="ctrl.user.new_password" ng-disabled="frm.new_password.$invalid" required />
+                    <input type="password" name="confirm_password" id="confirm_password"
+                           ng-model="ctrl.user.confirm_password" compare-to="ctrl.user.new_password"
+                           ng-disabled="frm.new_password.$invalid" required/>
                     <span ng-show="frm.confirm_password.$dirty && frm.confirm_password.$error.compareTo">Passwords don't match.</span>
                 </div>
             </div>
@@ -106,7 +112,8 @@
         <button type="submit"
                 class="proceed"
                 ng-class="{red: frm.email.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid || frm.confirm_password.$error.compareTo}"
-                ng-disabled="frm.email.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid || frm.confirm_password.$error.compareTo">Save Changes
+                ng-disabled="frm.email.$invalid || frm.monthSalary.$error.number || frm.current_password.$invalid || frm.confirm_password.$error.compareTo">
+            Save Changes
         </button>
     </form>
     <div class="push"></div>

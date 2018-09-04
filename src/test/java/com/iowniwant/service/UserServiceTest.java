@@ -16,7 +16,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 import static com.iowniwant.controller.helper.TestEntity.getTestUser;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -25,29 +26,26 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
-    @Mock
-    private UserDao userDao;
-
-    @InjectMocks
-    private UserService userService;
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
+    @Mock
+    private UserDao userDao;
+    @InjectMocks
+    private UserService userService;
     private User user;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         user = getTestUser();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         user = null;
     }
 
     @Test
-    public void shouldSaveUser() throws Exception {
+    public void shouldSaveUser() {
         // given
         user.setId(null);
 
@@ -62,7 +60,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldNotSaveExistingUser() throws Exception {
+    public void shouldNotSaveExistingUser() {
         // given
         when(userDao.create(user))
                 .thenReturn(user);
@@ -78,7 +76,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldFetchUserById() throws Exception {
+    public void shouldFetchUserById() {
         // given
         when(userDao.getById(user.getId()))
                 .thenReturn(user);
@@ -92,7 +90,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldNotFetchNullUserById() throws Exception {
+    public void shouldNotFetchNullUserById() {
         // given
         when(userDao.getById(user.getId()))
                 .thenReturn(null);
@@ -105,11 +103,11 @@ public class UserServiceTest {
 
         // then
         verify(userDao, atLeastOnce()).getById(user.getId());
-        assertEquals("user is null", userById, null);
+        assertNull("user is null", userById);
     }
 
     @Test
-    public void shouldUpdateUser() throws Exception {
+    public void shouldUpdateUser() {
         // given
         when(userDao.update(user))
                 .thenReturn(user);
@@ -122,7 +120,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldNotUpdateNonExistingUSer() throws Exception {
+    public void shouldNotUpdateNonExistingUSer() {
         // given
         user.setId(null);
 
@@ -140,7 +138,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldFetchUserByUserName() throws Exception {
+    public void shouldFetchUserByUserName() {
         // given
         when(userDao.getByUserName(user.getUserName()))
                 .thenReturn(user);
@@ -154,7 +152,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldNotFetchNullUserByUserName() throws Exception {
+    public void shouldNotFetchNullUserByUserName() {
         // given
         when(userDao.getByUserName(user.getUserName()))
                 .thenReturn(null);
@@ -167,6 +165,6 @@ public class UserServiceTest {
 
         // then
         verify(userDao, atLeastOnce()).getById(user.getId());
-        assertEquals("user is null", userByNickName, null);
+        assertNull("user is null", userByNickName);
     }
 }

@@ -8,6 +8,7 @@ import java.util.Objects;
 /**
  * The Task class is a mutable data type to encapsulate
  * properties of a task associated with specific goal
+ *
  * @see Goal
  */
 public class Task implements Serializable {
@@ -26,8 +27,9 @@ public class Task implements Serializable {
     /**
      * Initialize a new task after its creation by a user
      * using its description and associated goal.
+     *
      * @param description task's description.
-     * @param goal goal associated with this task.
+     * @param goal        goal associated with this task.
      */
     public Task(String description, Goal goal) {
         this.description = description;
@@ -36,11 +38,12 @@ public class Task implements Serializable {
 
     /**
      * Initialize task using data from the obtained resultSet.
+     *
      * @param resultSet a table of data, obtained from the DataBase
-     * in order to create a new goal instance.
+     *                  in order to create a new goal instance.
      * @throws SQLException if some sqlException occurred.
      */
-    public Task (ResultSet resultSet, Goal goal) throws SQLException {
+    public Task(ResultSet resultSet, Goal goal) throws SQLException {
         this.id = resultSet.getLong("task_id");
         this.v_id = resultSet.getLong("v_task_id");
         this.description = resultSet.getString("description");
@@ -81,6 +84,7 @@ public class Task implements Serializable {
 
     /**
      * Compares this task to the specified task.
+     *
      * @param other the other task.
      * @return true if this task equals other; false otherwise.
      */
@@ -94,6 +98,7 @@ public class Task implements Serializable {
 
     /**
      * Returns a hash code for this task.
+     *
      * @return a hash code for this task.
      */
     @Override
@@ -105,6 +110,7 @@ public class Task implements Serializable {
 
     /**
      * Returns a string representation of this goal.
+     *
      * @return a string representation of this goal.
      */
     @Override

@@ -131,41 +131,50 @@ hr {
     padding-right: 15px
 }
 
-@media (min-width:992px) {
+@media (min-width: 992px) {
     .col-md-5,
     .col-md-7 {
         float: left
     }
+
     .col-md-7 {
         width: 58.33333333%
     }
+
     .col-md-5 {
         width: 41.66666667%
     }
+
     .col-md-pull-7 {
         right: 58.33333333%
     }
+
     .col-md-pull-5 {
         right: 41.66666667%
     }
+
     .col-md-push-7 {
         left: 58.33333333%
     }
+
     .col-md-push-5 {
         left: 41.66666667%
     }
+
     .col-md-offset-7 {
         margin-left: 58.33333333%
     }
+
     .col-md-offset-5 {
         margin-left: 41.66666667%
     }
 }
 
-@media (min-width:1200px) {
+@media (min-width: 1200px) {
     .col-lg-4 {
         float: left
     }
+
     .col-lg-4 {
         width: 50%
     }

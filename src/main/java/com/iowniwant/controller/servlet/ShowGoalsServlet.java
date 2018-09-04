@@ -21,9 +21,8 @@ import static com.iowniwant.util.ContextHolder.getUserIdFromServletContext;
  */
 @WebServlet(name = "ShowGoalsServlet", urlPatterns = {"/showGoalsServlet"})
 public class ShowGoalsServlet extends HttpServlet {
-    private static Logger LOG = LoggerFactory.getLogger(ShowGoalsServlet.class);
     private static final String GOALS_PAGE_URI = "/goals-page.jsp";
-
+    private static Logger LOG = LoggerFactory.getLogger(ShowGoalsServlet.class);
     private GoalService goalService = new GoalService();
 
     @Override

@@ -39,7 +39,7 @@ public class ShowGoalsServletTest extends Mockito {
     private List<Goal> list;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         list = new ArrayList<>();
 
         when(request.getServletContext()).thenReturn(servletContext);
@@ -48,7 +48,7 @@ public class ShowGoalsServletTest extends Mockito {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         list = null;
     }
 

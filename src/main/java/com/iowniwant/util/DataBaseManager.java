@@ -27,8 +27,14 @@ public class DataBaseManager {
 
     private Connection dbConnection;
 
+    private DataBaseManager() {
+        LOG.trace("Loading properties...");
+        this.loadProperties();
+    }
+
     /**
      * Provides DataBaseManager instance.
+     *
      * @return the same DataBaseManager object each time its invoked.
      */
     public static DataBaseManager getInstance() {
@@ -38,13 +44,9 @@ public class DataBaseManager {
         return instance;
     }
 
-    private DataBaseManager() {
-        LOG.trace("Loading properties...");
-        this.loadProperties();
-    }
-
     /**
      * Establishes connection to the DataBase.
+     *
      * @return connection to the DataBase.
      */
     public Connection getDbConnection() {

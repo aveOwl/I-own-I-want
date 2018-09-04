@@ -22,7 +22,7 @@ import static com.iowniwant.controller.helper.TestEntity.getTestGoal;
 import static com.iowniwant.controller.helper.TestEntity.getTestUser;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AddGoalsServletTest extends Mockito{
+public class AddGoalsServletTest extends Mockito {
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -57,7 +57,7 @@ public class AddGoalsServletTest extends Mockito{
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         user = null;
         goal = null;
     }
@@ -72,7 +72,7 @@ public class AddGoalsServletTest extends Mockito{
         when(request.getParameter("description")).thenReturn(goal.getDescription());
 
         // when
-        addGoalsServlet.doPost(request,response);
+        addGoalsServlet.doPost(request, response);
 
         // then
         verify(request, times(4)).getParameter(anyString());

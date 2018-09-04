@@ -1,8 +1,8 @@
 package com.iowniwant.dao.implementation;
 
+import com.iowniwant.controller.helper.InitialContextFactoryMock;
 import com.iowniwant.model.Goal;
 import com.iowniwant.model.User;
-import com.iowniwant.controller.helper.InitialContextFactoryMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,12 +22,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoalDaoTest extends Mockito {
     private static final Long TEST_ID = 99L;
-
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
     @Mock
     private DataSource dataSource;
     @Mock
@@ -42,12 +42,8 @@ public class GoalDaoTest extends Mockito {
     private User user;
     @Mock
     private UserDao userDao;
-
     @InjectMocks
     private GoalDao goalDao = new GoalDao();
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -115,7 +111,7 @@ public class GoalDaoTest extends Mockito {
 
         InOrder inOrder = inOrder(connection, preparedStatement);
         inOrder.verify(connection).prepareStatement(anyString());
-        inOrder.verify(preparedStatement).setLong(anyInt(),anyInt());
+        inOrder.verify(preparedStatement).setLong(anyInt(), anyInt());
         inOrder.verify(preparedStatement).executeQuery();
     }
 
@@ -128,7 +124,7 @@ public class GoalDaoTest extends Mockito {
         verify(dataSource, times(1)).getConnection();
         verify(connection, times(1)).prepareStatement(anyString());
 
-        verify(preparedStatement, times(3)).setString(anyInt(),anyString());
+        verify(preparedStatement, times(3)).setString(anyInt(), anyString());
         verify(preparedStatement, times(1)).setDouble(anyInt(), anyDouble());
         verify(preparedStatement, times(1)).setDate(anyInt(), any(Date.class));
         verify(preparedStatement, times(1)).setLong(anyInt(), anyInt());
