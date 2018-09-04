@@ -30,6 +30,7 @@
         <json.version>20160212</json.version>
         <gson.version>2.6.2</gson.version>
         <taglibs.version>1.1.2</taglibs.version>
+        <coveralls.version>4.2.0</coveralls.version>
     </properties>
 
     <dependencies>
@@ -138,9 +139,9 @@
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.2.0</version>
+                <version>${coveralls.version}</version>
                 <configuration>
-                    <repoToken>XZFHmI4Do0b7K0tFcap5csFefE5owywqT</repoToken>
+                    <repoToken>Bg05CS4dpNkZQ9kiF2v3yPOOW8SssPDRE</repoToken>
                 </configuration>
             </plugin>
             <plugin>
